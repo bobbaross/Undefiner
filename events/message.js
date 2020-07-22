@@ -1,5 +1,3 @@
-const e = require('express');
-
 module.exports = (client, message) => {
     var { commandHandler } = require('../functions/commandhandler.js');
     if (message.channel.type === 'dm') {
