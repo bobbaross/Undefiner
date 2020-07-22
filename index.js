@@ -1,20 +1,20 @@
 const {webhookSecret} = require('./config.json');
-const express = require('express');
-const app = express();
-const gad = require('git-auto-deploy');
+const http = require('http');
+const crypto = require('crypto');
+const exec = require('child_process').exec;
 
-app.listen(9004, () => console.log(`Webhook Running!`));
+http.createServer(function (req, res) {
+    req.on('data', async function (chunk) {
+        let sig = "sha1=" + crypto.createHmac('sha1', webhookSecret).update(chunk.toString()).digest('hex');
 
-app.get('/aprixia/undefiner/webhook', (req,res) => {
-    res.send(`No! Go away! ~.~`);
-});
+        if (req.headers['x-hub-signature'] == sig) {
+            await exec('git pull');
+            process.exit();
+        }
+    });
 
-app.post('/aprixia/undefiner/webhook', (req,res) => {
-    if (req.headers['X-Hub-Signature'] === webhookSecret) {
-        res.sendStatus(200);
-        gad.deploy();
-    }
-});
+    res.end();
+}).listen(9004);
 
 const shard = require('./shard.js');
 
