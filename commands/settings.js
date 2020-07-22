@@ -1,16 +1,16 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
+const { Utils } = require('../functions/functions');
 
 module.exports = {
-    name: "setup",
-    description: "Set up the database for your server. This command is required to avoid massive storage waste.",
-    usage: "",
-    aliases: ["startup", "start", "startbot", "start-bot", "setup-bot", "set-up", "start-up", "create-db"],
+    name: "settings",
+    description: "Change the settings for your server.",
+    usage: "<setting> <value>",
+    aliases: ["config", "configs", "setting"],
     category: "manager",
     guildOnly: true,
 
     async undefine(client, message, args) {
-        var {createDB,getDB,saveDB} = new Utils(client);
+        var {createDB,getDB,saveDB,getChannel,getRole} = new Utils(client);
         if (!message.member.hasPermission('MANAGE_SERVER')) {
             let oMem = [];
             let errbed = async () => {
@@ -33,11 +33,7 @@ module.exports = {
             return errbed();
         }
         getDB(message.guild.id).then(async res => {
-            if (res) return message.channel.send(`You don't need to do this anymore.`).catch(err => err);
-            var instance = await createDB(message.guild.id);
-            saveDB(instance).then(() => {
-                return message.channel.send(`Your database has now been set up!`).catch(err => err);
-            }).catch(err => console.error(err));
-        });
+            return;
+        }
     }
 }

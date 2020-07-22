@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
     aliases: ['commands', 'cmds'],
 
     async undefine(client, message, args) {
-        var {getDB} = require('../functions/functions.js');
+        var {getDB} = new Utils(client);
         var prefix;
         if (message.guild) {
             prefix = await new Promise(resolve => {

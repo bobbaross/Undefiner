@@ -1,5 +1,7 @@
-const { getEntries, saveDB } = require('./functions/functions.js');
-const {unmute,unban,unlock,untempRole} = require('./functions/expire.js');
+const { Utils } = require("./functions/functions");
+const { Expire } = require('./functions/expire.js');
+const { getEntries, saveDB } = new Utils(client);
+const {unmute,unban,unlock,untempRole} = new Expire(client);
 
 module.exports = {
     expire(client) {
