@@ -5,7 +5,7 @@ const Schema = new mongoose.Schema({
     serverID: String,
     db: String,
     prefix: String,
-    punishments: {bans: Object, mutes: Object, warns: Object, kicks: Object, notes: Object},
+    modCases: [Object],
     lockedChans: [Object],
     tempRoles: [Object],
     persistedRoles: [Object],
@@ -15,7 +15,8 @@ const Schema = new mongoose.Schema({
     afkMembers: [Object],
     disabledCommands: [String],
     tags: [Object],
-    settings: {mutedRole: String, modLogs: String}
+    settings: {mutedRole: String, modLogs: String},
+    notes: Object
 });
 
 const serverID = mongoose.model("serverID", Schema);

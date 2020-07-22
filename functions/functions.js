@@ -39,7 +39,7 @@ async function createDB(serverid) {
             serverID: `${serverid}`,
             db: "a",
             prefix: "undefine ",
-            punishments: {bans: {}, mutes: {}, warns: {}, kicks: {}, notes: {}},
+            modCases: [],
             lockedChans: [],
             tempRoles: [],
             persistedRoles: [],
@@ -49,7 +49,8 @@ async function createDB(serverid) {
             afkMembers: [],
             disabledCommands: [],
             tags: [],
-            mutedRole: ""
+            settings: {mutedRole: "", modLogs: ""},
+            notes: {}
         });
         return resolve(newDB);
     });
