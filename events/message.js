@@ -7,8 +7,8 @@ module.exports = (client, message) => {
     } else {
         var { getDB } = require('../functions/functions.js');
         getDB(message.guild.id).then(res => {
-            var prefix = res.prefix;
-            if (!prefix) prefix = "undefine ";
+            if (res && res.prefix) var prefix = res.prefix;
+            else var prefix = "undefine ";
             commandHandler(client, message, prefix).catch(err => console.error(err));
         });
     }
