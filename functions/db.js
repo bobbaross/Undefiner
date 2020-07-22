@@ -21,4 +21,4 @@ const Schema = new mongoose.Schema({
 const serverID = mongoose.model("serverID", Schema);
 const DB = mongoose.model("db", Schema);
 
-module.exports = { name: "db", serverID, DB }
+module.exports = { serverID, DB }

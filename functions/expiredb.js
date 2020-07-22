@@ -10,4 +10,4 @@ const ExpireSchema = new mongoose.Schema({
 const entryType = mongoose.model("type", ExpireSchema);
 const entryDB = mongoose.model("db", ExpireSchema);
 
-module.exports = { name: "db", entryType, entryDB }
+module.exports = { entryType, entryDB }
