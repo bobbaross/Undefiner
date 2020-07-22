@@ -33,7 +33,7 @@ module.exports = {
         }
         getDB(message.guild.id).then(async res => {
             if (res) return message.channel.send(`You don't need to do this anymore.`).catch(err => err);
-            var instance = createDB(message.guild.id);
+            var instance = await createDB(message.guild.id);
             saveDB(instance).then(() => {
                 return message.channel.send(`Your database has now been set up!`).catch(err => err);
             }).catch(err => console.error(err));
