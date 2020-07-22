@@ -11,7 +11,7 @@ async function commandHandler(client, message, prefix) {
         command.undefine(client, message, args);
     } catch (error) {
         console.error(error);
-        return message.channel.send(`Error: ${error.message}\nPlease contact a developer at the [AprixStudios Discord Server](https://www.aprixstudios.xyz/discord) or post [here](https://github.com/AprixStudios/Undefiner/issues) to get this issue solved.`);
+        return message.channel.send(`Error: ${error.message}\nPlease contact a developer at the AprixStudios Discord Server (https://www.aprixstudios.xyz/discord) or post on Github at https://github.com/AprixStudios/Undefiner/issues to get this issue solved.`);
     }
 }
 
