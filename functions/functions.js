@@ -38,7 +38,7 @@ async function createDB(serverid) {
         let newDB = new DB({
             serverID: `${serverid}`,
             db: "a",
-            prefix: "undefine",
+            prefix: "undefine ",
             punishments: {bans: {}, mutes: {}, warns: {}, kicks: {}, notes: {}},
             lockedChans: [],
             tempRoles: [],
