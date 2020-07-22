@@ -8,7 +8,7 @@ module.exports = {
     usage: '<code>',
     category: "developer",
 
-    undefine(client, message, args) {
+    async undefine(client, message, args) {
         if (message.author.id !== "266162824529707008") return;
         if (!args) return;
         message.channel.send(`Input\n\`\`\`js\n${args.join(' ')}\n\`\`\`\nOutput:\n\`\`\`js\n${eval(args.join(' '))}\n\`\`\``);
