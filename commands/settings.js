@@ -34,6 +34,6 @@ module.exports = {
         }
         getDB(message.guild.id).then(async res => {
             return;
-        }
+        });
     }
 }
