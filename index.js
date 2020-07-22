@@ -1,3 +1,4 @@
+const {webhookSecret} = require('./config.json');
 const express = require('express');
 const app = express();
 const gad = require('git-auto-deploy');
