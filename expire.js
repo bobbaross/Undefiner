@@ -5,6 +5,7 @@ module.exports = {
     expire(client) {
         setInterval(() => {
             getEntries("ban").then(res => {
+                if (!res) return;
                 let entries = res.entries;
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
@@ -18,6 +19,7 @@ module.exports = {
                 }
             });
             getEntries("mute").then(res => {
+                if (!res) return;
                 let entries = res.entries;
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
@@ -31,6 +33,7 @@ module.exports = {
                 }
             });
             getEntries("lock").then(res => {
+                if (!res) return;
                 let entries = res.entries;
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
@@ -44,6 +47,7 @@ module.exports = {
                 }
             });
             getEntries("tempRoles").then(res => {
+                if (!res) return;
                 let entries = res.entries;
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
