@@ -58,7 +58,7 @@ async function createDB(serverid) {
 async function createEntries(enteryType) {
     return new Promise(resolve => {
         let newDB = new entryDB({
-            type: `${enteryType}`,
+            entrytype: `${enteryType}`,
             entrydb: "a",
             entries: []
         });
@@ -82,7 +82,7 @@ async function getDB(serverid) {
 async function getEntries(enteryType) {
     return new Promise((resolve, reject) => {
         entryDB.findOne({
-            type: enteryType
+            entrytype: enteryType
         }, (err, res) => {
             if (err) return reject(err);
             resolve(res);

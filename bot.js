@@ -21,7 +21,7 @@ mongoose.connect(dburi, {useNewUrlParser: true, useUnifiedTopology: true}).then(
 
 try {
     let expire = require('./expire.js');
-    expire.expire(code);
+    expire.expire(client);
 } catch (error) {
     console.error(error);
 }
