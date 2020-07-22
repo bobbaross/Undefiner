@@ -60,7 +60,7 @@ async function createEntries(enteryType) {
         let newDB = new entryDB({
             type: `${enteryType}`,
             db: "a",
-            enteries: []
+            entries: []
         });
         return resolve(newDB);
     });
