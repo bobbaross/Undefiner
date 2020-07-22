@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 // don't question it
 const ExpireSchema = new mongoose.Schema({
     type: String,
-    db: String,
+    entrydb: String,
     entries: Array
 });
 
 const entryType = mongoose.model("type", ExpireSchema);
-const entryDB = mongoose.model("db", ExpireSchema);
+const entryDB = mongoose.model("entrydb", ExpireSchema);
 
 module.exports = { entryType, entryDB }

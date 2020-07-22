@@ -59,7 +59,7 @@ async function createEntries(enteryType) {
     return new Promise(resolve => {
         let newDB = new entryDB({
             type: `${enteryType}`,
-            db: "a",
+            entrydb: "a",
             entries: []
         });
         return resolve(newDB);
