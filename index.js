@@ -4,6 +4,10 @@ const gad = require('git-auto-deploy');
 
 app.listen(9004, () => console.log(`Webhook Running!`));
 
+app.get('/aprixia/undefiner/webhook', (req,res) => {
+    res.send(`No! Go away! ~.~`);
+});
+
 app.post('/aprixia/undefiner/webhook', (req,res) => {
     if (req.headers.secret === webhookSecret) {
         res.sendStatus(200);
