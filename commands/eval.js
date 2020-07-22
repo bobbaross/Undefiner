@@ -11,6 +11,6 @@ module.exports = {
     code(client, message, args, isTest) {
         if (message.author.id !== "266162824529707008") return;
         if (!args) return;
-        message.channel.send(`Input\n\`\`\`js\n${args.join(' ')}\n\`\`\`\nOutput:\n\`\`\`js\n${eval(args.join(' '))}\n\`\`\``);
+        message.channel.send(`2Input\n\`\`\`js\n${args.join(' ')}\n\`\`\`\nOutput:\n\`\`\`js\n${eval(args.join(' '))}\n\`\`\``);
     }
 }
