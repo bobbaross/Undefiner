@@ -10,7 +10,7 @@ app.get('/aprixia/undefiner/webhook', (req,res) => {
 });
 
 app.post('/aprixia/undefiner/webhook', (req,res) => {
-    if (req.headers.secret === webhookSecret) {
+    if (req.headers['X-Hub-Signature'] === webhookSecret) {
         res.sendStatus(200);
         gad.deploy();
     }
