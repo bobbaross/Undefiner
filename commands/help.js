@@ -14,7 +14,8 @@ module.exports = {
         if (message.guild) {
             prefix = new Promise(resolve => {
                 getDB(message.guild.id).then(res => {
-                    return resolve(res.prefix || "undefine ");
+                    if (res && res.prefix) return resolve(res.prefix);
+                    else return resolve("undefine ");
                 });
             });
         } else {
