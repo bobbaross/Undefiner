@@ -27,7 +27,7 @@ module.exports = {
             var commands = {
                 moderation: [],
                 information: [],
-                misc: [],
+                miscellaneous: [],
                 roles: [],
                 developer: []
             };
@@ -43,7 +43,7 @@ module.exports = {
             .setDescription(`<> = required | [] = optional\n${prefix}${this.name} ${this.usage}`)
             .addField(`Moderation`, commands.moderation.join(', '), true)
             .addField(`Information`, commands.information.join(', '), true)
-            .addField(`Fun`, commands.fun.join(', '), true)
+            .addField(`miscellaneous`, commands.miscellaneous.join(', '), true)
             .addField(`Roles`, commands.roles.join(', '), true)
             .addField(`Developer`, commands.developer.join(', '), true)
 
