@@ -8,11 +8,11 @@ module.exports = {
     category: "information",
     aliases: ['commands', 'cmds'],
 
-    undefine(client, message, args) {
+    async undefine(client, message, args) {
         var {getDB} = require('../functions/functions.js');
         var prefix;
         if (message.guild) {
-            prefix = new Promise(resolve => {
+            prefix = await new Promise(resolve => {
                 getDB(message.guild.id).then(res => {
                     if (res && res.prefix) return resolve(res.prefix);
                     else return resolve("undefine ");
