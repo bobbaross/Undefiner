@@ -19,7 +19,7 @@ module.exports = {
                 });
             });
         } else {
-            prefix = "undefine"
+            prefix = "undefine ";
         }
         var argCmd = args[0];
         if (argCmd) argCmd = argCmd.toLowerCase();
@@ -44,7 +44,7 @@ module.exports = {
             .setDescription(`<> = required | [] = optional\n${prefix}${this.name} ${this.usage}`)
             .addField(`Moderation`, commands.moderation.join(', '), true)
             .addField(`Information`, commands.information.join(', '), true)
-            .addField(`miscellaneous`, commands.miscellaneous.join(', '), true)
+            .addField(`Miscellaneous`, commands.miscellaneous.join(', '), true)
             .addField(`Roles`, commands.roles.join(', '), true)
             .addField(`Developer`, commands.developer.join(', '), true)
 
