@@ -232,7 +232,7 @@ class Utils {
 
     async getMember(userid, guild) {
         guild.members.fetch(userid).then(member => {
-            if (members) {
+            if (member) {
                 let embed = undefined;
                 return { member, embed };
             } else {
