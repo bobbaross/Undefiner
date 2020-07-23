@@ -1,6 +1,6 @@
-const {getDB,saveDB,getTime} = new Utils(client);
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('./functions');
+const {getDB,saveDB,getTime} = new Utils(client);
 const {good} = require('../config.json').colors;
 
 class Expire {
