@@ -40,6 +40,7 @@ module.exports = {
             }
             var embed;
             var value;
+            if (!args[0]) args[0] = "";
             switch (args[0].toLowerCase()) {
                 default:
                     embed = new MessageEmbed()
