@@ -74,7 +74,7 @@ module.exports = {
                 case "mutedrole":
                     if (!args[1]) {
                         embed = new MessageEmbed()
-                        .setDescription(`I might be COMPLETELY wrong, but I highly doubt that is a role to be honest.\n${this.name} ${this.usage}`);
+                        .setDescription(`I might be COMPLETELY wrong, but I highly doubt you specified a role to be honest.\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
                     let role = getRole(args[1]);
@@ -93,7 +93,7 @@ module.exports = {
                     case "modlogs":
                         if (!args[1]) {
                             embed = new MessageEmbed()
-                            .setDescription(`I may overlook this, but I don't think that is a channel. At least not one I can see.\n${this.name} ${this.usage}`);
+                            .setDescription(`I may overlook this, but I don't think you specified a channel. At least I don't see anything there.\n${this.name} ${this.usage}`);
                             return message.channel.send(embed).catch(err => err);
                         }
                         let channel = getChannel(args[1], message.guild.channels);
