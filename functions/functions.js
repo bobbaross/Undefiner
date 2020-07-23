@@ -230,17 +230,17 @@ class Utils {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
     }
 
-    async getMember(user, guild) {
-        if (guild.members.resolve(user)) {
-            let member = guild.members.resolve(user);
-            let embed = undefined;
-            return { member, embed };
-        } else {
-            let member = undefined;
-            let embed = new Discord.MessageEmbed()
-            .setDescription(`I swear mate, I can't find that member here.`);
-            return { member, embed };
-        }
+    async getMember(userid, guild) {
+        guild.members.fetch(userid).then(member => {
+            if (members) {
+                let embed = undefined;
+                return { member, embed };
+            } else {
+                let embed = new Discord.MessageEmbed()
+                .setDescription(`I swear mate, I can't find that member here.`);
+                return { member, embed };
+            }
+        });
     }
 }
 
