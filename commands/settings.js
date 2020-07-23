@@ -77,14 +77,14 @@ module.exports = {
                         .setDescription(`I might be COMPLETELY wrong, but I highly doubt you specified a role to be honest.\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    let role = await getRole(args[1]);
+                    let role = await getRole(args[1], message.guild.roles);
                     if (role) role = role.id;
                     else role = "0";
                     res.settings.mutedRole = role;
                     saveDB(res).then(() => {
                         embed = new MessageEmbed()
                         .setColor(branding)
-                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${getRole(role).name}`}`)
+                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${getRole(role, message.guild.roles).name}`}`)
                         message.channel.send(embed).catch(err => err);
                     }).catch(err => {
                         console.error(err);
