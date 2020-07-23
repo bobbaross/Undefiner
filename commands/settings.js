@@ -12,11 +12,11 @@ module.exports = {
 
     async undefine(client, message, args) {
         var {createDB,getDB,saveDB,getChannel,getRole} = new Utils(client);
-        if (!message.member.hasPermission('MANAGE_SERVER')) {
+        if (!message.member.hasPermission('MANAGE_GUILD')) {
             let oMem = [];
             let errbed = async () => {
                 message.guild.members.fetch({ withPresence: true, cache: false }).then(mems => {
-                let Mems = mems.map(mem => mem).filter(mem => mem.user.presence.status !== 'offline' && mem.hasPermission('MANAGE_SERVER') && !mem.user.bot);
+                let Mems = mems.map(mem => mem).filter(mem => mem.user.presence.status !== 'offline' && mem.hasPermission('MANAGE_GUILD') && !mem.user.bot);
                 Mems.forEach(mem => {
                     oMem.push(mem.user.tag);
                 });
