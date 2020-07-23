@@ -84,7 +84,7 @@ module.exports = {
                     saveDB(res).then(() => {
                         embed = new MessageEmbed()
                         .setColor(branding)
-                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${await getRole(args[1], message.guild.roles).name}`}`)
+                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${Promise.all(getRole(args[1], message.guild.roles).name)}`}`)
                         message.channel.send(embed).catch(err => err);
                     }).catch(err => {
                         console.error(err);
