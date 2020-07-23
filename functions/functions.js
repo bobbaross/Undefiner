@@ -231,7 +231,7 @@ class Utils {
     }
 
     async getMember(userid, guild) {
-        if (guild.members.fetch(user.id)) {
+        if (guild.members.fetch(userid)) {
             let member = guild.members.fetch(userid);
             let embed = undefined;
             return { member, embed };
