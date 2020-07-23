@@ -78,13 +78,12 @@ module.exports = {
                         return message.channel.send(embed).catch(err => err);
                     }
                     let role = await getRole(args[1], message.guild.roles);
-                    if (role) role = role.id;
-                    else role = "0";
-                    res.settings.mutedRole = role;
+                    if (!role) role = "0";
+                    res.settings.mutedRole = role.id;
                     saveDB(res).then(() => {
                         embed = new MessageEmbed()
                         .setColor(branding)
-                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${Promise.all(getRole(args[1], message.guild.roles).name)}`}`)
+                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${role.name}`}`)
                         message.channel.send(embed).catch(err => err);
                     }).catch(err => {
                         console.error(err);
@@ -97,15 +96,16 @@ module.exports = {
                             return message.channel.send(embed).catch(err => err);
                         }
                         let channel = await getChannel(args[1], message.guild.channels);
-                        if (channel) channel = channel.id;
-                        else if (args[1].toLowerCase() === "this") channel = message.channel.id;
-                        else if (args[1].toLowerCase() === "there") channel = "there";
-                        else channel = "off";
+                        let channelTwo;
+                        if (channel) {channel = channel.id; channelTwo = await getChannel(args[1], message.guild.channels)}
+                        else if (args[1].toLowerCase() === "this") {channel = message.channel.id; channelTwo = await getChannel(message.channel.id, message.guild.channels)}
+                        else if (args[1].toLowerCase() === "there") {channel = "there"; channelTwo = "there"}
+                        else {channel = "off"; channelTwo = "off"}
                         res.settings.modLogs = channel;
                         saveDB(res).then(() => {
                             embed = new MessageEmbed()
                             .setColor(branding)
-                            .setDescription(`Modlogs successfully ${getChannel(args[1], message.guild.channels).name ? channel === message.channel.id ? `set to the current channel` : `set to ${getChannel(args[1], message.guild.channels).name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
+                            .setDescription(`Modlogs successfully ${channelTwo.name ? channel === message.channel.id ? `set to the current channel` : `set to ${channelTwo.name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
                             message.channel.send(embed).catch(err => err);
                         }).catch(err => {
                             console.error(err);
