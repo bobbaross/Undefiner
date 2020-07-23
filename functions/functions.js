@@ -229,19 +229,6 @@ class Utils {
     async setCleanFooter(message, embed, footer) {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
     }
-
-    async getMember(userid, guild) {
-        guild.members.fetch(userid).then(member => {
-            if (member) {
-                let embed = undefined;
-                return { member, embed };
-            } else {
-                let embed = new Discord.MessageEmbed()
-                .setDescription(`I swear mate, I can't find that member here.`);
-                return { member, embed };
-            }
-        });
-    }
 }
 
 module.exports = { Utils }
