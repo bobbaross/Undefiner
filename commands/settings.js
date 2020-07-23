@@ -46,14 +46,70 @@ module.exports = {
                     embed = new MessageEmbed()
                     .setColor(branding)
                     .setTitle(`Settings`)
-                    .addField(`Prefix`, `${res.prefix ? res.prefix : `Hmm... Something doesn't seem right here... Please report this to the developers at the [AprixStudios Discord](https://discord.gg/RpM43Gc)`}\nThis value must be at least 1 letter and at max 10. Use \`_\` for spaces.`)
+                    .addField(`Prefix`, `${res.prefix ? res.prefix : `Hmm... Something doesn't seem right here... Please report this to the developers at the [AprixStudios Discord](https://discord.gg/RpM43Gc)`}\nThis value must be at least 1 letter and at max 10. Spaces can be used.`)
                     .addField(`Muted Role`, `${getRole(res.settings.mutedRole, message.guild.roles).name ? getRole(res.settings.mutedRole, message.guild.roles).name : `Not set.`}\nThis value is changable anytime, but will be set automatically upon a mute.`)
                     .addField(`Modlogs`, `${getChannel(res.settings.modLogs, message.guild.channels).name ? getChannel(res.settings.modLogs, message.guild.channels).name : res.settings.modLogs}\nSetting this value to a channel will enable mod logs to be sent in that channel.\nSetting this value to \`this\` will make it the current channel\nSetting this value to \`there\` will set it to be in the channel where the command was sent.\nSetting this value to anything not specified in this embed will turn mod logs off.`)
 
                     message.channel.send(embed).catch(err => err);
                     break;
-                //case "prefix":
-
+                case "prefix":
+                    let newPrefix = args.slice(1).join(' ');
+                    if (!newPrefix) {
+                        embed = new MessageEmbed()
+                        .setDescription(`I uhh... So what are we changing the prefix to again?\n${this.name} ${this.usage}`);
+                        return message.channel.send(embed).catch(err => err);
+                    }
+                    if (newPrefix.length > 10) return;
+                    let oldPrefix = await res.prefix;
+                    res.prefix = newPrefix;
+                    saveDB(res).then(() => {
+                        embed = new MessageEmbed()
+                        .setColor(branding)
+                        .setDescription(`Prefix successfully changed from ${oldPrefix} to ${newPrefix}`)
+                        message.channel.send(embed).catch(err => err);
+                    }).catch(err => {
+                        console.error(err);
+                    });
+                    break;
+                case "mutedrole":
+                    if (!args[1]) {
+                        embed = new MessageEmbed()
+                        .setDescription(`I might be COMPLETELY wrong, but I highly doubt that is a role to be honest.\n${this.name} ${this.usage}`);
+                        return message.channel.send(embed).catch(err => err);
+                    }
+                    let role = getRole(args[1]);
+                    if (role) role = role.id;
+                    else role = "0";
+                    res.settings.mutedRole = role;
+                    saveDB(res).then(() => {
+                        embed = new MessageEmbed()
+                        .setColor(branding)
+                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${role.name}`}`)
+                        message.channel.send(embed).catch(err => err);
+                    }).catch(err => {
+                        console.error(err);
+                    });
+                    break;
+                    case "modlogs":
+                        if (!args[1]) {
+                            embed = new MessageEmbed()
+                            .setDescription(`I may overlook this, but I don't think that is a channel. At least not one I can see.\n${this.name} ${this.usage}`);
+                            return message.channel.send(embed).catch(err => err);
+                        }
+                        let channel = getChannel(args[1], message.guild.channels);
+                        if (channel) channel = channel.id;
+                        else if (args[1].toLowerCase() === "this") channel = message.channel.id;
+                        else if (args[1].toLowerCase() === "there") channel = "there";
+                        else channel = "off";
+                        res.settings.modLogs = channel;
+                        saveDB(res).then(() => {
+                            embed = new MessageEmbed()
+                            .setColor(branding)
+                            .setDescription(`Modlogs successfully ${getChannel(channel, message.guild.channels).name ? channel === message.channel.id ? `set to the current channel` : `set to ${getChannel(channel, message.guild.channels).name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
+                            message.channel.send(embed).catch(err => err);
+                        }).catch(err => {
+                            console.error(err);
+                        });
             }
 
         });
