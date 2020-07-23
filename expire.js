@@ -1,10 +1,10 @@
 const { Utils } = require("./functions/functions");
 const { Expire } = require('./functions/expire.js');
-const { getEntries, saveDB } = new Utils(client);
-const {unmute,unban,unlock,untempRole} = new Expire(client);
 
 module.exports = {
     expire(client) {
+        var { getEntries, saveDB } = new Utils(client);
+        var {unmute,unban,unlock,untempRole} = new Expire(client);
         setInterval(() => {
             getEntries("ban").then(res => {
                 if (!res) return;
