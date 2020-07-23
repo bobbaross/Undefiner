@@ -230,9 +230,9 @@ class Utils {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
     }
 
-    async getMember(userid, guild) {
-        if (guild.members.fetch(userid)) {
-            let member = guild.members.fetch(userid);
+    async getMember(user, guild) {
+        if (guild.members.resolve(user)) {
+            let member = guild.members.resolve(user);
             let embed = undefined;
             return { member, embed };
         } else {
