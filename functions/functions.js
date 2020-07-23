@@ -8,7 +8,7 @@ class Utils {
     }
     
     // Get User Function
-    async getUser(mention, client) {
+    async getUser(mention) {
         return new Promise(resolve => {
             if (!mention) return;
             if (mention.startsWith('<@') && mention.endsWith('>')) {
@@ -17,16 +17,16 @@ class Utils {
                 if (mention.startsWith('!')) {
                     mention = mention.slice(1);
                 }
-                return resolve(client.users.cache.get(mention));
+                return resolve(this.client.users.cache.get(mention));
             }
-            else if (client.users.cache.get(mention)) {
+            else if (this.client.users.cache.get(mention)) {
                 // if it is a id it will do this
-                return resolve(client.users.cache.get(mention));
+                return resolve(this.client.users.cache.get(mention));
             } else {
                 // if it isn't either of them it will do this
-                if (client.users.cache.find(u => u.tag.toLowerCase().startsWith(mention.toLowerCase()))) {
+                if (this.client.users.cache.find(u => u.tag.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a user from the input it will do this
-                    return resolve(client.users.cache.find(u => u.tag.toLowerCase().startsWith(mention.toLowerCase())));
+                    return resolve(this.client.users.cache.find(u => u.tag.toLowerCase().startsWith(mention.toLowerCase())));
                 }
                 else {
                     // if not it wont do anything

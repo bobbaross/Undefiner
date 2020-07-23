@@ -1,15 +1,15 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('./functions');
-const {getDB,saveDB,getTime} = new Utils(client);
 const {good} = require('../config.json').colors;
+const { Utils } = require('./functions');
 
 class Expire {
     constructor (client) {
         this.client = client;
     }
 
-    async unmute(entry, client) {
-        let guild = client.guilds.cache.get(entry.guildId);
+    async unmute(entry) {
+    let {getDB,saveDB,getTime} = new Utils(this.client);
+        let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
         let member = guild.members.fetch(entry.userId);
         if (!member) return;
@@ -24,7 +24,7 @@ class Expire {
                 .setColor(good)
                 .setTitle(`Member unmuted #${res.cases}`)
                 .addField(`Member`, member.user.tag, true)
-                .addField(`Moderator`, client.user.tag, true)
+                .addField(`Moderator`, this.client.user.tag, true)
                 .addField(`Reason`, entry.reason, true)
                 .setFooter(`This mute lasted ${getTime(Date.now()-entry.happenedAt)} | ${entry.userId}`)
                 .setTimestamp()
@@ -34,8 +34,9 @@ class Expire {
         });
     }
 
-    async unban(entry, client) {
-        let guild = client.guilds.cache.get(entry.guildId);
+    async unban(entry) {
+        let {getDB,saveDB,getTime} = new Utils(this.client);
+        let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
         let ban = guild.fetchBan(entry.userId);
         if (!ban) return;
@@ -49,7 +50,7 @@ class Expire {
                 .setColor(good)
                 .setTitle(`Member unbanned #${res.cases}`)
                 .addField(`Member`, member.user.tag, true)
-                .addField(`Moderator`, client.user.tag, true)
+                .addField(`Moderator`, this.client.user.tag, true)
                 .addField(`Reason`, entry.reason, true)
                 .setFooter(`This ban lasted ${getTime(Date.now()-entry.happenedAt)} | ${entry.userId}`)
                 .setTimestamp()
@@ -59,8 +60,8 @@ class Expire {
         });
     }
 
-    async unlock(entry, client) {
-        let guild = client.guilds.cache.get(entry.guildId);
+    async unlock(entry) {
+        let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
         let channel = guild.channels.cache.get(entry.channelId);
         if (!channel) return;
@@ -69,8 +70,8 @@ class Expire {
         });
     }
 
-    async untempRole(entry, client) {
-        let guild = client.guilds.cache.get(entry.guildId);
+    async untempRole(entry) {
+        let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
         let member = guild.members.fetch(entry.userId);
         if (!member) return;
