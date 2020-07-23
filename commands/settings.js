@@ -51,7 +51,7 @@ module.exports = {
                     .addField(`Muted Role`, `${listingRole ? listingRole.name : `Not set.`}\nThis value is changable anytime, but will be set automatically upon a mute.`)
                     .addField(`Modlogs`, `${listingChan ? listingChan.name : res.settings.modLogs}\nSetting this value to a channel will enable mod logs to be sent in that channel.\nSetting this value to \`this\` will make it the current channel\nSetting this value to \`there\` will set it to be in the channel where the command was sent.\nSetting this value to anything not specified in this embed will turn mod logs off.`)
 
-                    message.channel.send(embed).catch(err => err);
+                    message.channel.send(embed).catch(err => console.error(err));
                     break;
                 case "prefix":
                     let newPrefix = args.slice(1).join(' ');
@@ -62,6 +62,7 @@ module.exports = {
                     }
                     if (newPrefix.length > 10) return;
                     let oldPrefix = await res.prefix;
+                    newPrefix.replace("_", " ");
                     res.prefix = newPrefix;
                     saveDB(res).then(() => {
                         embed = new MessageEmbed()
