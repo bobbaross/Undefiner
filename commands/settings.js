@@ -77,14 +77,14 @@ module.exports = {
                         .setDescription(`I might be COMPLETELY wrong, but I highly doubt you specified a role to be honest.\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    let role = getRole(args[1]);
+                    let role = await getRole(args[1]);
                     if (role) role = role.id;
                     else role = "0";
                     res.settings.mutedRole = role;
                     saveDB(res).then(() => {
                         embed = new MessageEmbed()
                         .setColor(branding)
-                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${role.name}`}`)
+                        .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${await getRole(role).name}`}`)
                         message.channel.send(embed).catch(err => err);
                     }).catch(err => {
                         console.error(err);
@@ -96,7 +96,7 @@ module.exports = {
                             .setDescription(`I may overlook this, but I don't think you specified a channel. At least I don't see anything there.\n${this.name} ${this.usage}`);
                             return message.channel.send(embed).catch(err => err);
                         }
-                        let channel = getChannel(args[1], message.guild.channels);
+                        let channel = await getChannel(args[1], message.guild.channels);
                         if (channel) channel = channel.id;
                         else if (args[1].toLowerCase() === "this") channel = message.channel.id;
                         else if (args[1].toLowerCase() === "there") channel = "there";
@@ -105,7 +105,7 @@ module.exports = {
                         saveDB(res).then(() => {
                             embed = new MessageEmbed()
                             .setColor(branding)
-                            .setDescription(`Modlogs successfully ${getChannel(channel, message.guild.channels).name ? channel === message.channel.id ? `set to the current channel` : `set to ${getChannel(channel, message.guild.channels).name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
+                            .setDescription(`Modlogs successfully ${await getChannel(channel, message.guild.channels).name ? channel === message.channel.id ? `set to the current channel` : `set to ${await getChannel(channel, message.guild.channels).name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
                             message.channel.send(embed).catch(err => err);
                         }).catch(err => {
                             console.error(err);
