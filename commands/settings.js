@@ -105,7 +105,7 @@ module.exports = {
                         saveDB(res).then(() => {
                             embed = new MessageEmbed()
                             .setColor(branding)
-                            .setDescription(`Modlogs successfully ${getChannel(channel, message.guild.channels).name ? channel === message.channel.id ? `set to the current channel` : `set to ${await getChannel(channel, message.guild.channels).name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
+                            .setDescription(`Modlogs successfully ${getChannel(channel, message.guild.channels).name ? channel === message.channel.id ? `set to the current channel` : `set to ${getChannel(channel, message.guild.channels).name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
                             message.channel.send(embed).catch(err => err);
                         }).catch(err => {
                             console.error(err);
