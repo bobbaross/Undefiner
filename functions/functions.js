@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { userID, DB } = require(`./db.js`);
 const { entryType, entryDB } = require('./expiredb.js');
+const Discord = require('discord.js');
 
 class Utils {
     constructor (client) {
@@ -227,6 +228,19 @@ class Utils {
 
     async setCleanFooter(message, embed, footer) {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
+    }
+
+    async getMember(user, guild) {
+        if (guild.members.fetch(user.id)) {
+            let member = guild.members.fetch(user.id);
+            let embed = undefined;
+            return { member, embed };
+        } else {
+            let member = undefined;
+            let embed = new Discord.MessageEmbed()
+            .setDescription(`I swear mate, I can't find that member here.`);
+            return { member, embed };
+        }
     }
 }
 
