@@ -1,3 +1,5 @@
+const {Utils} = require('./functions.js');
+
 async function commandHandler(client, message, prefix) {
     if (!message.content.toLowerCase().startsWith(prefix) || message.author.bot) return;
     var args = message.content.slice(prefix.length).split(/ +/);
