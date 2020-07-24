@@ -47,14 +47,14 @@ module.exports = {
                     embed = new MessageEmbed()
                     .setColor(branding)
                     .setTitle(`Settings`)
-                    .addField(`Prefix`, `${res.prefix ? res.prefix : `Hmm... Something doesn't seem right here... Please report this to the developers at the [AprixStudios Discord](https://discord.gg/RpM43Gc)`}\nThis value must be at least 1 letter and at max 10. Spaces can be used. Use \`-\` to add a guaranteed space.`)
+                    .addField(`Prefix`, `${res.prefix ? res.prefix : `Hmm... Something doesn't seem right here... Please report this to the developers at the [AprixStudios Discord](https://discord.gg/RpM43Gc)`}\nThis value must be at least 1 letter and at max 10. Spaces can be used.`)
                     .addField(`Muted Role`, `${listingRole ? listingRole : `Not set.`}\nThis value is changable anytime, but will be set automatically upon a mute.`)
                     .addField(`Modlogs`, `${listingChan ? listingChan : res.settings.modLogs}\nSetting this value to a channel will enable mod logs to be sent in that channel.\nSetting this value to \`this\` will make it the current channel\nSetting this value to \`there\` will set it to be in the channel where the command was sent.\nSetting this value to anything not specified in this embed will turn mod logs off.`)
 
                     message.channel.send(embed).catch(err => console.error(err));
                     break;
                 case "prefix":
-                    let newPrefix = args.slice(1).join(' ');
+                    let newPrefix = args[1];
                     if (!newPrefix) {
                         embed = new MessageEmbed()
                         .setDescription(`I uhh... So what are we changing the prefix to again?\n${this.name} ${this.usage}`);

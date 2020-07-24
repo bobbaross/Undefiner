@@ -44,7 +44,7 @@ module.exports = {
                     await saveDB(res);
                 }
                 var embed;
-                let newPrefix = args.slice(0).join(' ');
+                let newPrefix = args[0];
                 if (!newPrefix) {
                     embed = new MessageEmbed()
                     .setDescription(`I uhh... So what are we changing the prefix to again?\n${this.name} ${this.usage}`);
