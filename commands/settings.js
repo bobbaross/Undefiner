@@ -42,10 +42,8 @@ module.exports = {
             if (!args[0]) args[0] = "";
             switch (args[0].toLowerCase()) {
                 default:
-                    let listingRole = getRole(res.settings.mutedRole, message.guild.roles);
-                    let listingChan = getChannel(res.settings.modLogs, message.guild.channels);
-                    if (await listingRole) await listingRole;
-                    if (await listingChan) await listingChan;
+                    let listingRole = res.settings.mutedRole;
+                    let listingChan = res.settings.modLogs;
                     embed = new MessageEmbed()
                     .setColor(branding)
                     .setTitle(`Settings`)
