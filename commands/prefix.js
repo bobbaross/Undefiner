@@ -53,7 +53,7 @@ module.exports = {
                 if (newPrefix.length > 10) return;
                 let oldPrefix = await res.prefix;
                 for (i=0;i<newPrefix.length;i++) {
-                    if (newPrefix[i] === "_") newPrefix[i] = " ";
+                    if (newPrefix[i] === "-") newPrefix[i] = " ";
                 }
                 res.prefix = newPrefix;
                 saveDB(res).then(() => {
