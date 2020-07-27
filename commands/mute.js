@@ -41,7 +41,7 @@ module.exports = {
             console.log('f');
             if (!res) res = await createDB(message.guild.id);
             console.log('h');
-            var mutedRole = await getRole(res.settings.mutedRole, message.guild.roles);
+            let mutedRole = await getRole(res.settings.mutedRole, message.guild.roles);
             console.log('g');
             if (!mutedRole) mutedRole = await getRole("muted", message.guild.roles);
             console.log('i');
