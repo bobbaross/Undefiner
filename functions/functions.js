@@ -10,7 +10,6 @@ class Utils {
     
     // Get User Function
     async getUser(mention) {
-        console.log(this)
         return new Promise(resolve => {
             if (!mention) return resolve();
             if (mention.startsWith('<@') && mention.endsWith('>')) {
