@@ -85,8 +85,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('y');
-            var user = utils.getUser(args[0]);
-            await user;
+            var user = await utils.getUser(args[0]);
             console.log('u');
             if (!user) {
                 console.log('o NUSR');
