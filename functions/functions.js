@@ -3,7 +3,7 @@ const { userID, DB } = require(`./db.js`);
 const { entryType, entryDB } = require('./expiredb.js');
 const Discord = require('discord.js');
 
-module.exports = class Utils {
+class Utils {
     constructor (client) {
         this.client = client;
     }
@@ -231,3 +231,5 @@ module.exports = class Utils {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
     }
 }
+
+module.exports = { Utils }
