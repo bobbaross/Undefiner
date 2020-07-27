@@ -96,7 +96,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('p');
-            message.guild.members.fetch(user.id).then(async member => {
+            message.guild.members.fetch(`${user.id}`).then(async member => {
                 member = new Promise(resolve => resolve(member));
                 await member;
                 console.log(member);
