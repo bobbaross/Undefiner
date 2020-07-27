@@ -11,7 +11,7 @@ class Utils {
     // Get User Function
     async getUser(mention) {
         return new Promise(resolve => {
-            if (!mention) return;
+            if (!mention) return resolve();
             if (mention.startsWith('<@') && mention.endsWith('>')) {
                 // if it is a mention it will do this
                 mention = mention.slice(2, -1);
@@ -40,7 +40,7 @@ class Utils {
     // Get Role Function
     async getRole(mention, roles) {
         return new Promise(resolve => {
-            if (!mention) return;
+            if (!mention) return resolve();
             if (mention.startsWith('<&') && mention.endsWith('>')) {
                 // if it is a mention it will do this
                 mention = mention.slice(2, -1);
@@ -69,7 +69,7 @@ class Utils {
     // Get Channel Function
     async getChannel(mention, channels) {
         return new Promise(resolve => {
-            if (!mention) return;
+            if (!mention) return resolve();
             if (mention.startsWith('<#') && mention.endsWith('>')) {
                 // if it is a mention it will do this
                 mention = mention.slice(2, -1);
