@@ -42,7 +42,8 @@ module.exports = {
             let mutedRole = await utils.getRole(res.settings.mutedRole, message.guild.roles);
             console.log('g');
             if (!mutedRole) {
-                mutedRole = await utils.getRole("muted", message.guild.roles);
+                mutedRole = utils.getRole("muted", message.guild.roles);
+                await mutedRole;
             }
             console.log('i');
             if (mutedRole) {
