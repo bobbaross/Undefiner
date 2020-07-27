@@ -1,7 +1,7 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
 const { response } = require('express');
-const {bad} = require('../configs.json').colors;
+const {bad} = require('../config.json').colors;
 
 module.exports = {
     name: "mute",
