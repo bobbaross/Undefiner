@@ -127,7 +127,7 @@ module.exports = {
                 console.log('R');
                 utils.getEntries("mute").then(async activeMutes => {
                     console.log('T');
-                    activeMutes.entires.push({
+                    activeMutes.entries.push({
                         guildId: message.guild.id,
                         userId: user.id,
                         time: time,
