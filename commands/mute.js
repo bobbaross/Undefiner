@@ -85,7 +85,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('y');
-            var user = getUser(user);
+            var user = getUser(args[0]);
             await user;
             console.log('u');
             if (!user) {
@@ -94,14 +94,12 @@ module.exports = {
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
-            console.log(user);
             console.log('p');
             message.guild.members.fetch(`${user.id}`).then(async member => {
                 member = new Promise(resolve => resolve(member));
                 await member;
-                console.log(member);
                 console.log('S');
-                if (!member) {
+                if (!member.guild || member.guild && member.guild.id !== message.guild.id) {
                     console.log('K MMBR');
                     let embed = new MessageEmbed()
                     .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
