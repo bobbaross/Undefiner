@@ -14,8 +14,7 @@ module.exports = {
     async undefine(client, message, args) {
         console.log('a');
         utils = new Utils(client);
-        var {getUser,getRole,getChannel,getTime,setTime,createDB,getDB,getEntries,saveDB} = utils;
-        getDB(message.guild.id).then(async res => {
+        utils.getDB(message.guild.id).then(async res => {
             let bypassRoles = [];
             console.log('b');
             for (let role of res.modRoles) {
@@ -39,20 +38,20 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('f');
-            if (!res) res = await createDB(message.guild.id);
+            if (!res) res = await utils.createDB(message.guild.id);
             console.log('h');
-            let mutedRole = getRole(res.settings.mutedRole, message.guild.roles);
+            let mutedRole = utils.getRole(res.settings.mutedRole, message.guild.roles);
             await mutedRole
             console.log('g');
             if (!mutedRole) {
-                mutedRole = getRole("muted", message.guild.roles);
+                mutedRole = utils.getRole("muted", message.guild.roles);
                 await mutedRole;
             }
             console.log('i');
             if (mutedRole) {
                 console.log('j'+' MTDRL');
                 res.settings.mutedRole = mutedRole.id;
-                saveDB(res);
+                utils.saveDB(res);
             }
             console.log('q');
             if (!mutedRole) {
@@ -76,7 +75,7 @@ module.exports = {
                 });
                 await mutedRole;
                 res.settings.mutedRole = mutedRole;
-                saveDB(mutedRole);
+                utils.saveDB(mutedRole);
             }
             console.log('r');
             if (!args[0]) {
@@ -86,7 +85,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('y');
-            var user = getUser(args[0]);
+            var user = utils.getUser(args[0]);
             await user;
             console.log('u');
             if (!user) {
@@ -98,7 +97,7 @@ module.exports = {
             console.log('p');
             var member = message.guild.member(user);
             console.log('S');
-            if (!member.guild || member.guild && member.guild.id !== message.guild.id) {
+            if (!member) {
                 console.log('K MMBR');
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
@@ -114,7 +113,7 @@ module.exports = {
             console.log('X');
             await args.shift();
             console.log('V');
-            var time = setTime(args[0]);
+            var time = utils.setTime(args[0]);
             await time;
             console.log('N');
             if (time !== null) await args.shift();
@@ -130,7 +129,7 @@ module.exports = {
             console.log('E');
             member.roles.add(mutedRole.id, `Muted by ${message.author.tag} with reason: ${reason}`).then(() => {
                 console.log('R');
-                getEntries("mute").then(async activeMutes => {
+                utils.getEntries("mute").then(async activeMutes => {
                     console.log('T');
                     activeMutes.push({
                         guildId: message.guild.id,
@@ -140,11 +139,11 @@ module.exports = {
                         happenedAt: Date.now()
                     });
                     console.log('Y');
-                    saveDB(activeMutes).catch(err => console.error(err));
+                    utils.saveDB(activeMutes).catch(err => console.error(err));
                     console.log('U');
                     res.cases++;
                     console.log('I');
-                    var duration = getTime(time-Date.now());
+                    var duration = utils.getTime(time-Date.now());
                     await duration;
                     console.log('O');
                     let embed = new MessageEmbed()
@@ -153,7 +152,7 @@ module.exports = {
                     console.log('P');
                     var embedId;
                     console.log('A');
-                    var modLogsChan = getChannel(res.settings.modLogs);
+                    var modLogsChan = utils.getChannel(res.settings.modLogs);
                     await modLogsChan;
                     console.log('S');
                     if (modLogsChan) {
@@ -186,7 +185,7 @@ module.exports = {
                         happenedAt: Date.now()
                     });
                     console.log('H');
-                    saveDB(res).catch(err => console.error(err));
+                    utils.saveDB(res).catch(err => console.error(err));
                     console.log('J');
                     if (res.settings.deleteModCommands === true) message.delete();
                 });
