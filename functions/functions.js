@@ -3,7 +3,7 @@ const { userID, DB } = require(`./db.js`);
 const { entryType, entryDB } = require('./expiredb.js');
 const Discord = require('discord.js');
 
-class Utils {
+module.exports = class Utils {
     constructor (client) {
         this.client = client;
     }
