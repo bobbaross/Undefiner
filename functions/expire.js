@@ -11,9 +11,9 @@ class Expire {
     let {getDB,saveDB,getTime} = new Utils(this.client);
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
-        guild.members.fetch(entry.userId).then(member => {
+        guild.members.fetch(entry.userId).then(async member => {
             if (!member) return;
-            getDB(guild.id).then(res => {
+            getDB(guild.id).then(async res => {
                 if (!member.roles.has(res.settings.mutedRole)) return;
                 member.roles.remove(res.settings.mutedRole).then(() => {
                     res.cases++;
@@ -40,9 +40,9 @@ class Expire {
         let {getDB,saveDB,getTime} = new Utils(this.client);
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
-        guild.fetchBan(entry.userId).then(ban => {
+        guild.fetchBan(entry.userId).then(async ban => {
             if (!ban) return;
-            getDB(guild.id).then(res => {
+            getDB(guild.id).then(async res => {
                 guild.unban(ban.user.id).then(() => {
                     res.cases++;
                     saveDB(res);
@@ -77,7 +77,7 @@ class Expire {
     async untempRole(entry) {
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
-        guild.members.fetch(entry.userId).then(member => {
+        guild.members.fetch(entry.userId).then(async member => {
             if (!member) return;
             if (!member.roles.has(entry.roleId)) return;
             member.roles.remove(entry.roleId);
