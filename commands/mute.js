@@ -41,9 +41,13 @@ module.exports = {
             console.log('f');
             if (!res) res = await createDB(message.guild.id);
             console.log('h');
-            var mutedRole = await getRole(res.settings.mutedRole, message.guild);
+            let mutedRole = getRole(res.settings.mutedRole, message.guild.roles);
+            await mutedRole
             console.log('g');
-            if (!mutedRole) mutedRole = await getRole("muted", message.guild);
+            if (!mutedRole) {
+                mutedRole = getRole("muted", message.guild.roles);
+                await mutedRole;
+            }
             console.log('i');
             if (mutedRole) {
                 console.log('j'+' MTDRL');
@@ -62,7 +66,7 @@ module.exports = {
                                 }
                             }
                     }).then(newRole => {
-                        message.guild.channels.cache.forEach(channel => {
+                        message.guild.channels.cache.each(channel => {
                             channel.createOverwrite(newRole, {
                                 SEND_MESSAGES: false
                             });
@@ -146,7 +150,7 @@ module.exports = {
                     console.log('P');
                     var embedId;
                     console.log('A');
-                    var modLogsChan = await getChannel(res.settings.modLogs, message.guild);
+                    var modLogsChan = await getChannel(res.settings.modLogs);
                     console.log('S');
                     if (modLogsChan) {
                         console.log('D');
