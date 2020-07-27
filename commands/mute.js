@@ -97,6 +97,7 @@ module.exports = {
             }
             console.log('p');
             var member = message.guild.member(user.id);
+            await member;
             console.log('S');
             if (!member) {
                 console.log('K MMBR');
