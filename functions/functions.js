@@ -25,7 +25,7 @@ class Utils {
                 return resolve(this.client.users.cache.get(mention));
             } else {
                 // if it isn't either of them it will do this
-                if (this.client.users.cache.find(u => u.tag.toLowerCase().startsWith(mention ? mention.toLowerCase() : mention))) {
+                if (this.client.users.cache.find(u => u.tag.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a user from the input it will do this
                     return resolve(this.client.users.cache.find(u => u.tag.toLowerCase().startsWith(mention.toLowerCase())));
                 }
@@ -38,7 +38,7 @@ class Utils {
     }
 
     // Get Role Function
-    async getRole(mention, roles) {
+    async getRole(mention, guild) {
         return new Promise(resolve => {
             if (!mention) return resolve();
             if (mention.startsWith('<&') && mention.endsWith('>')) {
@@ -47,16 +47,16 @@ class Utils {
                 if (mention.startsWith('!')) {
                     mention = mention.slice(1);
                 }
-                return resolve(roles.cache.get(mention));
+                return resolve(guild.roles.cache.get(mention));
             }
-            else if (roles.cache.get(mention)) {
+            else if (guild.roles.cache.get(mention)) {
                 // if it is a id it will do this
-                return resolve(roles.cache.get(mention));
+                return resolve(guild.roles.cache.get(mention));
             } else {
                 // if it isn't either of them it will do this
-                if (roles.cache.find(r => r.name.toLowerCase().startsWith(mention))) {
+                if (guild.roles.cache.find(r => r.name.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a role from the input it will do this
-                    return resolve(roles.cache.find(r => r.tag.toLowerCase().startsWith(mention)));
+                    return resolve(guild.roles.cache.find(r => r.tag.toLowerCase().startsWith(mention.toLowerCase())));
                 }
                 else {
                     // if not it wont do anything
@@ -67,7 +67,7 @@ class Utils {
     }
 
     // Get Channel Function
-    async getChannel(mention, channels) {
+    async getChannel(mention, guild) {
         return new Promise(resolve => {
             if (!mention) return resolve();
             if (mention.startsWith('<#') && mention.endsWith('>')) {
@@ -76,16 +76,16 @@ class Utils {
                 if (mention.startsWith('!')) {
                     mention = mention.slice(1);
                 }
-                return resolve(channels.cache.get(mention));
+                return resolve(guild.channels.cache.get(mention));
             }
-            else if (channels.cache.get(mention)) {
+            else if (guild.channels.cache.get(mention)) {
                 // if it is a id it will do this
-                return resolve(channels.cache.get(mention));
+                return resolve(guild.channels.cache.get(mention));
             } else {
                 // if it isn't either of them it will do this
-                if (channels.cache.find(c => c.name.toLowerCase().startsWith(mention.toLowerCase()))) {
+                if (guild.channels.cache.find(c => c.name.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a channel from the input it will do this
-                    return resolve(channels.cache.find(c => c.tag.toLowerCase().startsWith(mention.toLowerCase())));
+                    return resolve(guild.channels.cache.find(c => c.tag.toLowerCase().startsWith(mention.toLowerCase())));
                 }
                 else {
                     // if not it wont do anything
