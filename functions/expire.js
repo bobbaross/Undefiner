@@ -14,7 +14,7 @@ class Expire {
         guild.members.fetch(entry.userId).then(async member => {
             if (!member) return;
             getDB(guild.id).then(async res => {
-                if (!member.roles.has(res.settings.mutedRole)) return;
+                if (!member.roles.cache.has(res.settings.mutedRole)) return;
                 member.roles.remove(res.settings.mutedRole).then(async () => {
                     res.cases++;
                     saveDB(res);
@@ -79,7 +79,7 @@ class Expire {
         if (!guild) return;
         guild.members.fetch(entry.userId).then(async member => {
             if (!member) return;
-            if (!member.roles.has(entry.roleId)) return;
+            if (!member.roles.cache.has(entry.roleId)) return;
             member.roles.remove(entry.roleId);
         });
     }

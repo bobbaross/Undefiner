@@ -26,7 +26,7 @@ module.exports = {
             }
             console.log('c');
             console.log(bypassRoles);
-            if (!message.member.hasPermission("MANAGE_MESSAGES") && !bypassRoles.some(r => message.member.roles.has(r))) {
+            if (!message.member.hasPermission("MANAGE_MESSAGES") && !bypassRoles.some(r => message.member.roles.cache.has(r))) {
                 console.log('d'+' MNGMSGS');
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
@@ -171,7 +171,7 @@ module.exports = {
                         case: res.cases,
                         userId: user.id,
                         userTag: user.tag,
-                        modId: message.auhtor.id,
+                        modId: message.author.id,
                         modTag: message.author.tag,
                         duration: duration,
                         reason: reason,
