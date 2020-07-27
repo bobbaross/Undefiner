@@ -39,12 +39,10 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('h');
-            let mutedRole = utils.getRole(res.settings.mutedRole, message.guild.roles);
-            await mutedRole;
+            let mutedRole = await utils.getRole(res.settings.mutedRole, message.guild.roles);
             console.log('g');
             if (!mutedRole) {
-                mutedRole = utils.getRole("muted", message.guild.roles);
-                await mutedRole;
+                mutedRole = await utils.getRole("muted", message.guild.roles);
             }
             console.log('i');
             if (mutedRole) {
