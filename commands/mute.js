@@ -96,100 +96,100 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('p');
-            var member = message.guild.member(user.id);
-            await member;
-            console.log('S');
-            if (!member) {
-                console.log('K MMBR');
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            console.log('L');
-            if (member.roles.has(mutedRole.id)) {
-                console.log('Z MMBHRL');
-                let embed = new MessageEmbed()
-                .setDescription(`Uhm... I am pretty sure they're already muted, to be honest.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            console.log('X');
-            await args.shift();
-            console.log('V');
-            var time = setTime(args[0]);
-            await time;
-            console.log('N');
-            if (time !== null) await args.shift();
-            console.log('M');
-            var reason = args.slice(0).join(' ');
-            console.log('Q');
-            if (!reason) {
-                console.log('W RSN');
-                let embed = new MessageEmbed()
-                .setDescription(`Wait I don't wanna do this without a reason.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            console.log('E');
-            member.roles.add(mutedRole.id, `Muted by ${message.author.tag} with reason: ${reason}`).then(() => {
-                console.log('R');
-                getEntries("mute").then(async activeMutes => {
-                    console.log('T');
-                    activeMutes.push({
-                        guildId: message.guild.id,
-                        userId: user.id,
-                        time: time,
-                        reason: reason,
-                        happenedAt: Date.now()
-                    });
-                    console.log('Y');
-                    saveDB(activeMutes).catch(err => console.error(err));
-                    console.log('U');
-                    res.cases++;
-                    console.log('I');
-                    var duration = getTime(time-Date.now());
-                    await duration;
-                    console.log('O');
+            message.guild.members.fetch(user.id).then(member => {
+                console.log('S');
+                if (!member) {
+                    console.log('K MMBR');
                     let embed = new MessageEmbed()
-                    .setDescription(`${user.tag} has been muted. ${res.settings.withReason === true ? reason : ""}`);
-                    message.channel.send(embed).catch(err => err);
-                    console.log('P');
-                    var embedId;
-                    console.log('A');
-                    var modLogsChan = getChannel(res.settings.modLogs);
-                    await modLogsChan;
-                    console.log('S');
-                    if (modLogsChan) {
-                        console.log('D');
-                        embedId = new Promise(resolve => {
-                            console.log('F');
-                            let modLogEmbed = new MessageEmbed()
-                            .setColor(good)
-                            .setTitle(`Member Muted #${res.cases}`)
-                            .addField(`Member`, member.user.tag, true)
-                            .addField(`Moderator`, message.author.tag, true)
-                            .addField(`Reason`, reason, true)
-                            .setFooter(`This mute will last ${duration} | ${user.id}`)
-                            .setTimestamp()
-                            modLogsChan.send(modLogEmbed).then(msg => {
-                                resolve(msg.id);
-                            }).catch(err => err);
+                    .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                console.log('L');
+                if (member.roles.has(mutedRole.id)) {
+                    console.log('Z MMBHRL');
+                    let embed = new MessageEmbed()
+                    .setDescription(`Uhm... I am pretty sure they're already muted, to be honest.\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                console.log('X');
+                await args.shift();
+                console.log('V');
+                var time = setTime(args[0]);
+                await time;
+                console.log('N');
+                if (time !== null) await args.shift();
+                console.log('M');
+                var reason = args.slice(0).join(' ');
+                console.log('Q');
+                if (!reason) {
+                    console.log('W RSN');
+                    let embed = new MessageEmbed()
+                    .setDescription(`Wait I don't wanna do this without a reason.\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                console.log('E');
+                member.roles.add(mutedRole.id, `Muted by ${message.author.tag} with reason: ${reason}`).then(() => {
+                    console.log('R');
+                    getEntries("mute").then(async activeMutes => {
+                        console.log('T');
+                        activeMutes.push({
+                            guildId: message.guild.id,
+                            userId: user.id,
+                            time: time,
+                            reason: reason,
+                            happenedAt: Date.now()
                         });
-                    }
-                    console.log('G');
-                    res.modCases.push({
-                        case: res.cases,
-                        userId: user.id,
-                        userTag: user.tag,
-                        modId: message.auhtor.id,
-                        modTag: message.author.tag,
-                        duration: duration,
-                        reason: reason,
-                        embedId: embedId ? embedId : null,
-                        happenedAt: Date.now()
+                        console.log('Y');
+                        saveDB(activeMutes).catch(err => console.error(err));
+                        console.log('U');
+                        res.cases++;
+                        console.log('I');
+                        var duration = getTime(time-Date.now());
+                        await duration;
+                        console.log('O');
+                        let embed = new MessageEmbed()
+                        .setDescription(`${user.tag} has been muted. ${res.settings.withReason === true ? reason : ""}`);
+                        message.channel.send(embed).catch(err => err);
+                        console.log('P');
+                        var embedId;
+                        console.log('A');
+                        var modLogsChan = getChannel(res.settings.modLogs);
+                        await modLogsChan;
+                        console.log('S');
+                        if (modLogsChan) {
+                            console.log('D');
+                            embedId = new Promise(resolve => {
+                                console.log('F');
+                                let modLogEmbed = new MessageEmbed()
+                                .setColor(good)
+                                .setTitle(`Member Muted #${res.cases}`)
+                                .addField(`Member`, member.user.tag, true)
+                                .addField(`Moderator`, message.author.tag, true)
+                                .addField(`Reason`, reason, true)
+                                .setFooter(`This mute will last ${duration} | ${user.id}`)
+                                .setTimestamp()
+                                modLogsChan.send(modLogEmbed).then(msg => {
+                                    resolve(msg.id);
+                                }).catch(err => err);
+                            });
+                        }
+                        console.log('G');
+                        res.modCases.push({
+                            case: res.cases,
+                            userId: user.id,
+                            userTag: user.tag,
+                            modId: message.auhtor.id,
+                            modTag: message.author.tag,
+                            duration: duration,
+                            reason: reason,
+                            embedId: embedId ? embedId : null,
+                            happenedAt: Date.now()
+                        });
+                        console.log('H');
+                        saveDB(res).catch(err => console.error(err));
+                        console.log('J');
+                        if (res.settings.deleteModCommands === true) message.delete();
                     });
-                    console.log('H');
-                    saveDB(res).catch(err => console.error(err));
-                    console.log('J');
-                    if (res.settings.deleteModCommands === true) message.delete();
                 });
             });
         });
