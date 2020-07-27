@@ -4,7 +4,7 @@ const { Expire } = require('./functions/expire.js');
 module.exports = {
     expire(client) {
         var { getEntries, saveDB } = new Utils(client);
-        var {unmute,unban,unlock,untempRole} = new Expire(client);
+        expire = new Expire(client);
         setInterval(() => {
             getEntries("ban").then(res => {
                 if (!res) return;
@@ -12,7 +12,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            unban(entry);
+                            expire.unban(entry);
                             let index = res.entries.indexOf(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
@@ -26,7 +26,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            unmute(entry);
+                            expire.unmute(entry);
                             let index = res.entries.indexOf(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
@@ -40,7 +40,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            unlock(entry);
+                            expire.unlock(entry);
                             let index = res.entries.indexOf(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
@@ -54,7 +54,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            untempRole(entry);
+                            expire.untempRole(entry);
                             let index = res.entries.indexOf(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
