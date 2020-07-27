@@ -40,18 +40,16 @@ module.exports = {
             console.log('f');
             if (!res) res = await utils.createDB(message.guild.id);
             console.log('h');
-            let mutedRole = utils.getRole(res.settings.mutedRole, message.guild.roles);
-            await mutedRole
+            let mutedRole = await utils.getRole(res.settings.mutedRole, message.guild.roles);
             console.log('g');
             if (!mutedRole) {
-                mutedRole = utils.getRole("muted", message.guild.roles);
-                await mutedRole;
+                mutedRole = await utils.getRole("muted", message.guild.roles);
             }
             console.log('i');
             if (mutedRole) {
                 console.log('j'+' MTDRL');
                 res.settings.mutedRole = mutedRole.id;
-                utils.saveDB(res);
+                await utils.saveDB(res);
             }
             console.log('q');
             if (!mutedRole) {
@@ -75,7 +73,7 @@ module.exports = {
                 });
                 await mutedRole;
                 res.settings.mutedRole = mutedRole;
-                utils.saveDB(mutedRole);
+                await utils.saveDB(res);
             }
             console.log('r');
             if (!args[0]) {
@@ -113,8 +111,7 @@ module.exports = {
             console.log('X');
             await args.shift();
             console.log('V');
-            var time = utils.setTime(args[0]);
-            await time;
+            var time = await utils.setTime(args[0]);
             console.log('N');
             if (time !== null) await args.shift();
             console.log('M');
@@ -139,12 +136,11 @@ module.exports = {
                         happenedAt: Date.now()
                     });
                     console.log('Y');
-                    utils.saveDB(activeMutes).catch(err => console.error(err));
+                    await utils.saveDB(activeMutes).catch(err => console.error(err));
                     console.log('U');
                     res.cases++;
                     console.log('I');
-                    var duration = utils.getTime(time-Date.now());
-                    await duration;
+                    var duration = await utils.getTime(time-Date.now());
                     console.log('O');
                     let embed = new MessageEmbed()
                     .setDescription(`${user.tag} has been muted. ${res.settings.withReason === true ? reason : ""}`);
@@ -152,8 +148,7 @@ module.exports = {
                     console.log('P');
                     var embedId;
                     console.log('A');
-                    var modLogsChan = utils.getChannel(res.settings.modLogs);
-                    await modLogsChan;
+                    var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
                     console.log('S');
                     if (modLogsChan) {
                         console.log('D');
@@ -185,7 +180,7 @@ module.exports = {
                         happenedAt: Date.now()
                     });
                     console.log('H');
-                    utils.saveDB(res).catch(err => console.error(err));
+                    await utils.saveDB(res).catch(err => console.error(err));
                     console.log('J');
                     if (res.settings.deleteModCommands === true) message.delete();
                 });
