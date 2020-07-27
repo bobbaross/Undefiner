@@ -13,7 +13,7 @@ module.exports = {
 
     async undefine(client, message, args) {
         console.log('a');
-        utils = new Utils(Client);
+        utils = new Utils(client);
         var {getUser,getRole,getChannel,getTime,setTime,createDB,getDB,getEntries,saveDB} = utils;
         getDB(message.guild.id).then(async res => {
             let bypassRoles = [];
