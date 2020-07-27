@@ -11,26 +11,28 @@ class Expire {
     let {getDB,saveDB,getTime} = new Utils(this.client);
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
-        let member = guild.members.fetch(entry.userId);
-        if (!member) return;
-        getDB(guild.id).then(res => {
-            if (!member.roles.has(res.settings.mutedRole)) return;
-            member.roles.remove(res.settings.mutedRole).then(() => {
-                res.cases++;
-                saveDB(res);
-                let modLogs = guild.channels.cache.get(res.settings.modLogs);
-                if (!modLogs) return;
-                let embed = new MessageEmbed()
-                .setColor(good)
-                .setTitle(`Member unmuted #${res.cases}`)
-                .addField(`Member`, member.user.tag, true)
-                .addField(`Moderator`, this.client.user.tag, true)
-                .addField(`Reason`, entry.reason, true)
-                .setFooter(`This mute lasted ${getTime(Date.now()-entry.happenedAt)} | ${entry.userId}`)
-                .setTimestamp()
+        guild.members.fetch(entry.userId).then(member => {
+            if (!member) return;
+            getDB(guild.id).then(res => {
+                if (!member.roles.has(res.settings.mutedRole)) return;
+                member.roles.remove(res.settings.mutedRole).then(() => {
+                    res.cases++;
+                    saveDB(res);
+                    let modLogs = guild.channels.cache.get(res.settings.modLogs);
+                    if (!modLogs) return;
+                    let duration = await getTime(Date.now()-entry.happenedAt);
+                    let embed = new MessageEmbed()
+                    .setColor(good)
+                    .setTitle(`Member unmuted #${res.cases}`)
+                    .addField(`Member`, member.user.tag, true)
+                    .addField(`Moderator`, this.client.user.tag, true)
+                    .addField(`Reason`, entry.reason, true)
+                    .setFooter(`This mute lasted ${duration} | ${entry.userId}`)
+                    .setTimestamp()
 
-                modLogs.send(embed).catch(err => err);
-            }).catch(err => console.error(err));
+                    modLogs.send(embed).catch(err => err);
+                }).catch(err => console.error(err));
+            });
         });
     }
 
@@ -38,25 +40,27 @@ class Expire {
         let {getDB,saveDB,getTime} = new Utils(this.client);
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
-        let ban = guild.fetchBan(entry.userId);
-        if (!ban) return;
-        getDB(guild.id).then(res => {
-            guild.unban(ban.user.id).then(() => {
-                res.cases++;
-                saveDB(res);
-                let modLogs = guild.channels.cache.get(res.settings.modLogs);
-                if (!modLogs) return;
-                let embed = new MessageEmbed()
-                .setColor(good)
-                .setTitle(`Member unbanned #${res.cases}`)
-                .addField(`Member`, member.user.tag, true)
-                .addField(`Moderator`, this.client.user.tag, true)
-                .addField(`Reason`, entry.reason, true)
-                .setFooter(`This ban lasted ${getTime(Date.now()-entry.happenedAt)} | ${entry.userId}`)
-                .setTimestamp()
+        guild.fetchBan(entry.userId).then(ban => {
+            if (!ban) return;
+            getDB(guild.id).then(res => {
+                guild.unban(ban.user.id).then(() => {
+                    res.cases++;
+                    saveDB(res);
+                    let modLogs = guild.channels.cache.get(res.settings.modLogs);
+                    if (!modLogs) return;
+                    let duration = await getTime(Date.now()-entry.happenedAt);
+                    let embed = new MessageEmbed()
+                    .setColor(good)
+                    .setTitle(`Member unbanned #${res.cases}`)
+                    .addField(`Member`, member.user.tag, true)
+                    .addField(`Moderator`, this.client.user.tag, true)
+                    .addField(`Reason`, entry.reason, true)
+                    .setFooter(`This ban lasted ${duration} | ${entry.userId}`)
+                    .setTimestamp()
 
-                modLogs.send(embed).catch(err => err);
-            }).catch(err => console.error(err));
+                    modLogs.send(embed).catch(err => err);
+                }).catch(err => console.error(err));
+            });
         });
     }
 
@@ -73,10 +77,11 @@ class Expire {
     async untempRole(entry) {
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
-        let member = guild.members.fetch(entry.userId);
-        if (!member) return;
-        if (!member.roles.has(entry.roleId)) return;
-        member.roles.remove(entry.roleId);
+        guild.members.fetch(entry.userId).then(member => {
+            if (!member) return;
+            if (!member.roles.has(entry.roleId)) return;
+            member.roles.remove(entry.roleId);
+        });
     }
 }
 

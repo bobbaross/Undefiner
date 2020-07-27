@@ -40,6 +40,8 @@ module.exports = {
             }
             var embed;
             if (!args[0]) args[0] = "";
+            let isTrue = ['yes', 'true', 'on', 'enable', 'allow', 'approve', 'accept'];
+            let isFalse = ['no', 'false', 'off', 'disable', 'disallow', 'disapprove', 'decline'];
             switch (args[0].toLowerCase()) {
                 default:
                     let listingRole = res.settings.mutedRole;
@@ -48,8 +50,11 @@ module.exports = {
                     .setColor(branding)
                     .setTitle(`Settings`)
                     .addField(`Prefix`, `${res.prefix ? res.prefix : `Hmm... Something doesn't seem right here... Please report this to the developers at the [AprixStudios Discord](https://discord.gg/RpM43Gc)`}\nThis value must be at least 1 letter and at max 10. Spaces can be used.`)
-                    .addField(`Muted Role`, `${listingRole ? listingRole : `Not set.`}\nThis value is changable anytime, but will be set automatically upon a mute.`)
+                    .addField(`MutedRole`, `${listingRole ? listingRole : `Not set.`}\nThis value is changable anytime, but will be set automatically upon a mute.`)
                     .addField(`Modlogs`, `${listingChan ? listingChan : res.settings.modLogs}\nSetting this value to a channel will enable mod logs to be sent in that channel.\nSetting this value to \`this\` will make it the current channel\nSetting this value to \`there\` will set it to be in the channel where the command was sent.\nSetting this value to anything not specified in this embed will turn mod logs off.`)
+                    .addField(`Respond-With-Reasons`, `${res.settings.withReason ? res.settings.withReason : "Whoops"}\nThis will make the bot respond with the reason for a mod case.\nAvailable options:\nEnable: \`${isTrue.join('` `')}\`\nDisable: \`${isFalse.join('` `')}\``)
+                    .addField(`Delete-Mod-Commands`, `${res.settings.deleteModCommands ? res.settings.deleteModCommands : "Whoops"}\nThis will make the bot delete moderation command messages.\nAvailable options:\nEnable: \`${isTrue.join('` `')}\`\nDisable: \`${isFalse.join('` `')}\``)
+
 
                     message.channel.send(embed).catch(err => console.error(err));
                     break;
@@ -111,6 +116,56 @@ module.exports = {
                         }).catch(err => {
                             console.error(err);
                         });
+                    break;
+                    case "respond-with-reason":
+                        if (isTrue.includes(args[1])) {
+                            res.settings.withReason = true;
+                            saveDB(res).then(() => {
+                                embed = new MessageEmbed()
+                                .setColor(branding)
+                                .setDescription(`Respond with reasons successfully turned on.`)
+                                message.channel.send(embed).catch(err => err);
+                            }).catch(err => console.error(err));
+                        }
+                        else if (isFalse.includes(args[1])) {
+                            res.settings.withReason = false;
+                            saveDB(res).then(() => {
+                                embed = new MessageEmbed()
+                                .setColor(branding)
+                                .setDescription(`Respond with reasons successfully turned off.`)
+                                message.channel.send(embed).catch(err => err);
+                            }).catch(err => console.error(err));
+                        }
+                        else {
+                            embed = new MessageEmbed()
+                            .setDescription(`I am pretty sure that doesn't tell me to enable or disable this.`);
+                            return message.channel.send(embed).catch(err => err);
+                        }
+                    break;
+                    case "delete-mod-commands":
+                        if (isTrue.includes(args[1])) {
+                            res.settings.deleteModCommands = true;
+                            saveDB(res).then(() => {
+                                embed = new MessageEmbed()
+                                .setColor(branding)
+                                .setDescription(`Delete Mod Commands successfully turned on.`)
+                                message.channel.send(embed).catch(err => err);
+                            }).catch(err => console.error(err));
+                        }
+                        else if (isFalse.includes(args[1])) {
+                            res.settings.deleteModCommands = false;
+                            saveDB(res).then(() => {
+                                embed = new MessageEmbed()
+                                .setColor(branding)
+                                .setDescription(`Delete Mod Commands successfully turned off.`)
+                                message.channel.send(embed).catch(err => err);
+                            }).catch(err => console.error(err));
+                        }
+                        else {
+                            embed = new MessageEmbed()
+                            .setDescription(`I am pretty sure that doesn't tell me to enable or disable this.`);
+                            return message.channel.send(embed).catch(err => err);
+                        }
             }
 
         });

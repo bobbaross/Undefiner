@@ -12,7 +12,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            unban(entry, client);
+                            unban(entry);
                             let index = res.entries.findIndex(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
@@ -26,7 +26,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            unmute(entry, client);
+                            unmute(entry);
                             let index = res.entries.findIndex(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
@@ -40,7 +40,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            unlock(entry, client);
+                            unlock(entry);
                             let index = res.entries.findIndex(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
@@ -54,7 +54,7 @@ module.exports = {
                 for (let entry of entries) {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
-                            untempRole(entry, client);
+                            untempRole(entry);
                             let index = res.entries.findIndex(entry);
                             res.entries.splice(index,1);
                             saveDB(res);

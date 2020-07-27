@@ -113,7 +113,7 @@ class Utils {
                 afkMembers: [],
                 disabledCommands: [],
                 tags: [],
-                settings: {mutedRole: "", modLogs: "off"},
+                settings: {mutedRole: "", modLogs: "off", withReason: false, deleteModCommands: false},
                 notes: {}
             });
             return resolve(newDB);
