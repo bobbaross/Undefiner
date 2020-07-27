@@ -54,9 +54,9 @@ class Utils {
                 return resolve(roles.cache.get(mention));
             } else {
                 // if it isn't either of them it will do this
-                if (roles.cache.find(r => r.name.toLowerCase().startsWith(mention ? mention.toLowerCase() : mention))) {
+                if (roles.cache.find(r => r.name.toLowerCase().startsWith(mention))) {
                     // if it can find a role from the input it will do this
-                    return resolve(roles.cache.find(r => r.tag.toLowerCase().startsWith(mention.toLowerCase())));
+                    return resolve(roles.cache.find(r => r.tag.toLowerCase().startsWith(mention)));
                 }
                 else {
                     // if not it wont do anything
@@ -85,7 +85,7 @@ class Utils {
                 // if it isn't either of them it will do this
                 if (channels.cache.find(c => c.name.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a channel from the input it will do this
-                    return resolve(channels.cache.find(c => c.tag.toLowerCase().startsWith(mention ? mention.toLowerCase() : mention)));
+                    return resolve(channels.cache.find(c => c.tag.toLowerCase().startsWith(mention.toLowerCase())));
                 }
                 else {
                     // if not it wont do anything
