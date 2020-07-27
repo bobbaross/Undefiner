@@ -15,7 +15,7 @@ class Expire {
             if (!member) return;
             getDB(guild.id).then(async res => {
                 if (!member.roles.has(res.settings.mutedRole)) return;
-                member.roles.remove(res.settings.mutedRole).then(() => {
+                member.roles.remove(res.settings.mutedRole).then(async () => {
                     res.cases++;
                     saveDB(res);
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
@@ -43,7 +43,7 @@ class Expire {
         guild.fetchBan(entry.userId).then(async ban => {
             if (!ban) return;
             getDB(guild.id).then(async res => {
-                guild.unban(ban.user.id).then(() => {
+                guild.unban(ban.user.id).then(async () => {
                     res.cases++;
                     saveDB(res);
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
