@@ -6,7 +6,6 @@ const Discord = require('discord.js');
 class Utils {
     constructor (client) {
         this.client = client;
-        console.log(this)
     }
     
     // Get User Function
