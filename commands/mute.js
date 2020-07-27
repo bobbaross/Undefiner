@@ -86,7 +86,8 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('y');
-            var user = await getUser(user);
+            var user = getUser(user);
+            await user;
             console.log('u');
             if (!user) {
                 console.log('o NUSR');
@@ -113,7 +114,8 @@ module.exports = {
             console.log('X');
             await args.shift();
             console.log('V');
-            var time = await setTime(args[0]);
+            var time = setTime(args[0]);
+            await time;
             console.log('N');
             if (time !== null) await args.shift();
             console.log('M');
@@ -142,7 +144,8 @@ module.exports = {
                     console.log('U');
                     res.cases++;
                     console.log('I');
-                    var duration = await getTime(time-Date.now());
+                    var duration = getTime(time-Date.now());
+                    await duration;
                     console.log('O');
                     let embed = new MessageEmbed()
                     .setDescription(`${user.tag} has been muted. ${res.settings.withReason === true ? reason : ""}`);
@@ -150,7 +153,8 @@ module.exports = {
                     console.log('P');
                     var embedId;
                     console.log('A');
-                    var modLogsChan = await getChannel(res.settings.modLogs);
+                    var modLogsChan = getChannel(res.settings.modLogs);
+                    await modLogsChan;
                     console.log('S');
                     if (modLogsChan) {
                         console.log('D');
