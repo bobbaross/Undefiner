@@ -92,7 +92,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             member.roles.add(mutedRole.id, `Muted by ${message.author.tag} with reason: ${reason}`).then(() => {
-                getEntries("mute").then(activeMutes => {
+                getEntries("mute").then(async activeMutes => {
                     activeMutes.push({
                         guildId: message.guild.id,
                         userId: user.id,
