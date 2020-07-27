@@ -12,7 +12,6 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        var logged = 0;
         console.log('a');
         var {getUser,getRole,getChannel,getTime,setTime,createDB,getDB,getEntries,saveDB} = new Utils(client);
         getDB(message.guild.id).then(async res => {
@@ -95,6 +94,7 @@ module.exports = {
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
+            console.log(user);
             console.log('p');
             message.guild.members.fetch(`${user.id}`).then(async member => {
                 member = new Promise(resolve => resolve(member));
