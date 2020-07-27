@@ -155,7 +155,7 @@ module.exports = {
                             console.log('F');
                             let modLogEmbed = new MessageEmbed()
                             .setColor(bad)
-                            .setTitle(`Member Muted | #${res.cases}`)
+                            .setTitle(`Member Muted | Case #${res.cases}`)
                             .addField(`Member`, member.user.tag, true)
                             .addField(`Moderator`, message.author.tag, true)
                             .addField(`Reason`, reason, true)

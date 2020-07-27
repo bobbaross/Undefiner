@@ -23,7 +23,7 @@ class Expire {
                     let duration = await getTime(Date.now()-entry.happenedAt);
                     let embed = new MessageEmbed()
                     .setColor(good)
-                    .setTitle(`Member Unmuted | #${res.cases}`)
+                    .setTitle(`Member Unmuted | Case #${res.cases}`)
                     .addField(`Member`, member.user.tag, true)
                     .addField(`Moderator`, this.client.user.tag, true)
                     .addField(`Reason`, entry.reason, true)
@@ -51,7 +51,7 @@ class Expire {
                     let duration = await getTime(Date.now()-entry.happenedAt);
                     let embed = new MessageEmbed()
                     .setColor(good)
-                    .setTitle(`Member Unbanned | #${res.cases}`)
+                    .setTitle(`Member Unbanned | Case #${res.cases}`)
                     .addField(`Member`, member.user.tag, true)
                     .addField(`Moderator`, this.client.user.tag, true)
                     .addField(`Reason`, entry.reason, true)
