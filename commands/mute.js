@@ -96,7 +96,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             console.log('p');
-            message.guild.members.fetch(user.id).then(member => {
+            message.guild.members.fetch(user.id).then(async member => {
                 console.log('S');
                 if (!member) {
                     console.log('K MMBR');
