@@ -13,7 +13,7 @@ module.exports = {
                     if (entry.time < Date.now()+60000) {
                         setTimeout(() => {
                             unban(entry);
-                            let index = res.entries.findIndex(entry);
+                            let index = res.entries.indexOf(entry);
                             res.entries.splice(index,1);
                             saveDB(res);
                         },entry.time-Date.now());

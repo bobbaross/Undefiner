@@ -154,7 +154,7 @@ module.exports = {
                         embedId = new Promise(resolve => {
                             console.log('F');
                             let modLogEmbed = new MessageEmbed()
-                            .setColor(good)
+                            .setColor(bad)
                             .setTitle(`Member Muted #${res.cases}`)
                             .addField(`Member`, member.user.tag, true)
                             .addField(`Moderator`, message.author.tag, true)
