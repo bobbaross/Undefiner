@@ -97,6 +97,7 @@ module.exports = {
             }
             console.log('p');
             message.guild.members.fetch(user.id).then(async member => {
+                await Promise.all(member);
                 console.log('S');
                 if (!member) {
                     console.log('K MMBR');
