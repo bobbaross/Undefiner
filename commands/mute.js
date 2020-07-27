@@ -106,7 +106,7 @@ module.exports = {
                     return message.channel.send(embed).catch(err => err);
                 }
                 console.log('L');
-                if (member.roles.has(mutedRole.id)) {
+                if (member.roles.cache.has(mutedRole.id)) {
                     console.log('Z MMBHRL');
                     let embed = new MessageEmbed()
                     .setDescription(`Uhm... I am pretty sure they're already muted, to be honest.\n${this.name} ${this.usage}`);
