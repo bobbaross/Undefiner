@@ -231,5 +231,3 @@ module.exports = class Utils {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
     }
 }
-
-module.exports = { Utils }
