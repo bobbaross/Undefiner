@@ -15,6 +15,7 @@ module.exports = {
         console.log('a');
         utils = new Utils(client);
         utils.getDB(message.guild.id).then(async res => {
+            if (!res) res = await utils.createDB(message.guild.id);
             let bypassRoles = [];
             console.log('b');
             for (let role of res.modRoles) {
@@ -37,8 +38,6 @@ module.exports = {
                 .setDescription(`Ehem... Maybe sort my permissions first? I need the Manage Roles permissions.`)
                 return message.channel.send(embed).catch(err => err);
             }
-            console.log('f');
-            if (!res) res = await utils.createDB(message.guild.id);
             console.log('h');
             let mutedRole = await utils.getRole(res.settings.mutedRole, message.guild.roles);
             console.log('g');
