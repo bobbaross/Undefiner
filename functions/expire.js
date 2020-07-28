@@ -43,7 +43,7 @@ class Expire {
         guild.fetchBan(entry.userId).then(async ban => {
             if (!ban) return;
             getDB(guild.id).then(async res => {
-                guild.unban(ban.user.id).then(async () => {
+                guild.members.unban(ban.user.id).then(async () => {
                     res.cases++;
                     saveDB(res);
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
