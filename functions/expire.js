@@ -52,7 +52,7 @@ class Expire {
                     let embed = new MessageEmbed()
                     .setColor(good)
                     .setTitle(`Member Unbanned | Case #${res.cases}`)
-                    .addField(`Member`, member.user.tag, true)
+                    .addField(`Member`, ban.user.tag, true)
                     .addField(`Moderator`, this.client.user.tag, true)
                     .addField(`Reason`, entry.reason, true)
                     .setFooter(`This ban lasted ${duration} | ${entry.userId}`)
