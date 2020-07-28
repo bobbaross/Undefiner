@@ -105,7 +105,6 @@ module.exports = {
             var reason = args.slice(0).join(' ');
             if (!reason) reason = "No reason specified.";
             res.cases++;
-            if (time-Date.now() < 0) duration = null;
             if (res.settings.dmOnPunished === true) {
                 let dmEmbed = new MessageEmbed()
                 .setColor(bad)
