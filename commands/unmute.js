@@ -1,15 +1,13 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
-const { response } = require('express');
-const { remove } = require('fs-extra');
-const {bad} = require('../config.json').colors;
+const {good} = require('../config.json').colors;
 
 module.exports = {
     name: "unmute",
     description: "Unmute a member.",
     aliases: ['unsilence'],
     category: "moderation",
-    usage: "<member> [time] <reason>",
+    usage: "<member> <reason>",
     guildOnly: true,
 
     async undefine(client, message, args) {
@@ -139,7 +137,7 @@ module.exports = {
                     });
                 }
                 res.modCases.push({
-                    type: "unmute",
+                    type: "Unmute",
                     case: res.cases,
                     userId: user.id,
                     userTag: user.tag,

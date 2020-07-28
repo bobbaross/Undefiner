@@ -122,7 +122,7 @@ module.exports = {
                     });
                 }
                 res.modCases.push({
-                    type: "ban",
+                    type: "Ban",
                     case: res.cases,
                     userId: user.id,
                     userTag: user.tag,

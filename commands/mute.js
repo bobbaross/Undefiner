@@ -157,7 +157,7 @@ module.exports = {
                     });
                 }
                 res.modCases.push({
-                    type: "mute",
+                    type: "Mute",
                     case: res.cases,
                     userId: user.id,
                     userTag: user.tag,
