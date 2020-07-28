@@ -154,7 +154,6 @@ module.exports = {
                     for (let entry of activeMutes.entries) {
                         if (entry.guildId === message.guild.id && entry.userId === user.id) {
                             let index = activeMutes.entries.indexOf(entry);
-                            if (!index) return;
                             activeMutes.entries.splice(index, 1);
                             await activeMutes;
                             await utils.saveDB(activeMutes).catch(err => console.error(err));
