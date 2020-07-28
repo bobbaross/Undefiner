@@ -5,9 +5,9 @@ const { remove } = require('fs-extra');
 const {bad} = require('../config.json').colors;
 
 module.exports = {
-    name: "mute",
-    description: "Mute a member.",
-    aliases: ['silence'],
+    name: "unmute",
+    description: "Unmute a member.",
+    aliases: ['unsilence'],
     category: "moderation",
     usage: "<member> [time] <reason>",
     guildOnly: true,
