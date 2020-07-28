@@ -151,13 +151,15 @@ module.exports = {
                 });
                 await utils.saveDB(res).catch(err => console.error(err));
                 utils.getEntries("mute").then(async activeMutes => {
-                    let removeThisActiveMute = activeMutes.entries.find(entry => entry.guildId === message.guild.id && entry.userId === user.id);
-                    if (!removeThisActiveMute) return;
-                    let index = activeMutes.entries.indexOf(removeThisActiveMute);
-                    if (!index) return;
-                    activeMutes.entries.splice(index, 1);
-                    await activeMutes;
-                    await utils.saveDB(activeMutes).catch(err => console.error(err));
+                    for (let entry of activeMutes.entries) {
+                        if (entry.guildId === message.guild.id && entry.userId === user.id) {
+                            let index = activeMutes.entries.indexOf(entry);
+                            if (!index) return;
+                            activeMutes.entries.splice(index, 1);
+                            await activeMutes;
+                            await utils.saveDB(activeMutes).catch(err => console.error(err));
+                        }
+                    }
                 });
                 if (res.settings.deleteModCommands === true) message.delete();
             });
