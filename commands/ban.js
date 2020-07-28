@@ -104,7 +104,8 @@ module.exports = {
                 message.channel.send(embed).catch(err => err);
                 var embedId;
                 var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
-                if (modLogsChan) {
+                if (modLogsChan || res.settings.modLogs === "there") {
+                    if (res.settings.modLogs === "there") modLogsChan = message.channel;
                     embedId = new Promise(resolve => {
                         let modLogEmbed = new MessageEmbed()
                         .setColor(bad)
