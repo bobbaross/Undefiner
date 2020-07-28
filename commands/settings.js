@@ -54,6 +54,7 @@ module.exports = {
                     .addField(`Modlogs`, `${listingChan ? listingChan : res.settings.modLogs}\nSetting this value to a channel will enable mod logs to be sent in that channel.\nSetting this value to \`this\` will make it the current channel\nSetting this value to \`there\` will set it to be in the channel where the command was sent.\nSetting this value to anything not specified in this embed will turn mod logs off.`)
                     .addField(`Respond-With-Reasons`, `${res.settings.withReason ? res.settings.withReason : "Whoops"}\nThis will make the bot respond with the reason for a mod case.\nAvailable options:\nEnable: \`${isTrue.join('` `')}\`\nDisable: \`${isFalse.join('` `')}\``)
                     .addField(`Delete-Mod-Commands`, `${res.settings.deleteModCommands ? res.settings.deleteModCommands : "Whoops"}\nThis will make the bot delete moderation command messages.\nAvailable options:\nEnable: \`${isTrue.join('` `')}\`\nDisable: \`${isFalse.join('` `')}\``)
+                    .addField(`DM-On-Punishment`, `${res.settings.dmOnPunish ? res.settings.dmOnPunish : `Whoops...`}\nThis will make the bot DM victims a copy of the modlog upon being punished.\nAvailable options:\nEnable: \`${isTrue.join('` `')}\`\nDisable: \`${isFalse.join('` `')}\``)
 
 
                     message.channel.send(embed).catch(err => console.error(err));
@@ -166,6 +167,31 @@ module.exports = {
                             .setDescription(`I am pretty sure that doesn't tell me to enable or disable this.`);
                             return message.channel.send(embed).catch(err => err);
                         }
+                        break;
+                        case "dm-on-punishment":
+                            if (isTrue.includes(args[1])) {
+                                res.settings.dmOnPunish = true;
+                                saveDB(res).then(() => {
+                                    embed = new MessageEmbed()
+                                    .setColor(branding)
+                                    .setDescription(`DM On Punishment successfully turned on.`)
+                                    message.channel.send(embed).catch(err => err);
+                                }).catch(err => console.error(err));
+                            }
+                            else if (isFalse.includes(args[1])) {
+                                res.settings.dmOnPunish = false;
+                                saveDB(res).then(() => {
+                                    embed = new MessageEmbed()
+                                    .setColor(branding)
+                                    .setDescription(`DM On Punishment successfully turned off.`)
+                                    message.channel.send(embed).catch(err => err);
+                                }).catch(err => console.error(err));
+                            }
+                            else {
+                                embed = new MessageEmbed()
+                                .setDescription(`I am pretty sure that doesn't tell me to enable or disable this.`);
+                                return message.channel.send(embed).catch(err => err);
+                            }
             }
 
         });

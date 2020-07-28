@@ -4,9 +4,9 @@ const { response } = require('express');
 const {bad} = require('../config.json').colors;
 
 module.exports = {
-    name: "mute",
-    description: "Mute a member.",
-    aliases: ['silence'],
+    name: "ban",
+    description: "Ban a member.",
+    aliases: ['banish'],
     category: "moderation",
     usage: "<member> [time] <reason>",
     guildOnly: true,
@@ -22,49 +22,19 @@ module.exports = {
             for (let role of res.adminRoles) {
                 bypassRoles.push(role);
             }
-            if (!message.member.hasPermission("MANAGE_MESSAGES") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) {
+            if (!message.member.hasPermission("BAN_MEMBERS") && !bypassRoles.some(r => message.member.roles.cache.has(r))) {
                 let embed = new MessageEmbed()
-                .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
+                .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("BAN_MEMBERS") ? "Whoops" : "Ban Members"} amongst your permissions.`);
                 return message.channel.send(embed).catch(err => err);
             }
-            if (!message.guild.me.hasPermission("MANAGE_ROLES")) {
+            if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
                 let embed = new MessageEmbed()
-                .setDescription(`Ehem... Maybe sort my permissions first? I need the Manage Roles permissions.`)
+                .setDescription(`Ehem... Maybe sort my permissions first? I need the Ban Members permissions.`)
                 return message.channel.send(embed).catch(err => err);
-            }
-            let mutedRole = await utils.getRole(res.settings.mutedRole, message.guild.roles);
-            if (!mutedRole) {
-                mutedRole = await utils.getRole("muted", message.guild.roles);
-            }
-            if (mutedRole) {
-                res.settings.mutedRole = mutedRole.id;
-                await utils.saveDB(res);
-            }
-            if (!mutedRole) {
-                mutedRole = new Promise((resolve) => {
-                        message.guild.roles.create({
-                            data: {
-                                name: "Muted",
-                                permissions: {
-                                    SEND_MESSAGES: false
-                                }
-                            }
-                    }).then(newRole => {
-                        message.guild.channels.cache.each(channel => {
-                            channel.createOverwrite(newRole, {
-                                SEND_MESSAGES: false
-                            });
-                        });
-                        return resolve(newRole)
-                    });
-                });
-                await mutedRole;
-                res.settings.mutedRole = mutedRole;
-                await utils.saveDB(res);
             }
             if (!args[0]) {
                 let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me who to mute.\n${this.name} ${this.usage}`);
+                .setDescription(`Now you see, there is something called telling me who to ban.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
             var user = await utils.getUser(args[0]);
@@ -87,17 +57,12 @@ module.exports = {
             }
             if (member.roles.highest.position >= message.member.roles.highest.position) {
                 let embed = new MessageEmbed()
-                .setDescription(`Hey, I don't think you should mute them.\n${this.name} ${this.usage}`);
+                .setDescription(`Hey, I don't think you should ban them.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
             if (member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
-                .setDescription(`I wouldn't mute that person if I was you.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            if (member.roles.cache.has(mutedRole.id)) {
-                let embed = new MessageEmbed()
-                .setDescription(`Uhm... I am pretty sure they're already muted, to be honest.\n${this.name} ${this.usage}`);
+                .setDescription(`I wouldn't ban that person if I was you.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
             await args.shift();
@@ -114,28 +79,28 @@ module.exports = {
             if (res.settings.dmOnPunished === true) {
                 let dmEmbed = new MessageEmbed()
                 .setColor(bad)
-                .setTitle(`You've been muted in ${message.guild.name}, here is a copy of the log!\nMember Muted | Case #${res.cases}`)
+                .setTitle(`You've been banned in ${message.guild.name}, here is a copy of the log!\nMember Banned | Case #${res.cases}`)
                 .addField(`Member`, member.user.tag, true)
                 .addField(`Moderator`, message.author.tag, true)
                 .addField(`Reason`, reason, true)
-                .setFooter(`${duration ? `This mute will last ${duration} | ` : ""}${user.id}`)
+                .setFooter(`${duration ? `This ban will last ${duration} | ` : ""}${user.id}`)
                 .setTimestamp()
                 user.send(dmEmbed).catch(err => err);
             }
-            member.roles.add(mutedRole.id, `Muted by ${message.author.tag} with reason: ${reason}`).then(async () => {
-                utils.getEntries("mute").then(async activeMutes => {
+            member.ban(`Banned by ${message.author.tag} with reason: ${reason}`).then(async () => {
+                utils.getEntries("ban").then(async activeBans => {
                     if (!time) return;
-                    activeMutes.entries.push({
+                    activeBans.entries.push({
                         guildId: message.guild.id,
                         userId: user.id,
                         time: time,
                         reason: reason,
                         happenedAt: Date.now()
                     });
-                    await utils.saveDB(activeMutes).catch(err => console.error(err));
+                    await utils.saveDB(activeBans).catch(err => console.error(err));
                 });
                 let embed = new MessageEmbed()
-                .setDescription(`${user.tag} has been muted. ${res.settings.withReason === true ? reason : ""}`);
+                .setDescription(`${user.tag} has been banned. ${res.settings.withReason === true ? reason : ""}`);
                 message.channel.send(embed).catch(err => err);
                 var embedId;
                 var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
@@ -143,11 +108,11 @@ module.exports = {
                     embedId = new Promise(resolve => {
                         let modLogEmbed = new MessageEmbed()
                         .setColor(bad)
-                        .setTitle(`Member Muted | Case #${res.cases}`)
+                        .setTitle(`Member Banned | Case #${res.cases}`)
                         .addField(`Member`, member.user.tag, true)
                         .addField(`Moderator`, message.author.tag, true)
                         .addField(`Reason`, reason, true)
-                        .setFooter(`${duration ? `This mute will last ${duration} | ` : ""}${user.id}`)
+                        .setFooter(`${duration ? `This ban will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
                         modLogsChan.send(modLogEmbed).then(msg => {
                             resolve(msg.id);
@@ -155,7 +120,7 @@ module.exports = {
                     });
                 }
                 res.modCases.push({
-                    type: "mute",
+                    type: "ban",
                     case: res.cases,
                     userId: user.id,
                     userTag: user.tag,
