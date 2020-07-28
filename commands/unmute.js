@@ -152,7 +152,7 @@ module.exports = {
                 await utils.saveDB(res).catch(err => console.error(err));
                 utils.getEntries("mute").then(async activeMutes => {
                     for (let entry of activeMutes.entries) {
-                        if (entry.guildId === message.guild.id && entry.userId === user.id) {
+                        if (entry.guildId == message.guild.id && entry.userId == user.id) {
                             let index = activeMutes.entries.indexOf(entry);
                             activeMutes.entries.splice(index, 1);
                             await activeMutes;
