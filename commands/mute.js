@@ -111,6 +111,7 @@ module.exports = {
             }
             res.cases++;
             var duration = await utils.getTime(time-Date.now());
+            if (time-Date.now() < 0) duration = null;
             if (res.settings.dmOnPunished === true) {
                 let dmEmbed = new MessageEmbed()
                 .setColor(bad)
@@ -118,7 +119,7 @@ module.exports = {
                 .addField(`Member`, member.user.tag, true)
                 .addField(`Moderator`, message.author.tag, true)
                 .addField(`Reason`, reason, true)
-                .setFooter(`${duration ? `This mute will last ${duration} | ` : ""}${user.id}`)
+                .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                 .setTimestamp()
                 user.send(dmEmbed).catch(err => err);
             }
@@ -148,7 +149,7 @@ module.exports = {
                         .addField(`Member`, member.user.tag, true)
                         .addField(`Moderator`, message.author.tag, true)
                         .addField(`Reason`, reason, true)
-                        .setFooter(`${duration ? `This mute will last ${duration} | ` : ""}${user.id}`)
+                        .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
                         modLogsChan.send(modLogEmbed).then(msg => {
                             resolve(msg.id);
