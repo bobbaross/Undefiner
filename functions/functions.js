@@ -114,7 +114,7 @@ class Utils {
                 disabledCommands: [],
                 tags: [],
                 settings: {mutedRole: "", modLogs: "off", withReason: false, deleteModCommands: false, dmOnPunish: false},
-                notes: {}
+                notes: []
             });
             return resolve(newDB);
         });
@@ -193,7 +193,7 @@ class Utils {
     }
 
     async setTime(time) {
-        let times = ['s', 'm', 'h', 'd'];
+        let times = ['s', 'm', 'h', 'd', 'w'];
         return new Promise(resolve => {
             if (!time || !times.some(letter => time.toLowerCase().endsWith(letter)) || isNaN(time.slice(0,-1))) {
                 return resolve(null);
@@ -204,6 +204,7 @@ class Utils {
                 if (timeAt === 'm') timeInd = 60000;
                 if (timeAt === 'h') timeInd = 3600000;
                 if (timeAt === 'd') timeInd = 86400000;
+                if (timeAt === 'w') timeInd = 86400000*7;
                 let timeMs = time.slice(0,-1);
                 let timeMsAdd = timeMs*timeInd;
                 let timeMS = Date.now()+timeMsAdd;
