@@ -112,7 +112,7 @@ class Utils {
                 adminRoles: [],
                 afkMembers: [],
                 disabledCommands: [],
-                tags: [],
+                tags: {},
                 settings: {mutedRole: "", modLogs: "off", withReason: false, deleteModCommands: false, dmOnPunish: false},
                 notes: []
             }, false);
