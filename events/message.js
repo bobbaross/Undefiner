@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const { Utils } = require(`../functions/functions.js`);
 
 module.exports = (client, message) => {
