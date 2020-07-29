@@ -45,7 +45,7 @@ module.exports = {
                 .setDescription(`Hey! You can't just remove the reason, you know!\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
-            message.channel.messages.fetch(modCase.embedId).then(msg => {
+            message.channel.messages.fetch(`${modCase.embedId}`).then(msg => {
                 if (!msg) {
                     let embed = new MessageEmbed()
                     .setDescription(`I can't seem to find that message in this channel. You sure you're in the right channel?\n${this.name} ${this.usage}`);
