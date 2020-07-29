@@ -164,7 +164,7 @@ module.exports = {
                     });
                     break;
                 case "list":
-                    let tags = Object.keys(tagJson.tags);
+                    let tags = Object.keys(res.tags);
                     embed = new MessageEmbed()
                     .setColor("RANDOM")
                     .setTitle("Tags")
