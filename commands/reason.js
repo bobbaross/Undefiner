@@ -5,7 +5,7 @@ const {bad} = require('../config.json').colors;
 module.exports = {
     name: "reason",
     description: "Change the reason of a mod case",
-    aliases: [],
+    aliases: ['r', 'changereason', 'setreason'],
     category: "moderation",
     usage: "<case id> <reason>",
     guildOnly: true,

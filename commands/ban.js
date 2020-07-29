@@ -91,6 +91,7 @@ module.exports = {
                 utils.getEntries("ban").then(async activeBans => {
                     if (!time) return;
                     activeBans.entries.push({
+                        servCase: res.cases,
                         guildId: message.guild.id,
                         userId: user.id,
                         time: time,

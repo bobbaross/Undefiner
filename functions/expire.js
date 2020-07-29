@@ -27,7 +27,7 @@ class Expire {
                             .setTitle(`Member Unmuted | Case #${res.cases}`)
                             .addField(`Member`, member.user.tag, true)
                             .addField(`Moderator`, this.client.user.tag, true)
-                            .addField(`Reason`, entry.reason, true)
+                            .addField(`Reason`, `Automatic unmute, time expired from case #${entry.servCase}`, true)
                             .setFooter(`This mute lasted ${duration} | ${entry.userId}`)
                             .setTimestamp()
 
@@ -70,7 +70,7 @@ class Expire {
                             .setTitle(`Member Unbanned | Case #${res.cases}`)
                             .addField(`Member`, ban.user.tag, true)
                             .addField(`Moderator`, this.client.user.tag, true)
-                            .addField(`Reason`, entry.reason, true)
+                            .addField(`Reason`, `Automatic unmute, time expired from case #${entry.servCase}`, true)
                             .setFooter(`This ban lasted ${duration} | ${entry.userId}`)
                             .setTimestamp()
 

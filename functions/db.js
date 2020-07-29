@@ -5,7 +5,7 @@ const Schema = new mongoose.Schema({
     serverID: String,
     db: String,
     prefix: String,
-    modCases: [Object],
+    modCases: [{type: String, case: Number, userId: String, userTag: String, modId: String, modTag: String, reason: String, embedId: String, happenedAt: Number}],
     lockedChans: [Object],
     tempRoles: [Object],
     persistedRoles: [Object],
@@ -14,7 +14,7 @@ const Schema = new mongoose.Schema({
     adminRoles: [String],
     afkMembers: [Object],
     disabledCommands: [String],
-    tags: [Object],
+    tags: Object,
     settings: {mutedRole: String, modLogs: String, withReason: Boolean, deleteModCommands: Boolean, dmOnPunish: Boolean},
     notes: [Object]
 });

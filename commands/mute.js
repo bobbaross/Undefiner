@@ -126,6 +126,7 @@ module.exports = {
                 utils.getEntries("mute").then(async activeMutes => {
                     if (!time) return;
                     activeMutes.entries.push({
+                        servCase: res.cases,
                         guildId: message.guild.id,
                         userId: user.id,
                         time: time,
