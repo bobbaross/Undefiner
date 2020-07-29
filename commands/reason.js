@@ -47,6 +47,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             let index = res.modCases.indexOf(modCase);
+            console.log(index)
             res.modCases[index].reason = reason;
             utils.saveDB(res).catch(err => console.error(err));
 
