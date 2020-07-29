@@ -51,7 +51,6 @@ module.exports = {
             res.modCases[index].reason = reason;
             console.log(res.modCases[index])
             await utils.saveDB(res).catch(err => console.error(err));
-            console.log(res)
             message.channel.messages.fetch(`${modCase.embedId}`).then(msg => {
                 if (!msg) {
                     let embed = new MessageEmbed()
