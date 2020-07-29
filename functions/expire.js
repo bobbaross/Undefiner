@@ -17,20 +17,35 @@ class Expire {
                 if (!member.roles.cache.has(res.settings.mutedRole)) return;
                 member.roles.remove(res.settings.mutedRole).then(async () => {
                     res.cases++;
-                    saveDB(res);
+                    let embedId;
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
-                    if (!modLogs) return;
-                    let duration = await getTime(Date.now()-entry.happenedAt);
-                    let embed = new MessageEmbed()
-                    .setColor(good)
-                    .setTitle(`Member Unmuted | Case #${res.cases}`)
-                    .addField(`Member`, member.user.tag, true)
-                    .addField(`Moderator`, this.client.user.tag, true)
-                    .addField(`Reason`, entry.reason, true)
-                    .setFooter(`This mute lasted ${duration} | ${entry.userId}`)
-                    .setTimestamp()
+                    if (modLogs) {
+                        embedId = new Promise(resolve => {
+                            let duration = await getTime(Date.now()-entry.happenedAt);
+                            let embed = new MessageEmbed()
+                            .setColor(good)
+                            .setTitle(`Member Unmuted | Case #${res.cases}`)
+                            .addField(`Member`, member.user.tag, true)
+                            .addField(`Moderator`, this.client.user.tag, true)
+                            .addField(`Reason`, entry.reason, true)
+                            .setFooter(`This mute lasted ${duration} | ${entry.userId}`)
+                            .setTimestamp()
 
-                    modLogs.send(embed).catch(err => err);
+                            modLogs.send(embed).then(msg => resolve(msg.id)).catch(err => err);
+                        });
+                    }
+                    res.modCases.push({
+                        type: "Unmute",
+                        case: res.cases,
+                        userId: member.user.id,
+                        userTag: member.user.tag,
+                        modId: this.client.user.id,
+                        modTag: this.client.user.tag,
+                        reason: entry.reason,
+                        embedId: embedId ? embedId : null,
+                        happenedAt: Date.now()
+                    });
+                    saveDB(res);
                 }).catch(err => console.error(err));
             });
         });
@@ -45,20 +60,35 @@ class Expire {
             getDB(guild.id).then(async res => {
                 guild.members.unban(ban.user.id).then(async () => {
                     res.cases++;
-                    saveDB(res);
+                    let embedId;
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
-                    if (!modLogs) return;
-                    let duration = await getTime(Date.now()-entry.happenedAt);
-                    let embed = new MessageEmbed()
-                    .setColor(good)
-                    .setTitle(`Member Unbanned | Case #${res.cases}`)
-                    .addField(`Member`, ban.user.tag, true)
-                    .addField(`Moderator`, this.client.user.tag, true)
-                    .addField(`Reason`, entry.reason, true)
-                    .setFooter(`This ban lasted ${duration} | ${entry.userId}`)
-                    .setTimestamp()
+                    if (modLogs) {
+                        embedId = new Promise(resolve => {
+                            let duration = await getTime(Date.now()-entry.happenedAt);
+                            let embed = new MessageEmbed()
+                            .setColor(good)
+                            .setTitle(`Member Unbanned | Case #${res.cases}`)
+                            .addField(`Member`, ban.user.tag, true)
+                            .addField(`Moderator`, this.client.user.tag, true)
+                            .addField(`Reason`, entry.reason, true)
+                            .setFooter(`This ban lasted ${duration} | ${entry.userId}`)
+                            .setTimestamp()
 
-                    modLogs.send(embed).catch(err => err);
+                            modLogs.send(embed).then(msg => resolve(msg.id)).catch(err => err);
+                        });
+                    }
+                    res.modCases.push({
+                        type: "Unban",
+                        case: res.cases,
+                        userId: member.user.id,
+                        userTag: member.user.tag,
+                        modId: this.client.user.id,
+                        modTag: this.client.user.tag,
+                        reason: entry.reason,
+                        embedId: embedId ? embedId : null,
+                        happenedAt: Date.now()
+                    });
+                    saveDB(res);
                 }).catch(err => console.error(err));
             });
         });

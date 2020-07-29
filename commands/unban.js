@@ -52,8 +52,8 @@ module.exports = {
                 res.cases++;
                 message.guild.members.unban(userId).then(async () => {
                     let embed = new MessageEmbed()
-                .setDescription(`${userId} has been unbanned. ${res.settings.withReason === true ? reason : ""}`);
-                message.channel.send(embed).catch(err => err);
+                    .setDescription(`${userId} has been unbanned. ${res.settings.withReason === true ? reason : ""}`);
+                    message.channel.send(embed).catch(err => err);
                 var embedId;
                 var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
                 if (modLogsChan || res.settings.modLogs === "there") {
