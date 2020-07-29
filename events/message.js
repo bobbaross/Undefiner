@@ -60,4 +60,6 @@ module.exports = (client, message) => {
             }
         });
     }
+    commands();
+    tags();
 }
