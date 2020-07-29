@@ -39,7 +39,6 @@ module.exports = {
                 .setDescription(`Now you see, there is something called telling me a valid case id.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
-            console.log(modCase)
             var reason = args.join(' ');
             if (!reason) {
                 let embed = new MessageEmbed()
