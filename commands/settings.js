@@ -36,7 +36,6 @@ module.exports = {
         getDB(message.guild.id).then(async res => {
             if (!res) {
                 res = await createDB(message.guild.id);
-                await saveDB(res);
             }
             var embed;
             if (!args[0]) args[0] = "";
