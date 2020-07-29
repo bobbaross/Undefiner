@@ -3,11 +3,11 @@ const { Utils } = require('../functions/functions.js');
 const {bad} = require('../config.json').colors;
 
 module.exports = {
-    name: "mute",
-    description: "Mute a member.",
-    aliases: ['silence'],
+    name: "reason",
+    description: "Change the reason of a mod case",
+    aliases: [],
     category: "moderation",
-    usage: "<member> [time] <reason>",
+    usage: "<case id> <reason>",
     guildOnly: true,
 
     async undefine(client, message, args) {
