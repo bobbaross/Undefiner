@@ -3,8 +3,8 @@ const { Utils } = require('../functions/functions.js');
 const {severe} = require('../config.json').colors;
 
 module.exports = {
-    name: "kick",
-    description: "Kick a member.",
+    name: "warn",
+    description: "Warn a member.",
     aliases: [],
     category: "moderation",
     usage: "<member> <reason>",
