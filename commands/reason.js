@@ -45,28 +45,29 @@ module.exports = {
                 .setDescription(`Hey! You can't just remove the reason, you know!\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
-            var msg = message.channel.messages.cache.find(mesg => mesg.id = modCase.embedId);
-            if (!msg) {
-                let embed = new MessageEmbed()
-                .setDescription(`I can't seem to find that message in this channel. You sure you're in the right channel?\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            let oldEmbed = msg.embeds[0];
-            console.log(msg);
-            let newEmbed = new MessageEmbed()
-            .setColor(oldEmbed.hexColor)
-            .setTitle(oldEmbed.title)
-            .addField(oldEmbed.fields[0].name, oldEmbed.fields[0].value, oldEmbed.fields[0].inline)
-            .addField(oldEmbed.fields[1].name, oldEmbed.fields[1].value, oldEmbed.fields[1].inline)
-            .addField(`Reason`, `${newReason}`, true)
-            .setFooter(oldEmbed.footer)
-            .setTimestamp(oldEmbed.setTimestamp)
+            message.channel.messages.fetch(entry.embedId).then(msg => {
+                if (!msg) {
+                    let embed = new MessageEmbed()
+                    .setDescription(`I can't seem to find that message in this channel. You sure you're in the right channel?\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                let oldEmbed = msg.embeds[0];
+                console.log(msg);
+                let newEmbed = new MessageEmbed()
+                .setColor(oldEmbed.hexColor)
+                .setTitle(oldEmbed.title)
+                .addField(oldEmbed.fields[0].name, oldEmbed.fields[0].value, oldEmbed.fields[0].inline)
+                .addField(oldEmbed.fields[1].name, oldEmbed.fields[1].value, oldEmbed.fields[1].inline)
+                .addField(`Reason`, `${newReason}`, true)
+                .setFooter(oldEmbed.footer)
+                .setTimestamp(oldEmbed.setTimestamp)
 
-            msg.edit(newEmbed).then(() => {
-                let embed = new MessageEmbed()
-                .setDescription(`Case #${modCase.case} has been updated.`);
-                message.channel.send(embed).catch(err => err);
-            }).catch(err => console.error(err));
+                msg.edit(newEmbed).then(() => {
+                    let embed = new MessageEmbed()
+                    .setDescription(`Case #${modCase.case} has been updated.`);
+                    message.channel.send(embed).catch(err => err);
+                }).catch(err => console.error(err));
+            });
         });
     }
 }
