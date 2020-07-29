@@ -115,7 +115,7 @@ class Utils {
                 tags: [],
                 settings: {mutedRole: "", modLogs: "off", withReason: false, deleteModCommands: false, dmOnPunish: false},
                 notes: []
-            });
+            }, false);
             return resolve(newDB);
         });
     }
