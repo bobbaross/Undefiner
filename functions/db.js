@@ -5,7 +5,7 @@ const Schema = new mongoose.Schema({
     serverID: String,
     db: String,
     prefix: String,
-    modCases: [{type: String, case: Number, userId: String, userTag: String, modId: String, modTag: String, reason: String, embedId: String, happenedAt: Number}],
+    modCases: Array,
     lockedChans: [Object],
     tempRoles: [Object],
     persistedRoles: [Object],
