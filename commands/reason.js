@@ -51,7 +51,6 @@ module.exports = {
                     .setDescription(`I can't seem to find that message in this channel. You sure you're in the right channel?\n${this.name} ${this.usage}`);
                     return message.channel.send(embed).catch(err => err);
                 }
-                console.log(msg)
                 let oldEmbed = msg.embeds[0];
                 let newEmbed = new MessageEmbed()
                 .setColor(oldEmbed.hexColor)
@@ -59,8 +58,8 @@ module.exports = {
                 .addField(oldEmbed.fields[0].name, oldEmbed.fields[0].value, oldEmbed.fields[0].inline)
                 .addField(oldEmbed.fields[1].name, oldEmbed.fields[1].value, oldEmbed.fields[1].inline)
                 .addField(`Reason`, `${reason}`, true)
-                .setFooter(oldEmbed.footer)
-                .setTimestamp(oldEmbed.setTimestamp)
+                .setFooter(oldEmbed.footer.text)
+                .setTimestamp(oldEmbed.timestamp)
 
                 msg.edit(newEmbed).then(() => {
                     let embed = new MessageEmbed()
