@@ -52,6 +52,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             let oldEmbed = msg.embeds[0];
+            console.log(oldEmbed);
             let newEmbed = new MessageEmbed()
             .setColor(oldEmbed.hexColor)
             .setTitle(oldEmbed.title)
