@@ -2,8 +2,6 @@ const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
 const {branding} = require('../config.json').colors;
 
-
-
 module.exports = {
     name: "tag",
     aliases: ["tags"],
@@ -12,9 +10,9 @@ module.exports = {
     usage: "create <name> <text> | delete <name> | modify <name> <value | color> <value> | display <name> | list",
     guildOnly: true,
 
-    code(client, message, args) {
+    async undefine(client, message, args) {
         utils = new Utils(client);
-        utils.getDB(message.guild.id).then(res => {
+        utils.getDB(message.guild.id).then(async res => {
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
