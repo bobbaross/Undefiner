@@ -51,8 +51,8 @@ module.exports = {
                     .setDescription(`I can't seem to find that message in this channel. You sure you're in the right channel?\n${this.name} ${this.usage}`);
                     return message.channel.send(embed).catch(err => err);
                 }
+                console.log(msg)
                 let oldEmbed = msg.embeds[0];
-                console.log(msg);
                 let newEmbed = new MessageEmbed()
                 .setColor(oldEmbed.hexColor)
                 .setTitle(oldEmbed.title)
