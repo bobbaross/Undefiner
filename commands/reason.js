@@ -45,6 +45,10 @@ module.exports = {
                 .setDescription(`Hey! You can't just remove the reason, you know!\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
+            let index = res.modCases.indexOf(modCase);
+            res.modCases[index].reason = reason;
+            utils.saveDB(res).catch(err => console.error(err));
+
             message.channel.messages.fetch(`${modCase.embedId}`).then(msg => {
                 if (!msg) {
                     let embed = new MessageEmbed()
