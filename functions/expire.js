@@ -20,7 +20,7 @@ class Expire {
                     let embedId;
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
                     if (modLogs) {
-                        embedId = new Promise(resolve => {
+                        embedId = new Promise(async resolve => {
                             let duration = await getTime(Date.now()-entry.happenedAt);
                             let embed = new MessageEmbed()
                             .setColor(good)
@@ -63,7 +63,7 @@ class Expire {
                     let embedId;
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
                     if (modLogs) {
-                        embedId = new Promise(resolve => {
+                        embedId = new Promise(async resolve => {
                             let duration = await getTime(Date.now()-entry.happenedAt);
                             let embed = new MessageEmbed()
                             .setColor(good)
