@@ -124,7 +124,7 @@ module.exports = {
                     if (res.settings.modLogs === "there") modLogsChan = message.channel;
                     embedId = await new Promise(resolve => {
                         let modLogEmbed = new MessageEmbed()
-                        .setColor(bad)
+                        .setColor(good)
                         .setTitle(`Member Unmuted | Case #${res.cases}`)
                         .addField(`Member`, member.user.tag, true)
                         .addField(`Moderator`, message.author.tag, true)
