@@ -55,7 +55,7 @@ module.exports = {
                         return message.channel.send(embed).catch(err => err);
                     }
                     name = name.toLowerCase();
-                    Object.assign(res.tags, {name = {
+                    Object.assign(res.tags, {[name]: {
                         value: value,
                         color: branding
                     }});
