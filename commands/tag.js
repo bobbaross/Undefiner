@@ -54,10 +54,11 @@ module.exports = {
                         .setDescription(`Hey, mind telling me what the tag is gonna say?\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    res.tags[name.toLowerCase()] = {
+                    name = name.toLowerCase();
+                    Object.assign(res.tags, {name = {
                         value: value,
                         color: branding
-                    }
+                    }});
 
                     utils.saveDB(res).catch(err => console.error(err));
 
