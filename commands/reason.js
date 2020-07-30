@@ -46,8 +46,9 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             let index = res.modCases.indexOf(modCase);
-            modCase.reason = reason;
-            res.modCases.splice(index,1,modCase);
+            /*modCase.reason = reason;
+            res.modCases.splice(index,1,modCase);*/
+            Object.assign(res.modCases[index], {reason: reason});
             await utils.saveDB(res).catch(err => console.error(err));
             message.channel.messages.fetch(`${modCase.embedId}`).then(msg => {
                 if (!msg) {
