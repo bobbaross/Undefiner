@@ -50,6 +50,26 @@ module.exports = {
                     .setDescription(`I uhh... So what are we changing the prefix to again?\n${this.name} ${this.usage}`);
                     return message.channel.send(embed).catch(err => err);
                 }
+                if (newPrefix === "longer than 10 characters") {
+                    embed = new MessageEmbed()
+                    .setDescription(`No, it must be 10 characters or less.\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                if (newPrefix === "10 characters or less") {
+                    embed = new MessageEmbed()
+                    .setDescription(`Ok listen, it must be at max 10 characters.\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                if (newPrefix === "at max 10 characters") {
+                    embed = new MessageEmbed()
+                    .setDescription(`NO! MAKE IT SHORTER THAN 10 CHARACTERS!\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                if (newPrefix === "SHORTER THAN 10 CHARACTERS") {
+                    embed = new MessageEmbed()
+                    .setDescription(`I am getting really tired of you...\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
                 if (newPrefix.length > 10) {
                     embed = new MessageEmbed()
                     .setDescription(`The prefix may not be longer than 10 characters.\n${this.name} ${this.usage}`);
