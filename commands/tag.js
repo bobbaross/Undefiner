@@ -13,6 +13,7 @@ module.exports = {
     async undefine(client, message, args) {
         utils = new Utils(client);
         utils.getDB(message.guild.id).then(async res => {
+            console.log(res.tags)
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
