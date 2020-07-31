@@ -61,7 +61,7 @@ module.exports = {
                 userTag: user.tag,
                 modId: message.author.id,
                 modTag: message.author.tag,
-                reason: reason,
+                reason: note,
                 happenedAt: Date.now()
             });
             utils.saveDB(res).catch(err => console.error(err));
