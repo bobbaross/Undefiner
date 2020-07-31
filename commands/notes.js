@@ -55,7 +55,7 @@ module.exports = {
             var pages = await utils.getPages(notesArr, args[0]);
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setTitle(`Notes\n${member.user.tag}`)
+            .setTitle(`Notes`)
             for (let item of pages.pages) {
                 embed.addField(`${item.id}`, `**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n**Member**: ${client.users.cache.get(item.userId) ? client.users.cache.get(item.userId).tag : item.userTag}\n${item.reason}`);
             }
