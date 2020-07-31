@@ -46,7 +46,9 @@ module.exports = {
                         return message.channel.send(embed).catch(err => err);
                     }
                     if (client.commands.get(name.toLowerCase())) {
-
+                        embed = new MessageEmbed()
+                        .setDescription(`Mate, I am not gonna let you create that tag.\n${this.name} ${this.usage}`);
+                        return message.channel.send(embed).catch(err => err);
                     }
                     resTag = res.tags.find(tag => tag.name === name.toLowerCase());
                     if (resTag) {
