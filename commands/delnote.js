@@ -5,7 +5,7 @@ const {branding} = require('../config.json').colors;
 module.exports = {
     name: "delnote",
     description: "Delete a note from a member.",
-    usage: "<member> <noteid>",
+    usage: "<noteid>",
     aliases: [],
     category: "moderation",
     guildOnly: true,
@@ -26,25 +26,6 @@ module.exports = {
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
                 return message.channel.send(embed).catch(err => err);
             }
-            if (!args[0]) {
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me who's notes you want to see.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            var user = await utils.getUser(args[0]);
-            if (!user) {
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            var member = message.guild.member(user);
-            await member;
-            if (!member) {
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            await args.shift();
             var noteId = args[0];
             if (!noteId) {
                 let embed = new MessageEmbed()
