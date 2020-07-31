@@ -60,8 +60,8 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle(`Notes\n${member.user.tag}`)
-            for (let item of pages.pages) {
-                embed.addField(`${item.id}`, `**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n${item.reason}`);
+            for (i=0;i<pages.pages.length;i++) {
+                embed.addField(`${pages.pages[i].id}`, `**Moderator**: ${client.users.cache.get(pages.pages[i].modId) ? client.users.cache.get(pages.pages[i].modId).tag : pages.pages[i].modTag}\n${pages.pages[i].reason}`);
             }
             embed.setFooter(`Page ${pages.amount}`);
             return message.channel.send(embed).catch(err => err);
