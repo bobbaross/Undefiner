@@ -56,7 +56,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             if (!args[0]) args[0] = "0";
-            var pages = await getPages(notesArr, args[0]);
+            var pages = await utils.getPages(notesArr, args[0]);
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle(`Notes\n${member.user.tag}`)
