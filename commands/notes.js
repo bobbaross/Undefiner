@@ -55,7 +55,7 @@ module.exports = {
                 .setDescription(`No notes found for ${member.user.tag}`)
                 return message.channel.send(embed).catch(err => err);
             }
-            if (!args[0]) args[0] = "0";
+            if (!args[0] || args[0] && args[0] <= 0) args[0] = 1;
             var pages = await utils.getPages(notesArr, args[0]);
             console.log(pages)
             let embed = new MessageEmbed()
