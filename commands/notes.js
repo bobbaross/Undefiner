@@ -4,8 +4,8 @@ const {branding} = require('../config.json').colors;
 
 module.exports = {
     name: "notes",
-    description: "Display the notes of a member.",
-    usage: "<member> [page]",
+    description: "Display the notes of a member or the entire server.",
+    usage: "[member] [page]",
     aliases: [],
     category: "moderation",
     guildOnly: true,
@@ -26,33 +26,29 @@ module.exports = {
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
                 return message.channel.send(embed).catch(err => err);
             }
-            if (!args[0]) {
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me who's notes you want to see.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
+            var notesArr = [];
             var user = await utils.getUser(args[0]);
             if (!user) {
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            var member = message.guild.member(user);
-            await member;
-            if (!member) {
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
-            }
-            await args.shift();
-            var notesArr = [];
-            for (let noteInstance of res.notes) {
-                if (noteInstance.userId === member.user.id) notesArr.push(noteInstance);
+                for (let note of res.notes) {
+                    notesArr.push(note);
+                }
+            } else {
+                var member = message.guild.member(user);
+                await member;
+                if (!member) {
+                    let embed = new MessageEmbed()
+                    .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => err);
+                }
+                await args.shift();
+                for (let noteInstance of res.notes) {
+                    if (noteInstance.userId === member.user.id) notesArr.push(noteInstance);
+                }
             }
             if (notesArr <= 0) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
-                .setDescription(`No notes found for ${member.user.tag}`)
+                .setDescription(`No notes found.`)
                 return message.channel.send(embed).catch(err => err);
             }
             if (!args[0] || args[0] && args[0] <= 0) args[0] = 1;
@@ -61,7 +57,7 @@ module.exports = {
             .setColor(branding)
             .setTitle(`Notes\n${member.user.tag}`)
             for (let item of pages.pages) {
-                embed.addField(`${item.id}`, `**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n${item.reason}`);
+                embed.addField(`${item.id}`, `**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n**Member**: ${client.users.cache.get(item.userId) ? client.users.cache.get(item.userId).tag : item.userTag}\n${item.reason}`);
             }
             embed.setFooter(`Page ${pages.amount}`);
             return message.channel.send(embed).catch(err => err);
