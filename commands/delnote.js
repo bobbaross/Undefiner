@@ -1,14 +1,13 @@
-const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
+const {MessageEmbed} = require ('discord.js');
+const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
-const uniqid = require('uniqid');
 
 module.exports = {
-    name: "note",
-    description: "Add a note to a member.",
+    name: "delnote",
+    description: "Delete a note from a member.",
+    usage: "<member> <noteid>",
     aliases: [],
     category: "moderation",
-    usage: "<member> <note>",
     guildOnly: true,
 
     async undefine(client, message, args) {
@@ -29,7 +28,7 @@ module.exports = {
             }
             if (!args[0]) {
                 let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me who to note.\n${this.name} ${this.usage}`);
+                .setDescription(`Now you see, there is something called telling me who's notes you want to see.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
             var user = await utils.getUser(args[0]);
@@ -46,26 +45,25 @@ module.exports = {
                 return message.channel.send(embed).catch(err => err);
             }
             await args.shift();
-            var note = args.slice(0).join(' ');
-            if (!note) {
+            var noteId = args[0];
+            if (!noteId) {
                 let embed = new MessageEmbed()
-                .setDescription(`I hope you don't mind me asking but... What is the note?\n${this.name} ${this.usage}`);
+                .setDescription(`Mind telling me the note id?\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
+            var note = res.notes.find(n => n.id === noteId);
+            if (!note) {
+                let embed = new MessageEmbed()
+                .setDescription(`That is not a real note id.\n${this.name} ${this.usage}`);
+                return message.channel.send(embed).catch(err => err);
+            }
+            let index = res.notes.indexOf(note);
+            res.notes.splice(index,1);
+            utils.saveDB(res).catch(err => console.error(err));
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setDescription(`Successfully added note for ${user.tag}`);
-            message.channel.send(embed).catch(err => err);
-            res.notes.push({
-                id: uniqid("note-(", ")"),
-                userId: user.id,
-                userTag: user.tag,
-                modId: message.author.id,
-                modTag: message.author.tag,
-                reason: note,
-                happenedAt: Date.now()
-            });
-            utils.saveDB(res).catch(err => console.error(err));
+            .setDescription(`Successfully deleted note with id ${note.id} and value ${note.reason}`)
+            return message.channel.send(embed).catch(err => err);
         });
     }
 }

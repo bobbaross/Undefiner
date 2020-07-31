@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
-const {severe} = require('../config.json').colors;
+const {severe,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -70,6 +70,7 @@ module.exports = {
                 user.send(dmEmbed).catch(err => err);
             }
             let embed = new MessageEmbed()
+            .setColor(branding)
             .setDescription(`${user.tag} has been warned. ${res.settings.withReason === true ? reason : ""}`);
             message.channel.send(embed).catch(err => err);
             var embedId;

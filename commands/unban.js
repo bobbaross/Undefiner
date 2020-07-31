@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
-const {good} = require('../config.json').colors;
+const {good,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -53,6 +53,7 @@ module.exports = {
                 res.cases++;
                 message.guild.members.unban(userId).then(async () => {
                     let embed = new MessageEmbed()
+                    .setColor(branding)
                     .setDescription(`${userId} has been unbanned. ${res.settings.withReason === true ? reason : ""}`);
                     message.channel.send(embed).catch(err => err);
                 var embedId;
@@ -61,7 +62,7 @@ module.exports = {
                     if (res.settings.modLogs === "there") modLogsChan = message.channel;
                     embedId = await new Promise(resolve => {
                         let modLogEmbed = new MessageEmbed()
-                        .setColor(bad)
+                        .setColor(good)
                         .setTitle(`Member Unbanned | Case #${res.cases}`)
                         .addField(`Member`, userId, true)
                         .addField(`Moderator`, message.author.tag, true)

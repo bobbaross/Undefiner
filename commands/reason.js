@@ -68,6 +68,7 @@ module.exports = {
 
                 msg.edit(newEmbed).then(() => {
                     let embed = new MessageEmbed()
+                    .setColor(branding)
                     .setDescription(`Case #${modCase.case} has been updated.`);
                     message.channel.send(embed).catch(err => err);
                 }).catch(err => console.error(err));

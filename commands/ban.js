@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
-const {bad} = require('../config.json').colors;
+const {bad,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -102,6 +102,7 @@ module.exports = {
                     await utils.saveDB(activeBans).catch(err => console.error(err));
                 });
                 let embed = new MessageEmbed()
+                .setColor(branding)
                 .setDescription(`${user.tag} has been banned. ${res.settings.withReason === true ? reason : ""}`);
                 message.channel.send(embed).catch(err => err);
                 var embedId;

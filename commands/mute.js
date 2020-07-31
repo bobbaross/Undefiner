@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
-const {bad} = require('../config.json').colors;
+const {dangerous,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -114,7 +114,7 @@ module.exports = {
             if (time-Date.now() < 0) duration = null;
             if (res.settings.dmOnPunished === true) {
                 let dmEmbed = new MessageEmbed()
-                .setColor(bad)
+                .setColor(dangerous)
                 .setTitle(`You've been muted in ${message.guild.name}, here is a copy of the log!\nMember Muted | Case #${res.cases}`)
                 .addField(`Member`, member.user.tag, true)
                 .addField(`Moderator`, message.author.tag, true)
@@ -137,6 +137,7 @@ module.exports = {
                     await utils.saveDB(activeMutes).catch(err => console.error(err));
                 });
                 let embed = new MessageEmbed()
+                .setColor(branding)
                 .setDescription(`${user.tag} has been muted. ${res.settings.withReason === true ? reason : ""}`);
                 message.channel.send(embed).catch(err => err);
                 var embedId;
@@ -145,7 +146,7 @@ module.exports = {
                     if (res.settings.modLogs === "there") modLogsChan = message.channel;
                     embedId = await new Promise(resolve => {
                         let modLogEmbed = new MessageEmbed()
-                        .setColor(bad)
+                        .setColor(dangerous)
                         .setTitle(`Member Muted | Case #${res.cases}`)
                         .addField(`Member`, member.user.tag, true)
                         .addField(`Moderator`, message.author.tag, true)

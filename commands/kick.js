@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
-const {dangerous} = require('../config.json').colors;
+const {dangerous,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -86,6 +86,7 @@ module.exports = {
             }
             member.kick(`Kicked by ${message.author.tag} with reason: ${reason}`).then(async () => {
                 let embed = new MessageEmbed()
+                .setColor(branding)
                 .setDescription(`${user.tag} has been kicked. ${res.settings.withReason === true ? reason : ""}`);
                 message.channel.send(embed).catch(err => err);
                 var embedId;

@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
-const {good} = require('../config.json').colors;
+const {good,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -117,6 +117,7 @@ module.exports = {
             }
             member.roles.remove(mutedRole.id, `Unmuted by ${message.author.tag} with reason: ${reason}`).then(async () => {
                 let embed = new MessageEmbed()
+                .setColor(branding)
                 .setDescription(`${user.tag} has been unmuted. ${res.settings.withReason === true ? reason : ""}`);
                 message.channel.send(embed).catch(err => err);
                 var embedId;
