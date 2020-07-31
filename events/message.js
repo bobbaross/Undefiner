@@ -30,7 +30,7 @@ module.exports = (client, message) => {
             if (!message.member.hasPermission("MANAGE_MESSAGES") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) return;
             let args = message.content.slice(res.prefix.length).split(/ +/);
             let tagName = args.shift();
-            let tag = res.tags.find(t => t.name = tagName);
+            let tag = res.tags.find(t => t.name === tagName);
             if (!tag.value) return;
             let embed;
             switch(tag.name) {
