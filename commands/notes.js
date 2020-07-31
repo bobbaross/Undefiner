@@ -47,7 +47,7 @@ module.exports = {
             await args.shift();
             var notesArr = [];
             for (let noteInstance of res.notes) {
-                if (noteInstance.userId === member.user.id) notesArr.push(notesArr);
+                if (noteInstance.userId === member.user.id) notesArr.push(noteInstance);
             }
             if (notesArr <= 0) {
                 let embed = new MessageEmbed()
