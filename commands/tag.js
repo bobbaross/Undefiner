@@ -45,7 +45,10 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    resTag = res.tags.find(tag => tag.name === name);
+                    if (client.commands.get(name.toLowerCase())) {
+
+                    }
+                    resTag = res.tags.find(tag => tag.name === name.toLowerCase());
                     if (resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag already exist! I am not create another tag of one that already exist!\n${this.name} ${this.usage}`);
@@ -58,7 +61,7 @@ module.exports = {
                         return message.channel.send(embed).catch(err => err);
                     }
                     res.tags.push({
-                        name: name,
+                        name: name.toLowerCase(),
                         value: value,
                         color: branding
                     });
@@ -79,7 +82,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    resTag = res.tags.find(tag => tag.name === name);
+                    resTag = res.tags.find(tag => tag.name === name.toLowerCase());
                     if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
@@ -103,7 +106,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    resTag = res.tags.find(tag => tag.name === name);
+                    resTag = res.tags.find(tag => tag.name === name.toLowerCase());
                     if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
@@ -159,7 +162,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    resTag = res.tags.find(tag => tag.name === name);
+                    resTag = res.tags.find(tag => tag.name === name.toLowerCase());
                     if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
