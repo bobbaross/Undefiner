@@ -1,6 +1,7 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
 const {severe} = require('../config.json').colors;
+const uniqid = require('uniqid');
 
 module.exports = {
     name: "note",
@@ -28,7 +29,7 @@ module.exports = {
             }
             if (!args[0]) {
                 let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me who to warn.\n${this.name} ${this.usage}`);
+                .setDescription(`Now you see, there is something called telling me who to note.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => err);
             }
             var user = await utils.getUser(args[0]);
@@ -55,6 +56,7 @@ module.exports = {
             .setDescription(`Successfully added note for ${user.tag}`);
             message.channel.send(embed).catch(err => err);
             res.notes.push({
+                id: uniqid("note-(", ")"),
                 userId: user.id,
                 userTag: user.tag,
                 modId: message.author.id,

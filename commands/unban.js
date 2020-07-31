@@ -1,6 +1,7 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
 const {good} = require('../config.json').colors;
+const uniqid = require('uniqid');
 
 module.exports = {
     name: "unban",
@@ -74,6 +75,7 @@ module.exports = {
                 }
                 res.modCases.push({
                     type: "Unban",
+                    id: uniqid("unban-(", ")"),
                     case: res.cases,
                     userId: userId,
                     modId: message.author.id,

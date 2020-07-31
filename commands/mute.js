@@ -1,6 +1,7 @@
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions.js');
 const {bad} = require('../config.json').colors;
+const uniqid = require('uniqid');
 
 module.exports = {
     name: "mute",
@@ -158,6 +159,7 @@ module.exports = {
                 }
                 res.modCases.push({
                     type: "Mute",
+                    id: uniqid("mute-(", ")"),
                     case: res.cases,
                     userId: user.id,
                     userTag: user.tag,

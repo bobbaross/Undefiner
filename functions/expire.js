@@ -1,6 +1,7 @@
 const {MessageEmbed} = require('discord.js');
 const {good} = require('../config.json').colors;
 const { Utils } = require('./functions');
+const uniqid = require('uniqid');
 
 class Expire {
     constructor (client) {
@@ -36,6 +37,7 @@ class Expire {
                     }
                     res.modCases.push({
                         type: "Unmute",
+                        id: uniqid("unmute-(", ")"),
                         case: res.cases,
                         userId: member.user.id,
                         userTag: member.user.tag,
@@ -79,6 +81,7 @@ class Expire {
                     }
                     res.modCases.push({
                         type: "Unban",
+                        id: uniqid("unban-(", ")"),
                         case: res.cases,
                         userId: member.user.id,
                         userTag: member.user.tag,
