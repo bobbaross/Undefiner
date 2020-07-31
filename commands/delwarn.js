@@ -3,10 +3,10 @@ const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
-    name: "delwarning",
+    name: "delwarn",
     description: "Delete a warning from a member.",
     usage: "<warningid>",
-    aliases: [],
+    aliases: ['delwarning'],
     category: "moderation",
     guildOnly: true,
 
