@@ -3,10 +3,10 @@ const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
-    name: "settings",
-    description: "Change the settings for your server.",
-    usage: "<setting> <value>",
-    aliases: ["config", "configs", "setting"],
+    name: "prefix",
+    description: "Change the prefix for your server.",
+    usage: "<value>",
+    aliases: ["setprefix"],
     category: "manager",
     guildOnly: true,
 
@@ -41,17 +41,17 @@ module.exports = {
             getDB(message.guild.id).then(async res => {
                 if (!res) {
                     res = await createDB(message.guild.id);
-                    await saveDB(res);
+
                 }
                 var embed;
-                let newPrefix = args[0];
+                let newPrefix = args.join(' ');
                 if (!newPrefix) {
                     embed = new MessageEmbed()
                     .setDescription(`I uhh... So what are we changing the prefix to again?\n${this.name} ${this.usage}`);
                     return message.channel.send(embed).catch(err => err);
                 }
                 if (newPrefix.length > 10) return;
-                let oldPrefix = await res.prefix;
+                let oldPrefix = res.prefix;
                 res.prefix = newPrefix;
                 saveDB(res).then(() => {
                     embed = new MessageEmbed()
