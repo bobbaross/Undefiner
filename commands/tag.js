@@ -35,6 +35,8 @@ module.exports = {
             let value;
             let oldValue;
             let embed;
+            let resTag = res.tags.find(tag => tag.name = name);
+            let index;
             switch(doing.toLowerCase()) {
                 case "create":
                     name = args.shift();
@@ -43,7 +45,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    if (res.tags[name.toLowerCase()]) {
+                    if (resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag already exist! I am not create another tag of one that already exist!\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
@@ -54,10 +56,11 @@ module.exports = {
                         .setDescription(`Hey, mind telling me what the tag is gonna say?\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    res.tags[name.toLowerCase()] = {
+                    res.tags.push({
+                        name: name,
                         value: value,
                         color: branding
-                    }
+                    });
 
                     utils.saveDB(res).catch(err => console.error(err));
 
@@ -75,13 +78,14 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    if (!tagJson.tags[name.toLowerCase()]) {
+                    if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    value = res.tags[name.toLowerCase()].value;
-                    delete res.tags[name.toLowerCase()];
+                    value = resTag.value;
+                    index = res.tags.indexOf(resTag);
+                    res.tags.splice(index,1);
                     utils.saveDB(res).catch(err => console.error(err));
                     embed = new MessageEmbed()
                     .setColor(branding)
@@ -97,7 +101,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    if (!tagJson.tags[name.toLowerCase()]) {
+                    if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
@@ -110,9 +114,11 @@ module.exports = {
                     }
                     switch(item.toLowerCase()) {
                         case "value":
-                            oldValue = res.tags[name.toLowerCase()].value;
+                            oldValue = resTag.value;
                             value = args.join(' ');
-                            res.tags[name.toLowerCase()].value = value;
+                            index = res.tags.indexOf(resTag);
+                            resTag.value = value;
+                            res.tags.splice(index,1,resTag);
                             utils.saveDB(res).catch(err => console.error(err));
                             embed = new MessageEmbed()
                             .setColor(branding)
@@ -122,10 +128,12 @@ module.exports = {
                             message.channel.send(embed);
                             break;
                         case "color":
-                            oldValue = res.tags[name.toLowerCase()].color;
+                            oldValue = resTag.color;
                             value = args[0];
                             if (value && value.toLowerCase() === "random") value = "RANDOM";
-                            res.tags[name.toLowerCase()].color = value;
+                            index = res.tags.indexOf(resTag);
+                            resTag.color = value;
+                            res.tags.splice(index,1,resTag);
                             utils.saveDB(res).catch(err => console.error(err))
                             embed = new MessageEmbed()
                             .setColor(branding)
@@ -148,23 +156,25 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    if (!tagJson.tags[name.toLowerCase()]) {
+                    if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
-                    let tag = res.tags[name.toLowerCase()];
                     embed = new MessageEmbed()
-                    .setColor(tag.color)
+                    .setColor(resTag.color)
                     utils.setCleanTitle(message, embed, name)
-                    embed.setDescription(`${tag.value}`)
+                    embed.setDescription(`${resTag.value}`)
 
                     message.channel.send(embed).then(msg => {
                         if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}${embed}`);
                     });
                     break;
                 case "list":
-                    let tags = Object.keys(res.tags);
+                    let tags = [];
+                    for (let tagInstance of res.tags) {
+                        tags.push(tagInstance.name);
+                    }
                     embed = new MessageEmbed()
                     .setColor("RANDOM")
                     .setTitle("Tags")
@@ -173,7 +183,8 @@ module.exports = {
                     message.channel.send(embed);
                     break;
                 default:
-                    embed = new MessageEmbed().setColor("RANDOM").setTitle(`Syntax Error\n${this.name.slice(0,1).toUpperCase()+this.name.slice(1)}`).setDescription(`${this.description}\n\nThis isn't a method.`).addField(`Usage`, prefix+this.name+' '+this.usage)
+                    embed = new MessageEmbed()
+                    .setDescription(`Hey! This isn't a method!\n${this.name} ${this.usage}`)
                     return message.channel.send(embed);
             }
         });

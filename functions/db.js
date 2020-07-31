@@ -14,7 +14,7 @@ const Schema = new mongoose.Schema({
     adminRoles: [String],
     afkMembers: [Object],
     disabledCommands: [String],
-    tags: Object,
+    tags: [Object],
     settings: {mutedRole: String, modLogs: String, withReason: Boolean, deleteModCommands: Boolean, dmOnPunish: Boolean},
     notes: [Object]
 });
