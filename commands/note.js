@@ -64,7 +64,7 @@ module.exports = {
                 reason: reason,
                 happenedAt: Date.now()
             });
-            await utils.saveDB(res).catch(err => console.error(err));
+            utils.saveDB(res).catch(err => console.error(err));
         });
     }
 }
