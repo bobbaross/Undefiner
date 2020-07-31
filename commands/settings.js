@@ -22,7 +22,7 @@ module.exports = {
                 });
             });
             await Promise.all(oMem);
-            const errEmbed = new Discord.MessageEmbed()
+            const errEmbed = new MessageEmbed()
             .setColor('#ff0000')
             .setAuthor(`${message.author.tag}`, message.author.avatarURL)
             .setTitle(`Error`)
