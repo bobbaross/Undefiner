@@ -29,8 +29,8 @@ module.exports = {
             var warningsArr = [];
             var user = await utils.getUser(args[0]);
             if (!user) {
-                for (let warning of res.warnings) {
-                    warningsArr.push(warning);
+                for (let warning of res.modCases) {
+                    if (warning.type === "Warning") warningsArr.push(warning);
                 }
             } else {
                 var member = message.guild.member(user);
