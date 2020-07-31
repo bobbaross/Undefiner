@@ -57,12 +57,10 @@ module.exports = {
             }
             if (!args[0] || args[0] && args[0] <= 0) args[0] = 1;
             var pages = await utils.getPages(notesArr, args[0]);
-            console.log(pages)
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle(`Notes\n${member.user.tag}`)
             for (let item of pages.pages) {
-                console.log(item)
                 embed.addField(`${item.id}`, `**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n${item.reason}`);
             }
             embed.setFooter(`Page ${pages.amount}`);
