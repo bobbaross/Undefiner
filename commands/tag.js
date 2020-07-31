@@ -35,7 +35,7 @@ module.exports = {
             let value;
             let oldValue;
             let embed;
-            let resTag = res.tags.find(tag => tag.name = name);
+            let resTag;
             let index;
             switch(doing.toLowerCase()) {
                 case "create":
@@ -45,6 +45,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
+                    resTag = res.tags.find(tag => tag.name === name);
                     if (resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag already exist! I am not create another tag of one that already exist!\n${this.name} ${this.usage}`);
@@ -78,6 +79,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
+                    resTag = res.tags.find(tag => tag.name === name);
                     if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
@@ -101,6 +103,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
+                    resTag = res.tags.find(tag => tag.name === name);
                     if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
@@ -156,6 +159,7 @@ module.exports = {
                         .setDescription(`:clap: give :clap: me :clap: a :clap: name :clap:\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => err);
                     }
+                    resTag = res.tags.find(tag => tag.name === name);
                     if (!resTag) {
                         embed = new MessageEmbed()
                         .setDescription(`But... This tag doesn't exist!\n${this.name} ${this.usage}`);
