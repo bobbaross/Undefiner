@@ -31,7 +31,7 @@ module.exports = (client, message) => {
             let args = message.content.slice(res.prefix.length).split(/ +/);
             let tagName = args.shift();
             let tag = res.tags.find(t => t.name = tagName);
-            if (!tag) return;
+            if (!tag.value) return;
             let embed;
             switch(tag.name) {
                 case "rule":
