@@ -183,7 +183,6 @@ module.exports = {
                     let tags = [];
                     for (let tagInstance of res.tags) {
                         tags.push(tagInstance.name);
-                        console.log(tagInstance)
                     }
                     embed = new MessageEmbed()
                     .setColor(branding)
