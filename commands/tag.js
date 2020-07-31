@@ -171,7 +171,11 @@ module.exports = {
                     });
                     break;
                 case "list":
-                    let tags = res.tags.map(tags => tags.name);
+                    let tags = [];
+                    for (let tagInstance of res.tags) {
+                        tags.push(tagInstance.name);
+                        console.log(tagInstance)
+                    }
                     embed = new MessageEmbed()
                     .setColor(branding)
                     .setTitle("Tags")
