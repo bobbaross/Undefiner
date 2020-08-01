@@ -25,6 +25,7 @@ module.exports = {
         var argCmd = args[0];
         if (argCmd) argCmd = argCmd.toLowerCase();
         let command = client.commands.get(argCmd) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(argCmd));
+        console.log(command);
         if (!command) {
             var commands = {
                 manager: [],
