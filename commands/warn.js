@@ -88,7 +88,13 @@ module.exports = {
                     .setTimestamp()
                     modLogsChan.send(modLogEmbed).then(msg => {
                         resolve(msg.id);
-                    }).catch(err => err);
+                    }).catch(err => {
+                        modLogsChan.send(`**Member Warned** | Case #${res.cases}
+                        **Member**: ${member.user.tag}
+                        **Moderator**: ${message.author.tag}
+                        **Reason**: ${reason}
+                        ${user.id}`).catch(error => error);
+                    });;
                 });
             }
             res.modCases.push({

@@ -60,7 +60,39 @@ module.exports = {
                 embed.addField(`${item.id}`, `**Case**: ${item.case}\n**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n**Member**: ${client.users.cache.get(item.userId) ? client.users.cache.get(item.userId).tag : item.userTag}\n${item.reason}\n**Happened at**: ${new Date(item.happenedAt).toString().slice(0,-40)}`);
             }
             embed.setFooter(`Page ${pages.amount}`);
-            return message.channel.send(embed).catch(err => err);
+            return message.channel.send(embed).catch(err => {
+                message.channel.send(`**Cases**
+                **${pages.pages[0].id}**
+                **Case**: ${pages.pages[0].case}
+                **Moderator**: ${client.users.cache.get(pages.pages[0].modId) ? client.users.cache.get(pages.pages[0].modId).tag : pages.pages[0].modTag}
+                **Member**: ${client.users.cache.get(pages.pages[0].userId) ? client.users.cache.get(pages.pages[0].userId).tag : pages.pages[0].userTag}
+                ${item.reason}
+                **Happened at**: ${new Date(pages.pages[0].happenedAt).toString().slice(0,-40)}
+                **${pages.pages[1].id}**
+                **Case**: ${pages.pages[1].case}
+                **Moderator**: ${client.users.cache.get(pages.pages[1].modId) ? client.users.cache.get(pages.pages[1].modId).tag : pages.pages[1].modTag}
+                **Member**: ${client.users.cache.get(pages.pages[1].userId) ? client.users.cache.get(pages.pages[1].userId).tag : pages.pages[1].userTag}
+                ${item.reason}
+                **Happened at**: ${new Date(pages.pages[1].happenedAt).toString().slice(0,-40)}
+                **${pages.pages[2].id}**
+                **Case**: ${pages.pages[2].case}
+                **Moderator**: ${client.users.cache.get(pages.pages[2].modId) ? client.users.cache.get(pages.pages[2].modId).tag : pages.pages[2].modTag}
+                **Member**: ${client.users.cache.get(pages.pages[2].userId) ? client.users.cache.get(pages.pages[2].userId).tag : pages.pages[2].userTag}
+                ${item.reason}
+                **Happened at**: ${new Date(pages.pages[2].happenedAt).toString().slice(0,-40)}
+                **${pages.pages[3].id}**
+                **Case**: ${pages.pages[3].case}
+                **Moderator**: ${client.users.cache.get(pages.pages[3].modId) ? client.users.cache.get(pages.pages[3].modId).tag : pages.pages[3].modTag}
+                **Member**: ${client.users.cache.get(pages.pages[3].userId) ? client.users.cache.get(pages.pages[3].userId).tag : pages.pages[3].userTag}
+                ${item.reason}
+                **Happened at**: ${new Date(pages.pages[3].happenedAt).toString().slice(0,-40)}
+                **${pages.pages[4].id}**
+                **Case**: ${pages.pages[4].case}
+                **Moderator**: ${client.users.cache.get(pages.pages[4].modId) ? client.users.cache.get(pages.pages[4].modId).tag : pages.pages[4].modTag}
+                **Member**: ${client.users.cache.get(pages.pages[4].userId) ? client.users.cache.get(pages.pages[4].userId).tag : pages.pages[4].userTag}
+                ${item.reason}
+                **Happened at**: ${new Date(pages.pages[4].happenedAt).toString().slice(0,-40)}`).catch(error => error);
+            });
         });
     }
 }

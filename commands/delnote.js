@@ -44,7 +44,9 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully deleted note with id ${note.id} and value ${note.reason}`)
-            return message.channel.send(embed).catch(err => err);
+            return message.channel.send(embed).catch(err => {
+                message.channel.send(`Successfully deleted note with id ${note.id} and value ${note.reason}`).catch(error => error);
+            });
         });
     }
 }

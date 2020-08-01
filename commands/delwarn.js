@@ -44,7 +44,9 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully deleted warning with id ${warning.id} and value ${warning.reason}`)
-            return message.channel.send(embed).catch(err => err);
+            return message.channel.send(embed).catch(err => {
+                message.channel.send(`Successfully deleted warning with id ${warning.id} and value ${warning.reason}`).catch(error => error);
+            });
         });
     }
 }

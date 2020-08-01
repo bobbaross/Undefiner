@@ -44,7 +44,9 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully deleted Mod Case with id ${Case.id} and reason ${Case.reason}`)
-            return message.channel.send(embed).catch(err => err);
+            return message.channel.send(embed).catch(err => {
+                message.channel.send(`Successfully deleted Mod Case with id ${Case.id} and value ${Case.reason}`).catch(error => error);
+            });
         });
     }
 }

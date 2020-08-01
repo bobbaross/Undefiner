@@ -28,7 +28,9 @@ module.exports = {
             .setDescription(`As you do not have permission to do this, please contact one of the following people to do this:\n${oMem.join(' | ')}`)
             .setTimestamp()
 
-            return message.channel.send(errEmbed).catch(err => err);
+            return message.channel.send(errEmbed).catch(err => {
+                message.channel.send(`As you do not have permission to do this, please contact one of the following people to do this:\n${oMem.join(' | ')}`).catch(error => error);
+            });
             }
             return errbed();
         }

@@ -55,7 +55,9 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully added note for ${user.tag}`);
-            message.channel.send(embed).catch(err => err);
+            message.channel.send(embed).catch(err => {
+                message.channel.send(`Successfully added note for ${user.tag}`).catch(error => error);
+            });
             res.notes.push({
                 id: uniqid("note-(", ")"),
                 userId: user.id,
