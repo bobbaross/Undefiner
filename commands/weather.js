@@ -52,7 +52,7 @@ module.exports = {
                 }
                 message.channel.send(`${embed.description}
 ${fields.join('\n\n')}
-${embed.thumbnail}`).catch(err => err);
+${embed.thumbnail.url}`).catch(err => err);
             });
         });
     }
