@@ -35,7 +35,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
             .setDescription(`**${current.skytext}**`)
-            .setAuthor(`Weather for ${current.observationpoint}`)
+            .setTitle(`Weather for ${current.observationpoint}`)
             .setThumbnail(current.imageUrl)
             .setColor(branding)
             .addField('Timezone', `UTC${location.timezone}`, true)
@@ -50,7 +50,8 @@ module.exports = {
                 for (i=0;i<embed.fields.length;i++) {
                     fields.push(`**${embed.fields[i].name}**: ${embed.fields[i].value}`);
                 }
-                message.channel.send(`${embed.description}
+                message.channel.send(`${embed.title}
+${embed.description}
 ${fields.join('\n\n')}`).catch(err => err);
             });
         });
