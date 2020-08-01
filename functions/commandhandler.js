@@ -1,14 +1,14 @@
 const {Utils} = require('./functions.js');
 
-async function commandHandler(client, message, prefix) {
+async function commandHandler(client, message, prefix, disabledCommands) {
     if (!message.content.toLowerCase().startsWith(prefix) || message.author.bot) return;
     var args = message.content.slice(prefix.length).split(/ +/);
-    var commandName = args.shift();
+    var commandName = args.shift().toLowerCase();
     var command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
     if (!command) return;
     if (command.guildOnly === true && message.channel.type === 'dm') return;
-
+    if (disabledCommands && disabledCommands.includes(commandName)) return;
     try {
         command.undefine(client, message, args);
     } catch (error) {

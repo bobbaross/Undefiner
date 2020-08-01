@@ -1,27 +1,27 @@
 const Discord = require('discord.js');
 const { Utils } = require(`../functions/functions.js`);
 
-module.exports = (client, message) => {
+module.exports = (client, oldMessage, newMessage) => {
     utils = new Utils(client);
     async function commands() {
         var { commandHandler } = require('../functions/commandhandler.js');
-        if (message.channel.type === 'dm') {
-            commandHandler(client, message, "undefine ", null).catch(err => console.error(err));
+        if (newMessage.channel.type === 'dm') {
+            commandHandler(client, newMessage, "undefine ", null).catch(err => console.error(err));
         } else {
-            utils.getDB(message.guild.id).then(res => {
+            utils.getDB(newMessage.guild.id).then(res => {
                 if (res && res.prefix) var prefix = res.prefix;
                 else var prefix = "undefine ";
                 if (res && res.disabledCommands) var disabledCommands = res.disabledCommands;
                 else var disabledCommands = null;
-                commandHandler(client, message, prefix, disabledCommands).catch(err => console.error(err));
+                commandHandler(client, newMessage, prefix, disabledCommands).catch(err => console.error(err));
             });
         }
     }
     async function tags() {
-        if (message.channel.type === 'dm') return;
-        utils.getDB(message.guild.id).then(res => {
+        if (newMessage.channel.type === 'dm') return;
+        utils.getDB(newMessage.guild.id).then(res => {
             if (!res) return;
-            if (!message.content.toLowerCase().startsWith(res.prefix) || message.author.bot) return;
+            if (!newMessage.content.toLowerCase().startsWith(res.prefix) || newMessage.author.bot) return;
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -29,8 +29,8 @@ module.exports = (client, message) => {
             for (let role of res.adminRoles) {
                 bypassRoles.push(role);
             }
-            if (!message.member.hasPermission("MANAGE_MESSAGES") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) return;
-            let args = message.content.slice(res.prefix.length).split(/ +/);
+            if (!newMessage.member.hasPermission("MANAGE_MESSAGES") && !newMessage.member.roles.cache.some(r => bypassRoles.includes(r.id))) return;
+            let args = newMessage.content.slice(res.prefix.length).split(/ +/);
             let tagName = args.shift();
             let tag = res.tags.find(t => t.name === tagName);
             if (!tag) return;
@@ -44,21 +44,21 @@ module.exports = (client, message) => {
                     let ruleTag = tag[rule];
                     embed = new Discord.MessageEmbed()
                     .setColor(ruleTag.color)
-                    utils.setCleanTitle(message, embed, tagName)
+                    utils.setCleanTitle(newMessage, embed, tagName)
                     embed.setDescription(`${ruleTag.value}\n    ${ruleTag[section]}`)
 
-                    message.channel.send(embed).then(msg => {
-                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`);
+                    newMessage.channel.send(embed).then(msg => {
+                        if (message.mentions.users.first()) msg.edit(`${newMessage.mentions.users.first()}`);
                     });
                 break;
                 default:
                     embed = new Discord.MessageEmbed()
                     .setColor(tag.color)
-                    utils.setCleanTitle(message, embed, tagName)
+                    utils.setCleanTitle(newMessage, embed, tagName)
                     embed.setDescription(`${tag.value}`)
 
-                    message.channel.send(embed).then(msg => {
-                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`);
+                    newMessage.channel.send(embed).then(msg => {
+                        if (newMessage.mentions.users.first()) msg.edit(`${newMessage.mentions.users.first()}`);
                     });
             }
         });
