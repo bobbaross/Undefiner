@@ -8,8 +8,7 @@ module.exports = {
     usage: "<C/F> <city name>",
     aliases: [],
     category: "miscellaneous",
-
-
+    
     async undefine(client, message, args) {
         utils = new Utils(client);
     }

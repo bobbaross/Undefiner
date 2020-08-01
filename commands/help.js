@@ -54,7 +54,7 @@ module.exports = {
 
             return message.channel.send(embed).catch(err => {
                 message.channel.send(`**Help**
-                <> = required | [] = optional\n${prefix}${this.name} ${this.usage}
+<> = required | [] = optional\n${prefix}${this.name} ${this.usage}
 **Manager**: ${commands.manager.join(', ')}
 **Moderation**: ${commands.moderation.join(', ')}
 **Information**: ${commands.information.join(', ')}
