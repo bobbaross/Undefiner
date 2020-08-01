@@ -3,8 +3,8 @@ const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
-    name: "warnings",
-    description: "Display the warnings of a member or the entire server.",
+    name: "cases",
+    description: "Display the cases of a member or the entire server.",
     usage: "[member] [page]",
     aliases: [],
     category: "moderation",
@@ -26,11 +26,11 @@ module.exports = {
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
                 return message.channel.send(embed).catch(err => err);
             }
-            var warningsArr = [];
+            var casesArr = [];
             var user = await utils.getUser(args[0]);
             if (!user) {
-                for (let warning of res.modCases) {
-                    if (warning.type === "Warning") warningsArr.push(warning);
+                for (let Case of res.modCases) {
+                    casesArr.push(Case);
                 }
             } else {
                 var member = message.guild.member(user);
@@ -41,21 +41,21 @@ module.exports = {
                     return message.channel.send(embed).catch(err => err);
                 }
                 await args.shift();
-                for (let warningInstance of res.modCases) {
-                    if (warningInstance.userId === member.user.id && warningInstance.type === "Warning") warningsArr.push(warningInstance);
+                for (let caseInstance of res.modCases) {
+                    if (caseInstance.userId === member.user.id) casesArr.push(caseInstance);
                 }
             }
-            if (warningsArr <= 0) {
+            if (casesArr <= 0) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
-                .setDescription(`No warnings found.`)
+                .setDescription(`No cases found.`)
                 return message.channel.send(embed).catch(err => err);
             }
             if (!args[0] || args[0] && args[0] <= 0) args[0] = 1;
-            var pages = await utils.getPages(warningsArr, args[0]);
+            var pages = await utils.getPages(casesArr, args[0]);
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setTitle(`Warnings`)
+            .setTitle(`Cases`)
             for (let item of pages.pages) {
                 embed.addField(`${item.id}`, `**Case**: ${item.case}\n**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n**Member**: ${client.users.cache.get(item.userId) ? client.users.cache.get(item.userId).tag : item.userTag}\n${item.reason}\n**Happened at**: ${new Date(item.happenedAt).toString().slice(0,-40)}`);
             }
