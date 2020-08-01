@@ -13,7 +13,7 @@ module.exports = {
     async undefine(client, message, args) {
         var {createDB,getDB,saveDB} = new Utils(client);
         if (!args[0]) {
-            getDB(message.guild.id).then(() => {
+            getDB(message.guild.id).then(res => {
                 message.channel.send(`The prefix for this server is set to \`${res.prefix}\``).catch(err => err);
             });
         } else {
