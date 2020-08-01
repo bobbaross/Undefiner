@@ -25,52 +25,52 @@ module.exports = {
             if (!message.member.hasPermission("KICK_MEMBERS") && !bypassRoles.some(r => message.member.roles.cache.has(r))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("KICK_MEMBERS") ? "Whoops" : "Kick Members"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!message.guild.me.hasPermission("KICK_MEMBERS")) {
                 let embed = new MessageEmbed()
                 .setDescription(`Ehem... Maybe sort my permissions first? I need the Kick Members permissions.`)
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!args[0]) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me who to kick.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var user = await utils.getUser(args[0]);
             if (!user) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var member = message.guild.member(user);
             await member;
             if (!member) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (member.user.id === message.author.id) {
                 let embed = new MessageEmbed()
                 .setDescription(`This isn't a good idea...\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (member.roles.highest.position >= message.member.roles.highest.position) {
                 let embed = new MessageEmbed()
                 .setDescription(`Hey, I don't think you should kick them.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I wouldn't kick that person if I was you.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             await args.shift();
             var reason = args.slice(0).join(' ');
             if (!reason) {
                 let embed = new MessageEmbed()
                 .setDescription(`Wait I don't wanna do this without a reason.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             res.cases++;
             if (res.settings.dmOnPunished === true) {
@@ -88,7 +88,7 @@ module.exports = {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`${user.tag} has been kicked. ${res.settings.withReason === true ? reason : ""}`);
-                message.channel.send(embed).catch(err => err);
+                message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 var embedId;
                 var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
                 if (modLogsChan || res.settings.modLogs === "there") {

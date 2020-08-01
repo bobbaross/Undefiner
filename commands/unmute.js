@@ -25,12 +25,12 @@ module.exports = {
             if (!message.member.hasPermission("MANAGE_MESSAGES") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!message.guild.me.hasPermission("MANAGE_ROLES")) {
                 let embed = new MessageEmbed()
                 .setDescription(`Ehem... Maybe sort my permissions first? I need the Manage Roles permissions.`)
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             let mutedRole = await utils.getRole(res.settings.mutedRole, message.guild.roles);
             if (!mutedRole) {
@@ -65,40 +65,40 @@ module.exports = {
             if (!args[0]) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me who to unmute.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var user = await utils.getUser(args[0]);
             if (!user) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var member = message.guild.member(user);
             await member;
             if (!member) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (member.user.id === message.author.id) {
                 let embed = new MessageEmbed()
                 .setDescription(`I don't think this is allowed...\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (member.roles.highest.position >= message.member.roles.highest.position) {
                 let embed = new MessageEmbed()
                 .setDescription(`Hey, I don't think you should unmute them.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I doubt you have the authority to unmute that person.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!member.roles.cache.has(mutedRole.id)) {
                 let embed = new MessageEmbed()
                 .setDescription(`Uhm... I am pretty sure they're not muted, to be honest.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             await args.shift();
             var reason = args.slice(0).join(' ');
@@ -119,7 +119,7 @@ module.exports = {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`${user.tag} has been unmuted. ${res.settings.withReason === true ? reason : ""}`);
-                message.channel.send(embed).catch(err => err);
+                message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 var embedId;
                 var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
                 if (modLogsChan || res.settings.modLogs === "there") {

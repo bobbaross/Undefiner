@@ -24,19 +24,19 @@ module.exports = {
             if (!message.member.hasPermission("MANAGE_MESSAGES") && !bypassRoles.some(r => message.member.roles.cache.has(r))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var noteId = args[0];
             if (!noteId) {
                 let embed = new MessageEmbed()
                 .setDescription(`Mind telling me the note id?\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var note = res.notes.find(n => n.id === noteId);
             if (!note) {
                 let embed = new MessageEmbed()
                 .setDescription(`That is not a real note id.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             let index = res.notes.indexOf(note);
             res.notes.splice(index,1);
@@ -44,9 +44,7 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully deleted note with id ${note.id} and value ${note.reason}`)
-            return message.channel.send(embed).catch(err => {
-                message.channel.send(`Successfully deleted note with id ${note.id} and value ${note.reason}`).catch(error => error);
-            });
+            return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
         });
     }
 }

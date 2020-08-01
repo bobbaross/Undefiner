@@ -1,14 +1,14 @@
 Syntax Error
 let embed = new MessageEmbed()
 .setDescription(`x is not defined.\n${this.name} ${this.usage}`);
-return message.channel.send(embed).catch(err => err);
+return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
 
 Permissions Error
 let embed = new MessageEmbed()
 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("") ? "Whoops" : ""} amongst your permissions.`);
-return message.channel.send(embed).catch(err => err);
+return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
 
 Member Not Found
 let embed = new MessageEmbed()
 .setDescription(`I swear mate, I can't find that member here.`);
-return message.channel.send(embed).catch(err => err);
+return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));

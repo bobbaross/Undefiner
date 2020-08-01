@@ -48,8 +48,10 @@ module.exports = (client, message) => {
                     embed.setDescription(`${ruleTag.value}\n    ${ruleTag[section]}`)
 
                     message.channel.send(embed).then(msg => {
-                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`);
-                    });
+                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`).catch(err => err);
+                    }).catch(err => message.channel.send(embed.description).then(msg => {
+                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`).catch(err => err);
+                    }).catch(err => err));
                 break;
                 default:
                     embed = new Discord.MessageEmbed()
@@ -58,8 +60,10 @@ module.exports = (client, message) => {
                     embed.setDescription(`${tag.value}`)
 
                     message.channel.send(embed).then(msg => {
-                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`);
-                    });
+                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`).catch(err => err);
+                    }).catch(err => message.channel.send(embed.description).then(msg => {
+                        if (message.mentions.users.first()) msg.edit(`${message.mentions.users.first()}`).catch(err => err);
+                    }).catch(err => err));
             }
         });
     }

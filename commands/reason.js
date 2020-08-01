@@ -24,12 +24,12 @@ module.exports = {
             if (!message.member.hasPermission("MANAGE_MESSAGES") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!args[0]) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a case id.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var caseNum = parseInt(args[0]);
             await args.shift();
@@ -37,13 +37,13 @@ module.exports = {
             if (!modCase) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a valid case id.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var reason = args.join(' ');
             if (!reason) {
                 let embed = new MessageEmbed()
                 .setDescription(`Hey! You can't just remove the reason, you know!\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             let index = res.modCases.indexOf(modCase);
             modCase.reason = reason;
@@ -54,9 +54,14 @@ module.exports = {
                 if (!msg) {
                     let embed = new MessageEmbed()
                     .setDescription(`I can't seem to find that message in this channel. You sure you're in the right channel?\n${this.name} ${this.usage}`);
-                    return message.channel.send(embed).catch(err => err);
+                    return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 }
                 let oldEmbed = msg.embeds[0];
+                if (!oldEmbed) {
+                    let embed = new MessageEmbed()
+                    .setDescription(`That isn't a embed, so I am unable to edit it properly. The log has therefore not been edited, but the database has.`);
+                    return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                }
                 let newEmbed = new MessageEmbed()
                 .setColor(oldEmbed.hexColor)
                 .setTitle(oldEmbed.title)
@@ -70,7 +75,7 @@ module.exports = {
                     let embed = new MessageEmbed()
                     .setColor(branding)
                     .setDescription(`Case #${modCase.case} has been updated.`);
-                    message.channel.send(embed).catch(err => err);
+                    message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 }).catch(err => console.error(err));
             });
         });

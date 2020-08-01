@@ -24,7 +24,7 @@ module.exports = {
             if (!message.member.hasPermission("MANAGE_MESSAGES") && !bypassRoles.some(r => message.member.roles.cache.has(r))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var casesArr = [];
             var user = await utils.getUser(args[0]);
@@ -38,7 +38,7 @@ module.exports = {
                 if (!member) {
                     let embed = new MessageEmbed()
                     .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                    return message.channel.send(embed).catch(err => err);
+                    return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 }
                 await args.shift();
                 for (let caseInstance of res.modCases) {
@@ -49,7 +49,7 @@ module.exports = {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`No cases found.`)
-                return message.channel.send(embed).catch(err => message.channel.send(`No cases found.`).catch(error => error));
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!args[0] || args[0] && args[0] <= 0) args[0] = 1;
             var pages = await utils.getPages(casesArr, args[0]);

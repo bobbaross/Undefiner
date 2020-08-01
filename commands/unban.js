@@ -25,17 +25,17 @@ module.exports = {
             if (!message.member.hasPermission("BAN_MEMBERS") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("BAN_MEMBERS") ? "Whoops" : "Ban Members"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
                 let embed = new MessageEmbed()
                 .setDescription(`Ehem... Maybe sort my permissions first? I need the Ban Members permissions.`)
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!args[0]) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me who to unban.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var user = await utils.getUser(args[0]);
             var userId;
@@ -45,7 +45,7 @@ module.exports = {
                 if (!ban) {
                     let embed = new MessageEmbed()
                     .setDescription(`Yeah no, I don't think they're banned.\n${this.name} ${this.usage}`);
-                    return message.channel.send(embed).catch(err => err);
+                    return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 }
                 await args.shift();
                 var reason = args.slice(0).join(' ');
@@ -55,7 +55,7 @@ module.exports = {
                     let embed = new MessageEmbed()
                     .setColor(branding)
                     .setDescription(`${userId} has been unbanned. ${res.settings.withReason === true ? reason : ""}`);
-                    message.channel.send(embed).catch(err => err);
+                    message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 var embedId;
                 var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
                 if (modLogsChan || res.settings.modLogs === "there") {
