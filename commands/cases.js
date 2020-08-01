@@ -6,7 +6,7 @@ module.exports = {
     name: "cases",
     description: "Display the cases of a member or the entire server.",
     usage: "[member] [page]",
-    aliases: [],
+    aliases: ['moderations'],
     category: "moderation",
     guildOnly: true,
 
