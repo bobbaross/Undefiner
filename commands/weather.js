@@ -51,8 +51,7 @@ module.exports = {
                     fields.push(`**${embed.fields[i].name}**: ${embed.fields[i].value}`);
                 }
                 message.channel.send(`${embed.description}
-${fields.join('\n\n')}
-${embed.thumbnail.proxyUrl}`).catch(err => err);
+${fields.join('\n\n')}`, { attachments: embed.thumbnail.url}).catch(err => err);
             });
         });
     }
