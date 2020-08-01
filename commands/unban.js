@@ -73,10 +73,10 @@ module.exports = {
                             resolve(msg.id);
                         }).catch(err => {
                             modLogsChan.send(`**Member Unbanned** | Case #${res.cases}
-                            **Member**: ${member.user.tag}
-                            **Moderator**: ${message.author.tag}
-                            **Reason**: ${reason}
-                            ${user.id}`).catch(error => error);
+**Member**: ${member.user.tag}
+**Moderator**: ${message.author.tag}
+**Reason**: ${reason}
+${user.id}`).catch(error => error);
                         });
                     });
                 }

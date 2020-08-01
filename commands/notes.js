@@ -49,7 +49,7 @@ module.exports = {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`No notes found.`)
-                return message.channel.send(embed).catch(err => err);
+                return message.channel.send(embed).catch(err => message.channel.send(`No notes found.`).catch(error => error));
             }
             if (!args[0] || args[0] && args[0] <= 0) args[0] = 1;
             var pages = await utils.getPages(notesArr, args[0]);
@@ -61,32 +61,17 @@ module.exports = {
             }
             embed.setFooter(`Page ${pages.amount}`);
             return message.channel.send(embed).catch(err => {
+                let notesArr = [];
+                for (i=0;i<pages.pages.length;i++) {
+                    notesArr.push(`**${pages.pages[0].id}**
+**Moderator**: ${client.users.cache.get(pages.pages[i].modId) ? client.users.cache.get(pages.pages[i].modId).tag : pages.pages[i].modTag}
+**Member**: ${client.users.cache.get(pages.pages[i].userId) ? client.users.cache.get(pages.pages[i].userId).tag : pages.pages[i].userTag}
+${pages.pages[0].reason}`)
+                }
                 message.channel.send(`**Notes**
-                **${pages.pages[0].id}**
-                **Moderator**: ${client.users.cache.get(pages.pages[0].modId) ? client.users.cache.get(pages.pages[0].modId).tag : pages.pages[0].modTag}
-                **Member**: ${client.users.cache.get(pages.pages[0].userId) ? client.users.cache.get(pages.pages[0].userId).tag : pages.pages[0].userTag}
-                ${item.reason}
-                **Happened at**: ${new Date(pages.pages[0].happenedAt).toString().slice(0,-40)}
-                **${pages.pages[1].id}**
-                **Moderator**: ${client.users.cache.get(pages.pages[1].modId) ? client.users.cache.get(pages.pages[1].modId).tag : pages.pages[1].modTag}
-                **Member**: ${client.users.cache.get(pages.pages[1].userId) ? client.users.cache.get(pages.pages[1].userId).tag : pages.pages[1].userTag}
-                ${item.reason}
-                **Happened at**: ${new Date(pages.pages[1].happenedAt).toString().slice(0,-40)}
-                **${pages.pages[2].id}**
-                **Moderator**: ${client.users.cache.get(pages.pages[2].modId) ? client.users.cache.get(pages.pages[2].modId).tag : pages.pages[2].modTag}
-                **Member**: ${client.users.cache.get(pages.pages[2].userId) ? client.users.cache.get(pages.pages[2].userId).tag : pages.pages[2].userTag}
-                ${item.reason}
-                **Happened at**: ${new Date(pages.pages[2].happenedAt).toString().slice(0,-40)}
-                **${pages.pages[3].id}**
-                **Moderator**: ${client.users.cache.get(pages.pages[3].modId) ? client.users.cache.get(pages.pages[3].modId).tag : pages.pages[3].modTag}
-                **Member**: ${client.users.cache.get(pages.pages[3].userId) ? client.users.cache.get(pages.pages[3].userId).tag : pages.pages[3].userTag}
-                ${item.reason}
-                **Happened at**: ${new Date(pages.pages[3].happenedAt).toString().slice(0,-40)}
-                **${pages.pages[4].id}**
-                **Moderator**: ${client.users.cache.get(pages.pages[4].modId) ? client.users.cache.get(pages.pages[4].modId).tag : pages.pages[4].modTag}
-                **Member**: ${client.users.cache.get(pages.pages[4].userId) ? client.users.cache.get(pages.pages[4].userId).tag : pages.pages[4].userTag}
-                ${item.reason}
-                **Happened at**: ${new Date(pages.pages[4].happenedAt).toString().slice(0,-40)}`).catch(error => error);
+${notesArr.join('\n\n')}
+
+Page ${pages.amount}`)
             });
         });
     }

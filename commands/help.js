@@ -54,12 +54,12 @@ module.exports = {
             return message.channel.send(embed).catch(err => {
                 message.channel.send(`**Help**
                 <> = required | [] = optional\n${prefix}${this.name} ${this.usage}
-                **Manager**: ${commands.manager.join(', ')}
-                **Moderation**: ${commands.moderation.join(', ')}
-                **Information**: ${commands.information.join(', ')}
-                **Miscellaneous**: ${commands.miscellaneous.join(', ')}
-                **Roles**: ${commands.roles.join(', ')}
-                **Developer**: ${commands.developer.join(', ')}`).catch(error => error);
+**Manager**: ${commands.manager.join(', ')}
+**Moderation**: ${commands.moderation.join(', ')}
+**Information**: ${commands.information.join(', ')}
+**Miscellaneous**: ${commands.miscellaneous.join(', ')}
+**Roles**: ${commands.roles.join(', ')}
+**Developer**: ${commands.developer.join(', ')}`).catch(error => error);
             });
         } else if (command) {
             let embed = new MessageEmbed()
@@ -72,10 +72,10 @@ module.exports = {
 
             return message.channel.send(embed).catch(err => {
                 message.channel.send(`**${command.name.slice(0,1).toUpperCase() + command.name.slice(1)}**
-                ${command.description}\n<> = required | [] = optional
-                **Usage**: ${prefix}${command.name} ${command.usage}
-                **Category**: ${command.category.slice(0,1).toUpperCase()+command.category.slice(1)}
-                **Aliases**: ${command.aliases > 0 ? command.aliases.join(', ') : "None"}`).catch(error => error);
+${command.description}\n<> = required | [] = optional
+**Usage**: ${prefix}${command.name} ${command.usage}
+**Category**: ${command.category.slice(0,1).toUpperCase()+command.category.slice(1)}
+**Aliases**: ${command.aliases > 0 ? command.aliases.join(', ') : "None"}`).catch(error => error);
             });
         }
     }
