@@ -5,7 +5,7 @@ const {branding} = require('../config.json').colors;
 module.exports = {
     name: "prefix",
     description: "Change the prefix for your server.",
-    usage: "<value>",
+    usage: "<value (end with `_` for space between prefix and command)>",
     aliases: ["setprefix"],
     category: "manager",
     guildOnly: true,
@@ -78,8 +78,8 @@ module.exports = {
                     return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 }
                 console.log('"'+message.content+'"')
-                console.log(message.content.search(/ $/) >= 0)
-                if (message.content.search(/ $/) >= 0) newPrefix = newPrefix+' ';
+                console.log(message.content.search(/_$/) >= 0)
+                if (message.content.search(/_$/) >= 0) newPrefix = newPrefix+' ';
                 let oldPrefix = res.prefix;
                 res.prefix = newPrefix;
                 saveDB(res).then(() => {
