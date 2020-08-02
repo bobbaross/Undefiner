@@ -77,9 +77,7 @@ module.exports = {
                     .setDescription(`The prefix may not be longer than 10 characters.\n${this.name} ${this.usage}`);
                     return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 }
-                console.log(message.content)
-                console.log(message.content.search(/ $/))
-                if (message.content.search(/ $/)) newPrefix = newPrefix+' ';
+                if (message.content.search(/ $/) >= 0) newPrefix = newPrefix+' ';
                 let oldPrefix = res.prefix;
                 res.prefix = newPrefix;
                 saveDB(res).then(() => {
