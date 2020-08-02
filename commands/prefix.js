@@ -79,7 +79,7 @@ module.exports = {
                 }
                 console.log('"'+message.content+'"')
                 console.log(message.content.search(/_$/) >= 0)
-                if (message.content.search(/_$/) >= 0) newPrefix = newPrefix+' ';
+                if (message.content.search(/_$/) >= 0) newPrefix = newPrefix.slice(0,-1)+' ';
                 let oldPrefix = res.prefix;
                 res.prefix = newPrefix;
                 saveDB(res).then(() => {
