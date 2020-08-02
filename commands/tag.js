@@ -75,7 +75,7 @@ module.exports = {
                     .setTitle(`Tags | ${name}`)
                     .setDescription(`Successfully created the tag with name ${name} and value:\n${value}`)
 
-                    message.channel.send(embed);
+                    message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                     break;
                 case "delete":
                     name = args.shift();
@@ -99,7 +99,7 @@ module.exports = {
                     .setTitle(`Tags | ${name}`)
                     .setDescription(`Successfully deleted the tag with name ${name} and value:\n${value}`)
 
-                    message.channel.send(embed);
+                    message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                     break;
                 case "modify":
                     name = args.shift();
@@ -133,7 +133,7 @@ module.exports = {
                             .setTitle(`Tags | ${name}`)
                             .setDescription(`Successfully modified the tag with name ${name} and value:\n${value}\nFrom\n${oldValue}`)
 
-                            message.channel.send(embed);
+                            message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                             break;
                         case "color":
                             oldValue = resTag.color;
@@ -148,7 +148,7 @@ module.exports = {
                             .setTitle(`Tags | ${name}`)
                             .setDescription(`Successfully modified the tag with name ${name} and color:\n${value}\nFrom\n${oldValue}`)
 
-                            message.channel.send(embed);
+                            message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                             break;
                         default:
                             embed = new MessageEmbed()
@@ -189,12 +189,12 @@ module.exports = {
                     .setTitle("Tags")
                     .setDescription(`\`${tags.join('` `')}\``)
 
-                    message.channel.send(embed);
+                    message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                     break;
                 default:
                     embed = new MessageEmbed()
                     .setDescription(`Hey! This isn't a method!\n${this.name} ${this.usage}`)
-                    return message.channel.send(embed);
+                    return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
         });
     }
