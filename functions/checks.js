@@ -60,4 +60,4 @@ class Checks {
 
 }
 
-module.exports = Checks();
+module.exports = new Checks();
