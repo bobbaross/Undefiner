@@ -10,7 +10,7 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        if(hasPermission(message.guild.me, "MANAGE_ROLES")) {
+        if(checks.hasPermission(message.guild.me, "MANAGE_ROLES")) {
             return message.channel.send('yes').catch(err => err);
         } else {
             return message.channel.send('no').catch(err => err);
