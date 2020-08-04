@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const checks = require('../functions/checks');
 
 module.exports = {
     name: "role",
