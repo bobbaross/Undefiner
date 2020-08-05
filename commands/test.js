@@ -16,6 +16,7 @@ module.exports = {
     devRoles.forEach(dev => {
         developers.push(dev.tag);
     });
+    console.log(devRoles)
     embed.addField(`Founder`, `Aprixia#1033`);
     embed.addField(`Developers`, `a\n${developers.join('\n')}`);
     console.log(embed)
