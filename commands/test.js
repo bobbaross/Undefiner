@@ -12,7 +12,7 @@ module.exports = {
     embed.setColor("#fff5c0")
     embed.setTitle("Our Team")
     var developers = [];
-    let devRoles = new Promise(resolve => {message.guild.members.fetch({cache: false}).then(ms => {resolve(ms.map(member => member).filter(mem => mem.roles.cache.has('724603074651619401')))})});
+    let devRoles = message.guild.members.cache.map(member => member).filter(mem => mem.roles.cache.has('724603074651619401'));
     devRoles.forEach(dev => {
         developers.push(dev.tag);
     });
