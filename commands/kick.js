@@ -79,7 +79,7 @@ module.exports = {
                 .setTitle(`You've been kicked from ${message.guild.name}, here is a copy of the log!\nMember Kicked | Case #${res.cases}`)
                 .addField(`Member`, member.user.tag, true)
                 .addField(`Moderator`, message.author.tag, true)
-                .addField(`Reason`, reason, true)
+                .addField(`Reason`, reason)
                 .setFooter(`${user.id}`)
                 .setTimestamp()
                 user.send(dmEmbed).catch(err => err);
@@ -99,7 +99,7 @@ module.exports = {
                         .setTitle(`Member Kicked | Case #${res.cases}`)
                         .addField(`Member`, member.user.tag, true)
                         .addField(`Moderator`, message.author.tag, true)
-                        .addField(`Reason`, reason, true)
+                        .addField(`Reason`, reason)
                         .setFooter(`${user.id}`)
                         .setTimestamp()
                         modLogsChan.send(modLogEmbed).then(msg => {

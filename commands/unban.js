@@ -66,7 +66,7 @@ module.exports = {
                         .setTitle(`Member Unbanned | Case #${res.cases}`)
                         .addField(`Member`, userId, true)
                         .addField(`Moderator`, message.author.tag, true)
-                        .addField(`Reason`, reason, true)
+                        .addField(`Reason`, reason)
                         .setFooter(`${userId}`)
                         .setTimestamp()
                         modLogsChan.send(modLogEmbed).then(msg => {

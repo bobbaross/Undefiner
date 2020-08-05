@@ -118,7 +118,7 @@ module.exports = {
                 .setTitle(`You've been muted in ${message.guild.name}, here is a copy of the log!\nMember Muted | Case #${res.cases}`)
                 .addField(`Member`, member.user.tag, true)
                 .addField(`Moderator`, message.author.tag, true)
-                .addField(`Reason`, reason, true)
+                .addField(`Reason`, reason)
                 .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                 .setTimestamp()
                 user.send(dmEmbed).catch(err => err);
@@ -150,7 +150,7 @@ module.exports = {
                         .setTitle(`Member Muted | Case #${res.cases}`)
                         .addField(`Member`, member.user.tag, true)
                         .addField(`Moderator`, message.author.tag, true)
-                        .addField(`Reason`, reason, true)
+                        .addField(`Reason`, reason)
                         .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
                         modLogsChan.send(modLogEmbed).then(msg => {

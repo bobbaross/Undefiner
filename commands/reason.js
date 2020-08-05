@@ -67,7 +67,7 @@ module.exports = {
                 .setTitle(oldEmbed.title)
                 .addField(oldEmbed.fields[0].name, oldEmbed.fields[0].value, oldEmbed.fields[0].inline)
                 .addField(oldEmbed.fields[1].name, oldEmbed.fields[1].value, oldEmbed.fields[1].inline)
-                .addField(`Reason`, `${reason}`, true)
+                .addField(`Reason`, `${reason}`)
                 .setFooter(oldEmbed.footer.text)
                 .setTimestamp(oldEmbed.timestamp)
 

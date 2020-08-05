@@ -83,7 +83,7 @@ module.exports = {
                 .setTitle(`You've been banned from ${message.guild.name}, here is a copy of the log!\nMember Banned | Case #${res.cases}`)
                 .addField(`Member`, member.user.tag, true)
                 .addField(`Moderator`, message.author.tag, true)
-                .addField(`Reason`, reason, true)
+                .addField(`Reason`, reason)
                 .setFooter(`${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`)
                 .setTimestamp()
                 user.send(dmEmbed).catch(err => err);
@@ -115,7 +115,7 @@ module.exports = {
                         .setTitle(`Member Banned | Case #${res.cases}`)
                         .addField(`Member`, member.user.tag, true)
                         .addField(`Moderator`, message.author.tag, true)
-                        .addField(`Reason`, reason, true)
+                        .addField(`Reason`, reason)
                         .setFooter(`${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
                         modLogsChan.send(modLogEmbed).then(msg => {
