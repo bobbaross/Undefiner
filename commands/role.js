@@ -17,7 +17,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
         }
         utils = new Utils(client);
-        utils.getDB(message.guild.id).then(res => {
+        utils.getDB(message.guild.id).then(async res => {
             if (!res) res = await utils.createDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
