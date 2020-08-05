@@ -26,7 +26,7 @@ module.exports = {
             for (let role of res.adminRoles) {
                 bypassRoles.push(role);
             }
-            if (!Checks.hasPermission(message.guild.member, "MANAGE_ROLES") && !Checks.hasRole(message.guild.member, bypassRoles)) {
+            if (!Checks.hasPermission(message.member, "MANAGE_ROLES") && !Checks.hasRole(message.member, bypassRoles)) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
