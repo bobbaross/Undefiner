@@ -14,7 +14,7 @@ module.exports = {
     var developers = [];
     let devRoles = message.guild.members.cache.map(member => member).filter(mem => mem.roles.cache.has('724603074651619401'));
     devRoles.forEach(dev => {
-        developers.push(dev.tag);
+        developers.push(dev.user.tag);
     });
     console.log(devRoles)
     embed.addField(`Founder`, `Aprixia#1033`);
