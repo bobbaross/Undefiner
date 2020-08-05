@@ -33,7 +33,7 @@ module.exports = {
             }
             var user = await utils.getUser(args[0]);
             if (!user) {
-                if (args[0].search(/all/i)) user = "all";
+                if (args[0].search(/all/i) >= 0) user = "all";
                 return message.channel.send(`${user}`)
             }
         });
