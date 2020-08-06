@@ -4,7 +4,7 @@ const client = new Discord.Client();
 const fs = require('fs-extra');
 const mongoose = require('mongoose');
 
-mongoose.connect(dburi, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log(`Database Connected...`)).catch(error => console.error(error));
+mongoose.connect("mongodb://localhost:27017/undefiner", {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log(`Database Connected...`)).catch(error => console.error(error));
 
 
 try {
