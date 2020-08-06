@@ -7,7 +7,7 @@ module.exports = {
     description: "Give or take a role from a member.",
     aliases: [],
     category: "roles",
-    usage: "<member> [+|/|-] <role>",
+    usage: "<member or all> [+|/|-] <role>",
     guildOnly: true,
 
     async undefine(client, message, args) {
@@ -39,7 +39,13 @@ module.exports = {
             var user = await utils.getUser(args[0]);
             if (!user) {
                 if (args[0].search(/all/i) >= 0) user = "all";
+                if (user !== "all") {
+                    let embed = new MessageEmbed()
+                    .setDescription(`Mind telling me who to change the role for?\n${this.name} ${this.usage}`);
+                    return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                }
             }
+            
         });
     }
 }
