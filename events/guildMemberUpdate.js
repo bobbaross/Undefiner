@@ -1,4 +1,5 @@
 const { Checks } = require("../functions/checks");
+const {MessageEmbed} = require("discord.js");
 
 module.exports = (client, oldMember, newMember) => {
     function updateOurTeam() {
@@ -9,7 +10,7 @@ module.exports = (client, oldMember, newMember) => {
         if (!msg) return;
         var staffRoles = ["724603074651619401", "724603212598083626", "724609349871206432"];
         function updateTheEmbed(message) {
-            let embed = new Discord.MessageEmbed();
+            let embed = new MessageEmbed();
             embed.setColor("#fff5c0");
             embed.setTitle("Our Team");
             var developers = [];
