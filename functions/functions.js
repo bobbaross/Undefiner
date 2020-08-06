@@ -114,7 +114,10 @@ class Utils {
                 disabledCommands: [],
                 tags: [],
                 settings: {mutedRole: "", modLogs: "off", withReason: false, deleteModCommands: false, dmOnPunish: false},
-                notes: []
+                notes: [],
+                webhooks: {
+                    logs: "off"
+                }
             }, false);
             return resolve(newDB);
         });

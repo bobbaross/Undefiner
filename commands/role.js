@@ -31,10 +31,14 @@ module.exports = {
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
+            if (!args) {
+                let embed = new MessageEmbed()
+                .setDescription(`Mind telling me who to change the role for?\n${this.name} ${this.usage}`);
+                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+            }
             var user = await utils.getUser(args[0]);
             if (!user) {
                 if (args[0].search(/all/i) >= 0) user = "all";
-                return message.channel.send(`${user}`)
             }
         });
     }

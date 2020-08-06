@@ -35,7 +35,7 @@ class Checks {
         if (!roleOrRoles) throw new SyntaxError(`You forgot the role/roles!`);
         if (typeof roleOrRoles === "string" || typeof roleOrRoles === "number") {
             return member.roles.cache.has(roleOrRoles);
-        } else if (typeof roleOrRoles === "array") {
+        } else if (Array.isArray(roleOrRoles)) {
             return roleOrRoles.some(r => member.roles.cache.has(r));
         } else {
             throw new TypeError(`Invalid type for roleOrRoles.`);

@@ -16,7 +16,10 @@ const Schema = new mongoose.Schema({
     disabledCommands: [String],
     tags: [Object],
     settings: {mutedRole: String, modLogs: String, withReason: Boolean, deleteModCommands: Boolean, dmOnPunish: Boolean},
-    notes: [Object]
+    notes: [Object],
+    webhooks: {
+        logs: ""
+    }
 });
 
 const serverID = mongoose.model("serverID", Schema);
