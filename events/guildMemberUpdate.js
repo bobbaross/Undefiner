@@ -33,20 +33,20 @@ module.exports = (client, oldMember, newMember) => {
                     developers.push(dev.user.tag);
                 });
                 console.log('i')
-                if (devRoles === 0) devRoles.push("None");
+                if (devRoles.length === 0) devRoles.push("None");
                 console.log('o')
                 var admins = [];
                 let adminRoles = message.guild.members.cache.map(member => member).filter(mem => mem.roles.cache.has('724603212598083626'));
                 adminRoles.forEach(admin => {
                     admins.push(admin.user.tag);
                 });
-                if (adminRoles === 0) adminRoles.push("None");
+                if (adminRoles.length === 0) adminRoles.push("None");
                 var mods = [];
                 let modRoles = message.guild.members.cache.map(member => member).filter(mem => mem.roles.cache.has('724609349871206432'));
                 modRoles.forEach(mod => {
                     mods.push(mod.user.tag);
                 });
-                if (modRoles === 0) modRoles.push("None");
+                if (modRoles.length === 0) modRoles.push("None");
                 embed.addField(`Founder`, `Aprixia#1033`);
                 embed.addField(`Developers`, `${developers.join('\n')}`, true);
                 embed.addField(`Administrators`, `${admins.join('\n')}`, true);
