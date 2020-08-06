@@ -62,7 +62,7 @@ module.exports = (client, oldMember, newMember) => {
                 }
             } else if (Checks.memberHigherThan(oldMember, newMember)) {
                 console.log('k')
-                if (Checks.hasRole(newMember, staffRoles)) {
+                if (Checks.hasRole(oldMember, staffRoles)) {
                     console.log('l')
                     updateTheEmbed(msg);
                 }
