@@ -10,7 +10,7 @@ module.exports = (client, oldMember, newMember) => {
         console.log('c')
         if (!channel) return;
         console.log('d')
-        channel.messages.fetch("724612797597745222").then(msg => {;
+        channel.messages.fetch("740610386432360529").then(msg => {;
             console.log('e')
             if (!msg) return;
             console.log('f')
