@@ -1,7 +1,10 @@
 const { Checks } = require("../functions/checks");
 const {MessageEmbed} = require("discord.js");
+const sanitizer = require('@aero/sanitizer');
+const { Utils } = require("../functions/functions");
 
 module.exports = (client, oldMember, newMember) => {
+    utils = new Utils(client);
     function updateOurTeam() {
         if (newMember.guild.id !== "724602779053719693") return;
         var channel = newMember.guild.channels.cache.get("724612797597745222");
@@ -48,5 +51,13 @@ module.exports = (client, oldMember, newMember) => {
             } else return;
         });
     }
+    function sanitize() {
+        utils.getDB(newMember.guild.id).then(res => {
+            if (res?.antiUntypable !== true) return;
+            var sanitized = sanitizer(newMember.displayName);
+            if (newMember.displayName !== sanitized) newMember.setNickname(sanitized);
+        });
+    }
     updateOurTeam();
+    sanitize();
 }

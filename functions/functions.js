@@ -117,7 +117,9 @@ class Utils {
                 notes: [],
                 webhooks: {
                     logs: "off"
-                }
+                },
+                language: "en",
+                antiUntypable: false
             }, false);
             return resolve(newDB);
         });

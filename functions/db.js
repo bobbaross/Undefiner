@@ -18,8 +18,10 @@ const Schema = new mongoose.Schema({
     settings: {mutedRole: String, modLogs: String, withReason: Boolean, deleteModCommands: Boolean, dmOnPunish: Boolean},
     notes: [Object],
     webhooks: {
-        logs: ""
-    }
+        logs: String
+    },
+    language: String,
+    antiUntypable: Boolean
 });
 
 const serverID = mongoose.model("serverID", Schema);
