@@ -24,7 +24,7 @@ module.exports = {
                 });
             }
             message.guild.members.fetch().then(async guildMembers => {
-                var members = guildMembers.map(member => member).filter(member => member.displayName !== sanitizer(member.displayName));
+                var members = guildMembers.filter(member => member.displayName !== sanitizer(member.displayName));
                 var failedMembers = [];
                 members.forEach(member => {
                     member.setNickname(sanitizer(member.displayName)).catch(err => failedMembers.push(member.user.tag));
