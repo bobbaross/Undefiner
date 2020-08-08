@@ -55,7 +55,7 @@ module.exports = (client, oldMember, newMember) => {
         utils.getDB(newMember.guild.id).then(res => {
             if (res?.antiUntypable !== true) return;
             var sanitized = sanitizer(newMember.displayName);
-            if (newMember.displayName !== sanitized) newMember.setNickname(sanitized);
+            if (newMember.displayName !== sanitized) newMember.setNickname(sanitized).catch(err => err);
         });
     }
     updateOurTeam();
