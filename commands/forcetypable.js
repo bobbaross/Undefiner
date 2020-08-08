@@ -28,7 +28,7 @@ module.exports = {
                 var failedMembers = [];
                 members.forEach(member => {
                     let newNick = sanitizer(member.displayName);
-                    console.log(member)
+                    console.log(newNick)
                     member.setNickname(newNick).catch(err => failedMembers.push(member.user.tag));
                 });
                 await failedMembers;
