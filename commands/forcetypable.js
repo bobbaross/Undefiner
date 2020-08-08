@@ -29,12 +29,12 @@ module.exports = {
                 members.forEach(member => {
                     let newNick = sanitizer(member.displayName);
                     console.log(member)
-                    member.setNickname(newNick).then(console.log).catch(err => failedMembers.push(member.user.tag));
+                    member.setNickname(newNick).catch(err => failedMembers.push(member.user.tag));
                 });
                 await failedMembers;
                 let embed = new MessageEmbed()
                 .setColor(branding)
-                .setDescription(`Finished!\nFailed Members: ${failedMembers.length>0 ? failedMembers.join(', ') : "None"}`)
+                .setDescription(`Finished!\nFailed Members: ${failedMembers[0] ? failedMembers.join(', ') : "None"}`)
                 return message.channel.send(embed).catch(err => {
                     message.channel.send(embed.description).catch(error => error);
                 });
