@@ -29,7 +29,7 @@ module.exports = {
                 members.forEach(member => {
                     let newNick = sanitizer(member.displayName);
                     console.log(newNick)
-                    member.setNickname(newNick).catch(err => /*failedMembers.push(member.user.tag)*/console.error(err));
+                    member.setNickname(newNick).then(console.log).catch(err => /*failedMembers.push(member.user.tag)*/console.error(err));
                 });
                 await failedMembers;
                 let embed = new MessageEmbed()
