@@ -1,7 +1,7 @@
 const sanitizer = require('@aero/sanitizer');
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions');
-const {branding} = reequire('../config.json').colors;
+const {branding} = require('../config.json').colors;
 
 module.exports = {
     name: "antiuntypable",
