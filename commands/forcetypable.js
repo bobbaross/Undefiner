@@ -27,6 +27,7 @@ module.exports = {
                 var members = guildMembers.filter(member => member.displayName !== sanitizer(member.displayName));
                 var failedMembers = [];
                 members.forEach(member => {
+                    console.log(member.user.tag)
                     member.setNickname(sanitizer(member.displayName)).catch(err => failedMembers.push(member.user.tag));
                 });
                 await failedMembers;
