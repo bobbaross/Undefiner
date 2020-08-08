@@ -15,6 +15,14 @@ module.exports = {
         utils = new Utils(client);
         utils.getDB(message.guild.id).then(async res => {
             if (!res) res = await utils.createDB(message.guild.id);
+            if (!message.member.hasPermission("MANAGE_GUILD")) {
+                let embed = new MessageEmbed()
+                .setColor(branding)
+                .setDescription(`I don't see Manage Guild amongst your permissions.`)
+                return message.channel.send(embed).catch(err => {
+                    message.channel.send(embed.description).catch(error => error);
+                });
+            }
             if (!res.antiUntypable) res.antiUntypable = false;
             var embed;
             switch(res.antiUntypable) {
