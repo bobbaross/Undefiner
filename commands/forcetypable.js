@@ -28,7 +28,7 @@ module.exports = {
                 var failedMembers = [];
                 members.forEach(member => {
                     let newNick = sanitizer(member.displayName);
-                    let newMember = message.guild.member(member.user);
+                    let newMember = message.guild.members.cache.get(member.user.id);
                     newMember.setNickname(newNick).catch(err => failedMembers.push(member.user.tag));
                 });
                 await failedMembers;
