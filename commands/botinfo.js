@@ -11,7 +11,7 @@ module.exports = {
     async undefine(client, message, args) {
         let owner = require('../owner.json');
         let uptime = process.uptime();
-        let uptimeString = await client.functions.getStringTime(uptime);
+        let uptimeString = await client.functions.getStringTime(Math.round(uptime));
         let version = require('../version.json');
         client.shard.fetchClientValues('guilds.cache.size').then(async results => {
             let embed = new MessageEmbed()
