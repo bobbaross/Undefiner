@@ -1,7 +1,7 @@
 const sanitizer = require('@aero/sanitizer');
 const {MessageEmbed} = require('discord.js');
 const { Utils } = require('../functions/functions');
-const {branding} = require('../config.json');
+const {branding} = require('../config.json').colors;
 
 module.exports = {
     name: "forcetypable",
@@ -35,11 +35,10 @@ module.exports = {
                 var failedMembers = [];
                 guildMembers.filter(member => member.displayName !== sanitizer(member.displayName)).forEach(member => {
                     let newNick = sanitizer(member.displayName);
-                    console.log(newNick)
                     if (message.guild.me.roles.highest.position < member.roles.highest.position || member.user.id === message.guild.ownerID) {
                         failedMembers.push(member.user.tag)
                     } else {
-                        member.setNickname(newNick).then(console.log(member.user.tag+" Changed!"));
+                        member.setNickname(newNick);
                     }
                 });
                 let embed = new MessageEmbed()
