@@ -28,7 +28,7 @@ module.exports = {
             .addField(`Library`, `Discord.JS`, true)
             .addField(`Website`, `https://aprixstudios.xyz/`, true)
             .addField(`Discord`, `https://discord.gg/k2PEWMw or https://aprx.gq/discord`, true)
-            .addField(`GitHub`, `https://github.com/AprixStudios/Undefiner`)
+            .addField(`GitHub`, `https://github.com/AprixStudios/Undefiner`, true)
 
             return message.channel.send(embed).catch(err => {
                 let arr = [];
