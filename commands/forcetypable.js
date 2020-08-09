@@ -32,7 +32,7 @@ module.exports = {
                     setTimeout(() => {
                         console.log(newNew+" 2");
                         member.setNickname(newNick).then(console.log).catch(err => {failedMembers.push(member.user.tag);console.error(err);});
-                    });
+                    }, 1000);
                 });
                 await failedMembers;
                 await members;
