@@ -44,12 +44,12 @@ module.exports = {
             .setColor(branding)
             .setTitle("Help")
             .setDescription(`<> = required | [] = optional\n${prefix}${this.name} ${this.usage}`)
-            .addField(`Manager`, commands.manager.join(', '), true)
-            .addField(`Moderation`, commands.moderation.join(', '), true)
-            .addField(`Information`, commands.information.join(', '), true)
-            .addField(`Miscellaneous`, commands.miscellaneous.join(', '), true)
-            .addField(`Roles`, commands.roles.join(', '), true)
-            .addField(`Developer`, commands.developer.join(', '), true)
+            .addField(`Manager`, '`'+commands.manager.join(' | ')+'`', true)
+            .addField(`Moderation`, '`'+commands.moderation.join(' | ')+'`', true)
+            .addField(`Information`, '`'+commands.information.join(' | ')+'`', true)
+            .addField(`Miscellaneous`, '`'+commands.miscellaneous.join(' | ')+'`', true)
+            .addField(`Roles`, '`'+commands.roles.join(' | ')+'`', true)
+            .addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true)
 
             return message.channel.send(embed).catch(err => {
                 message.channel.send(`**Help**
