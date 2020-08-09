@@ -218,7 +218,7 @@ class Utils {
         else if (mins <= 9) displayTime = `0${mins} minutes ${displayTime}`;
 
         if (hours >= 10) displayTime = `${hours} hours ${displayTime}`;
-        else if (hours <= 9) displayTime = `0${hours} hours${displayTime}`;
+        else if (hours <= 9) displayTime = `0${hours} hours ${displayTime}`;
 
         if (days > 0) displayTime = `${days} days ${displayTime}`;
 

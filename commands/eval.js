@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs-extra');
+const {branding} = require('../config.json').colors;
 
 module.exports = {
     name: "eval",
