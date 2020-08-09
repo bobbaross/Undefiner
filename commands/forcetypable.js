@@ -24,13 +24,12 @@ module.exports = {
                 });
             }
             message.guild.members.fetch().then(async guildMembers => {
-                var members = guildMembers.filter(member => member.displayName !== sanitizer(member.displayName));
                 var failedMembers = [];
-                for (i=0;i<members.array.length;i++) {
-                    let newNick = sanitizer(members.array[i].displayName);
+                guildMembers.filter(member => member.displayName !== sanitizer(member.displayName)).forEach(member => {
+                    let newNick = sanitizer(member.displayName);
                     console.log(newNick)
-                    members.array[i].setNickname(newNick).then(console.log(members.array[i].user.tag+" Changed!")).catch(err => {failedMembers.push(members.array[i].user.tag);console.log(err);});
-                }
+                    member.setNickname(newNick).then(console.log(member.user.tag+" Changed!")).catch(err => {failedMembers.push(member.user.tag);console.log(err);});
+                });
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`Finished!\nFailed Members: ${failedMembers[0] ? failedMembers.join(', ') : "None"}`)
