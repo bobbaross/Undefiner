@@ -26,16 +26,11 @@ module.exports = {
             message.guild.members.fetch().then(async guildMembers => {
                 var members = guildMembers.filter(member => member.displayName !== sanitizer(member.displayName));
                 var failedMembers = [];
-                for (let member of members) {
-                    let newNick = sanitizer(member.displayName);
+                for (i=0;i<members.array.length;i++) {
+                    let newNick = sanitizer(members.array[i].displayName);
                     console.log(newNick)
-                    setTimeout(() => {
-                        console.log(newNew+" 2");
-                        member.setNickname(newNick).then(console.log).catch(err => {failedMembers.push(member.user.tag);console.error(err);});
-                    }, 500);
+                    members.array[i].setNickname(newNick).then(console.log(members.array[i].user.tag+" Changed!")).catch(err => {failedMembers.push(members.array[i].user.tag);console.error(err);});
                 }
-                await failedMembers;
-                await members;
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`Finished!\nFailed Members: ${failedMembers[0] ? failedMembers.join(', ') : "None"}`)
