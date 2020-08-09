@@ -6,20 +6,11 @@ const mongoose = require('mongoose');
 
 mongoose.connect(`mongodb://${dbuser}:${dbpass}@localhost:27017/undefiner`, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log(`Database Connected...`)).catch(error => console.error(error));
 
-
 try {
-    let expire = require('./expire.js');
-    expire.expire(client);
+    let clientvars = require('./clientvars.js');
+    clientvars(client);
 } catch (error) {
-    console.error(error);
-}
-
-client.commands = new Discord.Collection();
-var commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-
-for (let file of commandFiles) {
-    let command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
+    return console.error(error);
 }
 
 // Event handler

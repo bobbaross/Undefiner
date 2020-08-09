@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -11,9 +10,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        var {createDB,getDB,saveDB} = new Utils(client);
         if (!args[0]) {
-            getDB(message.guild.id).then(res => {
+            client.functions.getDB(message.guild.id).then(res => {
                 message.channel.send(`The prefix for this server is set to \`${res.prefix}\``).catch(err => err);
             });
         } else {
@@ -40,9 +38,9 @@ module.exports = {
                 }
                 return errbed();
             }
-            getDB(message.guild.id).then(async res => {
+            client.functions.getDB(message.guild.id).then(async res => {
                 if (!res) {
-                    res = await createDB(message.guild.id);
+                    res = await client.functions.createDB(message.guild.id);
 
                 }
                 var embed;
@@ -80,7 +78,7 @@ module.exports = {
                 if (message.content.search(/_$/) >= 0) newPrefix = newPrefix.slice(0,-1)+' ';
                 let oldPrefix = res.prefix;
                 res.prefix = newPrefix;
-                saveDB(res).then(() => {
+                client.functions.saveDB(res).then(() => {
                     embed = new MessageEmbed()
                     .setColor(branding)
                     .setDescription(`Prefix successfully changed from ${oldPrefix} to ${newPrefix}`)

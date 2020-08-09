@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -11,7 +10,6 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        var {createDB,getDB,saveDB,getChannel,getRole} = new Utils(client);
         if (!message.member.hasPermission('MANAGE_GUILD')) {
             let oMem = [];
             let errbed = async () => {
@@ -33,9 +31,9 @@ module.exports = {
             }
             return errbed();
         }
-        getDB(message.guild.id).then(async res => {
+        client.functions.getDB(message.guild.id).then(async res => {
             if (!res) {
-                res = await createDB(message.guild.id);
+                res = await client.functions.createDB(message.guild.id);
             }
             var embed;
             if (!args[0]) args[0] = "";
@@ -73,7 +71,7 @@ module.exports = {
                     if (message.content.search(/_$/) >= 0) newPrefix = newPrefix.slice(0,-1)+' ';
                     let oldPrefix = await res.prefix;
                     res.prefix = newPrefix;
-                    saveDB(res).then(() => {
+                    client.functions.saveDB(res).then(() => {
                         embed = new MessageEmbed()
                         .setColor(branding)
                         .setDescription(`Prefix successfully changed from ${oldPrefix} to ${newPrefix}`)
@@ -88,10 +86,10 @@ module.exports = {
                         .setDescription(`I might be COMPLETELY wrong, but I highly doubt you specified a role to be honest.\n${this.name} ${this.usage}`);
                         return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                     }
-                    let role = await getRole(args[1], message.guild.roles);
+                    let role = await client.functions.getRole(args[1], message.guild.roles);
                     if (!role) role = "0";
                     res.settings.mutedRole = role.id;
-                    saveDB(res).then(() => {
+                    client.functions.saveDB(res).then(() => {
                         embed = new MessageEmbed()
                         .setColor(branding)
                         .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${role.name}`}`)
@@ -106,14 +104,14 @@ module.exports = {
                             .setDescription(`I may overlook this, but I don't think you specified a channel. At least I don't see anything there.\n${this.name} ${this.usage}`);
                             return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                         }
-                        let channel = await getChannel(args[1], message.guild.channels);
+                        let channel = await client.functions.getChannel(args[1], message.guild.channels);
                         let channelTwo;
                         if (channel) {channel = channel.id; channelTwo = await getChannel(args[1], message.guild.channels)}
                         else if (args[1].toLowerCase() === "this") {channel = message.channel.id; channelTwo = await getChannel(message.channel.id, message.guild.channels)}
                         else if (args[1].toLowerCase() === "there") {channel = "there"; channelTwo = "there"}
                         else {channel = "off"; channelTwo = "off"}
                         res.settings.modLogs = channel;
-                        saveDB(res).then(() => {
+                        client.functions.saveDB(res).then(() => {
                             embed = new MessageEmbed()
                             .setColor(branding)
                             .setDescription(`Modlogs successfully ${channelTwo.name ? channel === message.channel.id ? `set to the current channel` : `set to ${channelTwo.name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
@@ -125,7 +123,7 @@ module.exports = {
                     case "respond-with-reason":
                         if (isTrue.includes(args[1])) {
                             res.settings.withReason = true;
-                            saveDB(res).then(() => {
+                            client.functions.saveDB(res).then(() => {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Respond with reasons successfully turned on.`)
@@ -134,7 +132,7 @@ module.exports = {
                         }
                         else if (isFalse.includes(args[1])) {
                             res.settings.withReason = false;
-                            saveDB(res).then(() => {
+                            client.functions.saveDB(res).then(() => {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Respond with reasons successfully turned off.`)
@@ -150,7 +148,7 @@ module.exports = {
                     case "delete-mod-commands":
                         if (isTrue.includes(args[1])) {
                             res.settings.deleteModCommands = true;
-                            saveDB(res).then(() => {
+                            client.functions.saveDB(res).then(() => {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Delete Mod Commands successfully turned on.`)
@@ -159,7 +157,7 @@ module.exports = {
                         }
                         else if (isFalse.includes(args[1])) {
                             res.settings.deleteModCommands = false;
-                            saveDB(res).then(() => {
+                            client.functions.saveDB(res).then(() => {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Delete Mod Commands successfully turned off.`)
@@ -175,7 +173,7 @@ module.exports = {
                         case "dm-on-punishment":
                             if (isTrue.includes(args[1])) {
                                 res.settings.dmOnPunish = true;
-                                saveDB(res).then(() => {
+                                client.functions.saveDB(res).then(() => {
                                     embed = new MessageEmbed()
                                     .setColor(branding)
                                     .setDescription(`DM On Punishment successfully turned on.`)
@@ -184,7 +182,7 @@ module.exports = {
                             }
                             else if (isFalse.includes(args[1])) {
                                 res.settings.dmOnPunish = false;
-                                saveDB(res).then(() => {
+                                client.functions.saveDB(res).then(() => {
                                     embed = new MessageEmbed()
                                     .setColor(branding)
                                     .setDescription(`DM On Punishment successfully turned off.`)

@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
 const {bad,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
@@ -12,9 +11,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
-            if (!res) res = await utils.createDB(message.guild.id);
+        client.functions.getDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -37,7 +35,7 @@ module.exports = {
                 .setDescription(`Now you see, there is something called telling me who to ban.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
-            var user = await utils.getUser(args[0]);
+            var user = await client.functions.getUser(args[0]);
             if (!user) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
@@ -66,7 +64,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             await args.shift();
-            var time = await utils.setTime(args[0]);
+            var time = await client.functions.setTime(args[0]);
             if (time !== null) await args.shift();
             var reason = args.slice(0).join(' ');
             if (!reason) {
@@ -75,7 +73,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             res.cases++;
-            var duration = await utils.getTime(time-Date.now());
+            var duration = await client.functions.getTime(time-Date.now());
             if (time-Date.now() < 0) duration = null;
             if (res.settings.dmOnPunished === true) {
                 let dmEmbed = new MessageEmbed()
@@ -89,7 +87,7 @@ module.exports = {
                 user.send(dmEmbed).catch(err => err);
             }
             member.ban(`Banned by ${message.author.tag} with reason: ${reason}`).then(async () => {
-                utils.getEntries("ban").then(async activeBans => {
+                client.functions.getEntries("ban").then(async activeBans => {
                     if (!time) return;
                     activeBans.entries.push({
                         servCase: res.cases,
@@ -99,14 +97,14 @@ module.exports = {
                         reason: reason,
                         happenedAt: Date.now()
                     });
-                    await utils.saveDB(activeBans).catch(err => console.error(err));
+                    await client.functions.saveDB(activeBans).catch(err => console.error(err));
                 });
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`${user.tag} has been banned. ${res.settings.withReason === true ? reason : ""}`);
                 message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 var embedId;
-                var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
+                var modLogsChan = await client.functions.getChannel(res.settings.modLogs, message.guild.channels);
                 if (modLogsChan || res.settings.modLogs === "there") {
                     if (res.settings.modLogs === "there") modLogsChan = message.channel;
                     embedId = await new Promise(resolve => {
@@ -142,7 +140,7 @@ ${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`).catc
                     embedId: embedId ? embedId : null,
                     happenedAt: Date.now()
                 });
-                await utils.saveDB(res).catch(err => console.error(err));
+                await client.functions.saveDB(res).catch(err => console.error(err));
                 if (res.settings.deleteModCommands === true) message.delete();
             });
         });

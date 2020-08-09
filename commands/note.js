@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
 const {branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
@@ -12,9 +11,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
-            if (!res) res = await utils.createDB(message.guild.id);
+        client.functions.getDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -32,7 +30,7 @@ module.exports = {
                 .setDescription(`Now you see, there is something called telling me who to note.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
-            var user = await utils.getUser(args[0]);
+            var user = await client.functions.getUser(args[0]);
             if (!user) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
@@ -67,7 +65,7 @@ module.exports = {
                 reason: note,
                 happenedAt: Date.now()
             });
-            utils.saveDB(res).catch(err => console.error(err));
+            client.functions.saveDB(res).catch(err => console.error(err));
         });
     }
 }

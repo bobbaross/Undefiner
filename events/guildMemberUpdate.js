@@ -1,10 +1,6 @@
-const { Checks } = require("../functions/checks");
 const {MessageEmbed} = require("discord.js");
 const sanitizer = require('@aero/sanitizer');
-const { Utils } = require("../functions/functions");
-
 module.exports = (client, oldMember, newMember) => {
-    utils = new Utils(client);
     function updateOurTeam() {
         if (newMember.guild.id !== "724602779053719693") return;
         var channel = newMember.guild.channels.cache.get("724612797597745222");
@@ -40,19 +36,19 @@ module.exports = (client, oldMember, newMember) => {
                 embed.addField(`Moderators`, `${mods.join('\n')}`, true);
                 message.edit(embed);
             }
-            if (Checks.memberHigherThan(newMember, oldMember)) {
-                if (Checks.hasRole(newMember, staffRoles)) {
+            if (client.checks.memberHigherThan(newMember, oldMember)) {
+                if (client.checks.hasRole(newMember, staffRoles)) {
                     updateTheEmbed(msg);
                 }
-            } else if (Checks.memberHigherThan(oldMember, newMember)) {
-                if (Checks.hasRole(oldMember, staffRoles)) {
+            } else if (client.checks.memberHigherThan(oldMember, newMember)) {
+                if (client.checks.hasRole(oldMember, staffRoles)) {
                     updateTheEmbed(msg);
                 }
             } else return;
         });
     }
     function sanitize() {
-        utils.getDB(newMember.guild.id).then(res => {
+        client.functions.getDB(newMember.guild.id).then(res => {
             if (res?.antiUntypable !== true) return;
             var sanitized = sanitizer(newMember.displayName);
             if (newMember.displayName !== sanitized) newMember.setNickname(sanitized).catch(err => err);

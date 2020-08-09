@@ -1,6 +1,5 @@
 const {MessageEmbed} = require('discord.js');
 const {good} = require('../config.json').colors;
-const { Utils } = require('./functions');
 const uniqid = require('uniqid');
 
 class Expire {
@@ -9,12 +8,11 @@ class Expire {
     }
 
     async unmute(entry) {
-    let {getDB,saveDB,getTime} = new Utils(this.client);
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
         guild.members.fetch(entry.userId).then(async member => {
             if (!member) return;
-            getDB(guild.id).then(async res => {
+            client.functions.getDB(guild.id).then(async res => {
                 if (!member.roles.cache.has(res.settings.mutedRole)) return;
                 member.roles.remove(res.settings.mutedRole).then(async () => {
                     res.cases++;
@@ -22,7 +20,7 @@ class Expire {
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
                     if (modLogs) {
                         embedId = new Promise(async resolve => {
-                            let duration = await getTime(Date.now()-entry.happenedAt);
+                            let duration = await client.functions.getTime(Date.now()-entry.happenedAt);
                             let embed = new MessageEmbed()
                             .setColor(good)
                             .setTitle(`Member Unmuted | Case #${res.cases}`)
@@ -47,26 +45,25 @@ class Expire {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    saveDB(res);
+                    client.functions.saveDB(res);
                 }).catch(err => console.error(err));
             });
         });
     }
 
     async unban(entry) {
-        let {getDB,saveDB,getTime} = new Utils(this.client);
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
         guild.fetchBan(entry.userId).then(async ban => {
             if (!ban) return;
-            getDB(guild.id).then(async res => {
+            client.functions.getDB(guild.id).then(async res => {
                 guild.members.unban(ban.user.id).then(async () => {
                     res.cases++;
                     let embedId;
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
                     if (modLogs) {
                         embedId = new Promise(async resolve => {
-                            let duration = await getTime(Date.now()-entry.happenedAt);
+                            let duration = await client.functions.getTime(Date.now()-entry.happenedAt);
                             let embed = new MessageEmbed()
                             .setColor(good)
                             .setTitle(`Member Unbanned | Case #${res.cases}`)
@@ -91,7 +88,7 @@ class Expire {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    saveDB(res);
+                    client.functions.saveDB(res);
                 }).catch(err => console.error(err));
             });
         });

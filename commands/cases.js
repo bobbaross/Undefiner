@@ -1,5 +1,4 @@
 const {MessageEmbed} = require ('discord.js');
-const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -11,9 +10,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
-            if (!res) res = await utils.createDB(message.guild.id);
+        client.functions.getDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -27,7 +25,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             var casesArr = [];
-            var user = await utils.getUser(args[0]);
+            var user = await client.functions.getUser(args[0]);
             if (!user) {
                 for (let Case of res.modCases) {
                     casesArr.push(Case);
@@ -52,7 +50,7 @@ module.exports = {
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
             if (!args[0] || args[0] && args[0] <= 0) args[0] = 1;
-            var pages = await utils.getPages(casesArr, args[0]);
+            var pages = await client.functions.getPages(casesArr, args[0]);
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle(`Cases`)

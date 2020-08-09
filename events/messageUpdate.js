@@ -1,14 +1,12 @@
 const Discord = require('discord.js');
-const { Utils } = require(`../functions/functions.js`);
 
 module.exports = (client, oldMessage, newMessage) => {
-    utils = new Utils(client);
     async function commands() {
         var { commandHandler } = require('../functions/commandhandler.js');
         if (newMessage.channel.type === 'dm') {
             commandHandler(client, newMessage, "undefine ", null).catch(err => console.error(err));
         } else {
-            utils.getDB(newMessage.guild.id).then(res => {
+            client.functions.getDB(newMessage.guild.id).then(res => {
                 if (res && res.prefix) var prefix = res.prefix;
                 else var prefix = "undefine ";
                 if (res && res.disabledCommands) var disabledCommands = res.disabledCommands;
@@ -19,7 +17,7 @@ module.exports = (client, oldMessage, newMessage) => {
     }
     async function tags() {
         if (newMessage.channel.type === 'dm') return;
-        utils.getDB(newMessage.guild.id).then(res => {
+        client.functions.getDB(newMessage.guild.id).then(res => {
             if (!res) return;
             if (!newMessage.content.toLowerCase().startsWith(res.prefix) || newMessage.author.bot) return;
             let bypassRoles = [];
@@ -44,7 +42,7 @@ module.exports = (client, oldMessage, newMessage) => {
                     let ruleTag = tag[rule];
                     embed = new Discord.MessageEmbed()
                     .setColor(ruleTag.color)
-                    utils.setCleanTitle(newMessage, embed, tagName)
+                    client.functions.setCleanTitle(newMessage, embed, tagName)
                     embed.setDescription(`${ruleTag.value}\n    ${ruleTag[section]}`)
 
                     newMessage.channel.send(embed).then(msg => {
@@ -54,7 +52,7 @@ module.exports = (client, oldMessage, newMessage) => {
                 default:
                     embed = new Discord.MessageEmbed()
                     .setColor(tag.color)
-                    utils.setCleanTitle(newMessage, embed, tagName)
+                    client.functions.setCleanTitle(newMessage, embed, tagName)
                     embed.setDescription(`${tag.value}`)
 
                     newMessage.channel.send(embed).then(msg => {

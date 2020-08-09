@@ -1,5 +1,3 @@
-const {Utils} = require('./functions.js');
-
 async function commandHandler(client, message, prefix, disabledCommands) {
     var mentionedBotPrefix = message.content.startsWith(`<@!${client.user.id}> `);
     if (mentionedBotPrefix) prefix = `<@!${client.user.id}> `;

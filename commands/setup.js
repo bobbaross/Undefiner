@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
 
 module.exports = {
     name: "setup",
@@ -10,7 +9,6 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        var {createDB,getDB,saveDB} = new Utils(client);
         if (!message.member.hasPermission('MANAGE_GUILD')) {
             let oMem = [];
             let errbed = async () => {
@@ -34,10 +32,10 @@ module.exports = {
             }
             return errbed();
         }
-        getDB(message.guild.id).then(async res => {
+        client.functions.getDB(message.guild.id).then(async res => {
             if (res) return message.channel.send(`You don't need to do this anymore.`).catch(err => err);
-            var instance = await createDB(message.guild.id);
-            saveDB(instance).then(() => {
+            var instance = await client.functions.createDB(message.guild.id);
+            client.functions.saveDB(instance).then(() => {
                 return message.channel.send(`Your database has now been set up!`).catch(err => err);
             }).catch(err => console.error(err));
         });

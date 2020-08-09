@@ -1,6 +1,5 @@
 const sanitizer = require('@aero/sanitizer');
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -12,9 +11,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
-            if (!res) res = await utils.createDB(message.guild.id);
+        client.functions.getDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createDB(message.guild.id);
             if (!message.member.hasPermission("MANAGE_GUILD")) {
                 let embed = new MessageEmbed()
                 .setColor(branding)

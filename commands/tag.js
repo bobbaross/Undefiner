@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -11,8 +10,7 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
+        client.functions.getDB(message.guild.id).then(async res => {
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -68,7 +66,7 @@ module.exports = {
                         color: branding
                     });
 
-                    utils.saveDB(res).catch(err => console.error(err));
+                    client.functions.saveDB(res).catch(err => console.error(err));
 
                     embed = new MessageEmbed()
                     .setColor(branding)
@@ -93,7 +91,7 @@ module.exports = {
                     value = resTag.value;
                     index = res.tags.indexOf(resTag);
                     res.tags.splice(index,1);
-                    utils.saveDB(res).catch(err => console.error(err));
+                    client.functions.saveDB(res).catch(err => console.error(err));
                     embed = new MessageEmbed()
                     .setColor(branding)
                     .setTitle(`Tags | ${name}`)
@@ -127,7 +125,7 @@ module.exports = {
                             index = res.tags.indexOf(resTag);
                             resTag.value = value;
                             res.tags.splice(index,1,resTag);
-                            utils.saveDB(res).catch(err => console.error(err));
+                            client.functions.saveDB(res).catch(err => console.error(err));
                             embed = new MessageEmbed()
                             .setColor(branding)
                             .setTitle(`Tags | ${name}`)
@@ -142,7 +140,7 @@ module.exports = {
                             index = res.tags.indexOf(resTag);
                             resTag.color = value;
                             res.tags.splice(index,1,resTag);
-                            utils.saveDB(res).catch(err => console.error(err))
+                            client.functions.saveDB(res).catch(err => console.error(err))
                             embed = new MessageEmbed()
                             .setColor(branding)
                             .setTitle(`Tags | ${name}`)
@@ -172,7 +170,7 @@ module.exports = {
                     }
                     embed = new MessageEmbed()
                     .setColor(resTag.color)
-                    utils.setCleanTitle(message, embed, name)
+                    client.functions.setCleanTitle(message, embed, name)
                     embed.setDescription(`${resTag.value}`)
 
                     message.channel.send(embed).then(msg => {

@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -10,11 +9,10 @@ module.exports = {
     aliases: ['commands', 'cmds'],
 
     async undefine(client, message, args) {
-        var {getDB} = new Utils(client);
         var prefix;
         if (message.guild) {
             prefix = await new Promise(resolve => {
-                getDB(message.guild.id).then(res => {
+                client.functions.getDB(message.guild.id).then(res => {
                     if (res && res.prefix) return resolve(res.prefix);
                     else return resolve("undefine ");
                 });

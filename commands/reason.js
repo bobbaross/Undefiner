@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
 const {bad} = require('../config.json').colors;
 
 module.exports = {
@@ -11,9 +10,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
-            if (!res) res = await utils.createDB(message.guild.id);
+        client.functions.getDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -49,7 +47,7 @@ module.exports = {
             modCase.reason = reason;
             res.modCases.splice(index,1,modCase);
             //Object.assign(res.modCases[index], {reason: reason});
-            await utils.saveDB(res).catch(err => console.error(err));
+            await client.functions.saveDB(res).catch(err => console.error(err));
             message.channel.messages.fetch(`${modCase.embedId}`).then(msg => {
                 if (!msg) {
                     let embed = new MessageEmbed()

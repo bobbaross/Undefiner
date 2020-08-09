@@ -1,5 +1,4 @@
 const {MessageEmbed} = require ('discord.js');
-const { Utils } = require('../functions/functions');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -11,9 +10,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
-            if (!res) res = await utils.createDB(message.guild.id);
+        client.functions.getDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -40,7 +38,7 @@ module.exports = {
             }
             let index = res.notes.indexOf(note);
             res.notes.splice(index,1);
-            utils.saveDB(res).catch(err => console.error(err));
+            client.functions.saveDB(res).catch(err => console.error(err));
             let embed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully deleted note with id ${note.id} and value ${note.reason}`)

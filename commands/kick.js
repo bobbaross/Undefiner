@@ -1,5 +1,4 @@
 const {MessageEmbed} = require('discord.js');
-const { Utils } = require('../functions/functions.js');
 const {dangerous,branding} = require('../config.json').colors;
 const uniqid = require('uniqid');
 
@@ -12,9 +11,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args) {
-        utils = new Utils(client);
-        utils.getDB(message.guild.id).then(async res => {
-            if (!res) res = await utils.createDB(message.guild.id);
+        client.functions.getDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -37,7 +35,7 @@ module.exports = {
                 .setDescription(`Now you see, there is something called telling me who to kick.\n${this.name} ${this.usage}`);
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
             }
-            var user = await utils.getUser(args[0]);
+            var user = await client.functions.getUser(args[0]);
             if (!user) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
@@ -90,7 +88,7 @@ module.exports = {
                 .setDescription(`${user.tag} has been kicked. ${res.settings.withReason === true ? reason : ""}`);
                 message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
                 var embedId;
-                var modLogsChan = await utils.getChannel(res.settings.modLogs, message.guild.channels);
+                var modLogsChan = await client.functions.getChannel(res.settings.modLogs, message.guild.channels);
                 if (modLogsChan || res.settings.modLogs === "there") {
                     if (res.settings.modLogs === "there") modLogsChan = message.channel;
                     embedId = await new Promise(resolve => {
@@ -125,7 +123,7 @@ ${user.id}`).catch(error => error);
                     embedId: embedId ? embedId : null,
                     happenedAt: Date.now()
                 });
-                await utils.saveDB(res).catch(err => console.error(err));
+                await client.functions.saveDB(res).catch(err => console.error(err));
                 if (res.settings.deleteModCommands === true) message.delete();
             });
         });
