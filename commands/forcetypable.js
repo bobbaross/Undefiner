@@ -26,14 +26,14 @@ module.exports = {
             message.guild.members.fetch().then(async guildMembers => {
                 var members = guildMembers.filter(member => member.displayName !== sanitizer(member.displayName));
                 var failedMembers = [];
-                members.forEach(member => {
+                for (let member of members) {
                     let newNick = sanitizer(member.displayName);
                     console.log(newNick)
                     setTimeout(() => {
                         console.log(newNew+" 2");
                         member.setNickname(newNick).then(console.log).catch(err => {failedMembers.push(member.user.tag);console.error(err);});
                     }, 500);
-                });
+                }
                 await failedMembers;
                 await members;
                 let embed = new MessageEmbed()
