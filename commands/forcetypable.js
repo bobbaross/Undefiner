@@ -29,7 +29,7 @@ module.exports = {
                 for (i=0;i<members.array.length;i++) {
                     let newNick = sanitizer(members.array[i].displayName);
                     console.log(newNick)
-                    members.array[i].setNickname(newNick).then(console.log(members.array[i].user.tag+" Changed!")).catch(err => {failedMembers.push(members.array[i].user.tag);console.error(err);});
+                    members.array[i].setNickname(newNick).then(console.log(members.array[i].user.tag+" Changed!")).catch(err => {failedMembers.push(members.array[i].user.tag);console.log(err);});
                 }
                 let embed = new MessageEmbed()
                 .setColor(branding)
