@@ -23,12 +23,24 @@ module.exports = {
                     message.channel.send(embed.description).catch(error => error);
                 });
             }
+            if (!message.guild.me.hasPermission("MANAGE_NICKNAMES")) {
+                let embed = new MessageEmbed()
+                .setColor(branding)
+                .setDescription(`I am lacking the Manage Nicknames permission.`)
+                return message.channel.send(embed).catch(err => {
+                    message.channel.send(embed.description).catch(error => error);
+                });
+            }
             message.guild.members.fetch().then(async guildMembers => {
                 var failedMembers = [];
                 guildMembers.filter(member => member.displayName !== sanitizer(member.displayName)).forEach(member => {
                     let newNick = sanitizer(member.displayName);
                     console.log(newNick)
-                    member.setNickname(newNick).then(console.log(member.user.tag+" Changed!")).catch(err => {failedMembers.push(member.user.tag);console.log(err);});
+                    if (message.guild.me.roles.highest.position < member.roles.highest.position || member.user.id === message.guild.ownerID) {
+                        failedMembers.push(member.user.tag)
+                    } else {
+                        member.setNickname(newNick).then(console.log(member.user.tag+" Changed!"));
+                    }
                 });
                 let embed = new MessageEmbed()
                 .setColor(branding)
