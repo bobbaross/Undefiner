@@ -11,8 +11,9 @@ module.exports = {
     async undefine(client, message, args) {
         let owner = require('../owner.json');
         let uptime = process.uptime();
+        let uptimeString = await client.functions.getStringTime(uptime);
         let version = require('../version.json');
-        client.shard.fetchClientValues('guilds.cache.size').then(results => {
+        client.shard.fetchClientValues('guilds.cache.size').then(async results => {
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle(`${client.user.name}'s Stats/Info`)
@@ -22,7 +23,7 @@ module.exports = {
             .addField(`Server Count`, `${results.reduce((prev, guildCount) => prev + guildCount, 0)} servers`, true)
             .addField(`Vote Count`, `Unavailable: Not add, approved, or set up, to top.gg yet`, true)
             .addField(`Command Count`, `${client.commands.map(cmd => cmd).length} commands`, true)
-            .addField(`Uptime`, client.functions.getStringTime(uptime), true)
+            .addField(`Uptime`, uptimeString, true)
             .addField(`Version`, `${version.release}.${version.beta}.${version.alpha}.${version.pre_alpha}`, true)
             .addField(`Library`, `Discord.JS`, true)
             .addField(`Website`, `https://aprixstudios.xyz/`, true)
