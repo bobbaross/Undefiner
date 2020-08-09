@@ -5,7 +5,7 @@ const { Checks } = require('./functions/checks');
 
 module.exports = (client) => {
     utils = new Utils(client);
-    var version = require('./version.txt');
+    var version = require('./version.json');
     client.functions = utils;
     client.checks = Checks;
     client.version = version;
