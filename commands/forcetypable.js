@@ -29,9 +29,13 @@ module.exports = {
                 members.forEach(member => {
                     let newNick = sanitizer(member.displayName);
                     console.log(newNick)
-                    member.setNickname(newNick).then(console.log).catch(err => /*failedMembers.push(member.user.tag)*/console.error(err));
+                    setTimeout(() => {
+                        console.log(newNew+" 2");
+                        member.setNickname(newNick).then(console.log).catch(err => {failedMembers.push(member.user.tag);console.error(err);});
+                    });
                 });
                 await failedMembers;
+                await members;
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`Finished!\nFailed Members: ${failedMembers[0] ? failedMembers.join(', ') : "None"}`)
