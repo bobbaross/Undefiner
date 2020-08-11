@@ -311,6 +311,7 @@ class Utils {
             let staffRole = Object.entries(staffRoles)[i][1].role;
             roles.push(staffRole);
         }
+        console.log(roles)
         if (memberRoles?.some(r => roles.includes(r.id))) {
             return true;
         } else {
