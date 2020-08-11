@@ -311,7 +311,7 @@ class Utils {
             let staffRole = Object.entries(staffRoles)[i][1].role;
             roles.push(staffRole);
         }
-        let member = guild.member(sender.id);
+        let member = guild.members.cache.get(sender.id);
         if (member?.roles.cache.some(r => roles.includes(r.id))) {
             return true;
         }
