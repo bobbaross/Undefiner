@@ -313,6 +313,8 @@ class Utils {
         }
         if (memberRoles?.some(r => roles.includes(r.id))) {
             return true;
+        } else {
+            return false;
         }
     }
 }
