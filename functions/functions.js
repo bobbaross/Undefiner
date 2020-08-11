@@ -295,7 +295,7 @@ class Utils {
 
     async getSupportServer() {
         return new Promise(resolve => {
-            this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")').then(results => {
+            this.client.shard.broadcastEval('Object.toJSON(this.guilds.cache.get("724602779053719693"))').then(results => {
                 let guild = results.find(result => result !== null);
                 return resolve(guild);
             });
