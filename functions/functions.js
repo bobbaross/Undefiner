@@ -310,6 +310,8 @@ class Utils {
         for (let i=minimum.pos;i>0;i--) {
             let staffRole = Object.entries(staffRoles)[i][1].role;
             roles.push(staffRole);
+            console.log(i)
+            console.log(staffRole)
         }
         console.log(roles)
         if (memberRoles?.some(r => roles.includes(r.id))) {
