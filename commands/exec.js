@@ -6,9 +6,10 @@ module.exports = {
     aliases: [],
     usage: '<commands>',
     category: "developer",
+    staffOnly: true,
+    auth: "dev",
 
     async undefine(client, message, args) {
-        if (message.author.id !== "266162824529707008") return;
         if (!args) return;
         exec(args.join(' '), (err, out) => {
             if (err) {console.log(err); return message.author.send(err).catch(err => err);}

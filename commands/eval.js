@@ -8,9 +8,10 @@ module.exports = {
     aliases: [],
     usage: '<code>',
     category: "developer",
+    staffOnly: true,
+    auth: "dev",
 
     async undefine(client, message, args) {
-        if (message.author.id !== "266162824529707008") return;
         try {
             var code = args.join(" ");
             let evaled = await require('util').inspect(eval(code));
