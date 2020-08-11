@@ -7,6 +7,8 @@ module.exports = {
     usage: "[command]",
     category: "information",
     aliases: ['commands', 'cmds'],
+    staffOnly: true,
+    auth: "mod",
 
     async undefine(client, message, args) {
         var prefix;
