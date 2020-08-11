@@ -46,14 +46,14 @@ module.exports = {
                 .addField(`CPU Cores`, require('os').cpus().length, true)
                 .addField(`CPU Usage`, `${cpuusage}%`)
                 .addField(`Memory Usage`, `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + 'MB'}/${Math.round(require('os').totalmem() / 1000000000) + 'GB'}`)
-                return message.channel.send(embed).then(msg.delete(1000)).catch(err => {
+                return message.channel.send(embed).then(msg.delete({timeout: 1000})).catch(err => {
                     let arr = [];
                     for (let field of embed.fields) {
                         arr.push(`**${field.name}**: ${field.value}`);
                     }
                     let str = `**${embed.title}**
 ${arr.join('\n')}`;
-                    return message.channel.send(str).then(msg.delete(1000)).catch(error => error);
+                    return message.channel.send(str).then(msg.delete({timeout: 1000})).catch(error => error);
                 });
             });
         }).catch(err => err);
