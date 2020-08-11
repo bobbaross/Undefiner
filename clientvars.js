@@ -40,7 +40,7 @@ module.exports = (client) => {
     };
     utils = new Utils(client);
     client.functions = utils;
-    client.supportServer = client.functions.getSupportServer();
+    //client.supportServer = client.functions.getSupportServer();
 
     var commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
     for (let file of commandFiles) {

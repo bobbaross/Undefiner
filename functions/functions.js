@@ -293,9 +293,9 @@ class Utils {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
     }
 
-    async getSupportServer() {
+    async getSupportServerMember(userid) {
         return new Promise(resolve => {
-            this.client.shard.broadcastEval('this.guilds.resolve("724602779053719693")').then(results => {
+            this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")?.member("'+userid+'")').then(results => {
                 let guild = results.find(result => result !== null);
                 return resolve(guild);
             });
@@ -303,7 +303,7 @@ class Utils {
     }
 
     async authorized(command, sender) {
-        let guild = await this.getSupportServer();
+        let member = await this.getSupportServerMember(sender.id);
         let staffRoles = this.client.staffRoles;
         let minimum = staffRoles[command.auth];
         let roles = [];
@@ -311,7 +311,6 @@ class Utils {
             let staffRole = Object.entries(staffRoles)[i][1].role;
             roles.push(staffRole);
         }
-        let member = guild.member(sender);
         if (member?.roles.cache.some(r => roles.includes(r.id))) {
             return true;
         }
