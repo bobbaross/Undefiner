@@ -35,7 +35,7 @@ module.exports = {
                 .addField(`Owner`, owner, true)
                 .addField(`OwnerID`, `266162824529707008`, true)
                 .addField(`Server Count`, `${results.reduce((prev, guildCount) => prev + guildCount, 0)} servers`, true)
-                .addField(`Vote Count`, `Unavailable: Not add, approved, or set up, to top.gg yet`, true)
+                .addField(`Vote Count`, `Unavailable: Not added, approved, or set up, to top.gg yet`, true)
                 .addField(`Command Count`, `${client.commands.map(cmd => cmd).length} commands`, true)
                 .addField(`Uptime`, uptimeString, true)
                 .addField(`Version`, `${version.release}.${version.beta}.${version.alpha}.${version.pre_alpha}`, true)
