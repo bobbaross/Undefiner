@@ -10,7 +10,7 @@ module.exports = {
 
     async undefine(client, message, args) {
         let fetchEmbed = new MessageEmbed()
-        message.channel.send(`Fetching...`).then(msg => {
+        message.channel.send(`Fetching...`).then(async msg => {
             async function cpuUsage(time) {
                 let startTime = process.hrtime();
                 let startCPU = process.cpuUsage();
