@@ -44,8 +44,8 @@ module.exports = {
                 .addField(`Discord`, `https://discord.gg/k2PEWMw or https://aprx.gq/discord`, true)
                 .addField(`GitHub`, `https://github.com/AprixStudios/Undefiner`, true)
                 .addField(`CPU Cores`, require('os').cpus().length, true)
-                .addField(`CPU Usage`, `${cpuusage}%`)
-                .addField(`Memory Usage`, `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + 'MB'}/${Math.round(require('os').totalmem() / 1000000000) + 'GB'}`)
+                .addField(`CPU Usage`, `${cpuusage}%`, true)
+                .addField(`Memory Usage`, `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + 'MB'}/${Math.round(require('os').totalmem() / 1000000000) + 'GB'}`, true)
                 return message.channel.send(embed).then(msg.delete({timeout: 1000})).catch(err => {
                     let arr = [];
                     for (let field of embed.fields) {
