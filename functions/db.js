@@ -21,7 +21,9 @@ const Schema = new mongoose.Schema({
         logs: String
     },
     language: String,
-    antiUntypable: Boolean
+    antiUntypable: Boolean,
+    disabledUsers: Array,
+    autoResponses: [Object]
 });
 
 const serverID = mongoose.model("serverID", Schema);

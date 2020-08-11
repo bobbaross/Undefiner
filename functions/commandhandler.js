@@ -7,6 +7,7 @@ async function commandHandler(client, message, prefix, disabledCommands) {
     var command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
     if (!command) return;
+    if (command.staffOnly === true && !client.functions.authorized(command, message.author)) return;
     if (command.guildOnly === true && message.channel.type === 'dm') return;
     if (disabledCommands && disabledCommands.includes(commandName)) return;
     try {

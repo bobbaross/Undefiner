@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const { userID, DB } = require(`./db.js`);
+const { serverID, DB } = require(`./db.js`);
 const { entryType, entryDB } = require('./expiredb.js');
+const { global, botstaffdb } = require('./botstaffdb.js');
 const Discord = require('discord.js');
 
 class Utils {
@@ -119,8 +120,25 @@ class Utils {
                     logs: "off"
                 },
                 language: "en",
-                antiUntypable: false
+                antiUntypable: false,
+                disabledUsers: [],
+                autoResponses: []
             }, false);
+            return resolve(newDB);
+        });
+    }
+
+    async createStaffDB() {
+        return new Promise(resolve => {
+            let newDB = new botstaffdb({
+                botstaffdb: "a",
+                global: true,
+                bannedServers: [],
+                bannedUsers: [],
+                bannedOwners: [],
+                bannedAdmins: [],
+                infractions: []
+            });
             return resolve(newDB);
         });
     }
@@ -142,6 +160,17 @@ class Utils {
         return new Promise((resolve, reject) => {
             DB.findOne({
                 serverID: serverid
+            }, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+            });
+        });
+    }
+
+    async getStaffDB() {
+        return new Promise((resolve, reject) => {
+            global.findOne({
+                botstaffdb: "a"
             }, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
@@ -262,6 +291,30 @@ class Utils {
 
     async setCleanFooter(message, embed, footer) {
         if (!message.content.toLowerCase().endsWith(` -c`) && !message.content.toLowerCase().endsWith(` -clean`)) embed.setFooter(footer);
+    }
+
+    async getSupportServer() {
+        return new Promise(resolve => {
+            client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")').then(results => {
+                let guild = results.find(result => result !== null);
+                return resolve(guild);
+            });
+        });
+    }
+
+    async authorized(command, sender) {
+        let guild = this.getSupportServer();
+        let staffRoles = this.client.staffRoles;
+        let minimum = staffRoles[command.auth];
+        let roles = [];
+        for (i=minimum.pos;i>0;i--) {
+            let staffRole = Object.entries(staffRoles)[i][1].role;
+            roles.push(staffRole);
+        }
+        let member = guild.member(sender.id);
+        if (member?.roles.cache.some(r => roles.includes(r.id))) {
+            return true;
+        }
     }
 }
 
