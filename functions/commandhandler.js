@@ -10,7 +10,7 @@ async function commandHandler(client, message, prefix, disabledCommands) {
 
     if (!command) return;
     let authorized = command.staffOnly === true ? await client.functions.authorized(command, message.author) : true;
-    if (command.staffOnly === true && !authorized) return;
+    if (command.staffOnly === true && authorized !== true) return;
     if (command.guildOnly === true && message.channel.type === 'dm') return;
     if (disabledCommands && disabledCommands.includes(commandName)) return;
     try {
