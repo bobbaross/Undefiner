@@ -303,7 +303,7 @@ class Utils {
     }
 
     async authorized(command, sender) {
-        let guild = this.getSupportServer();
+        let guild = await this.getSupportServer();
         let staffRoles = this.client.staffRoles;
         let minimum = staffRoles[command.auth];
         let roles = [];
