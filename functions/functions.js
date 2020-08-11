@@ -307,12 +307,11 @@ class Utils {
         let staffRoles = this.client.staffRoles;
         let minimum = staffRoles[command.auth];
         let roles = [];
-        console.log(guild);
         for (let i=minimum.pos;i>0;i--) {
             let staffRole = Object.entries(staffRoles)[i][1].role;
             roles.push(staffRole);
         }
-        let member = guild.members.cache.get(sender.id);
+        let member = guild.member(sender);
         if (member?.roles.cache.some(r => roles.includes(r.id))) {
             return true;
         }
