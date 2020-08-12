@@ -1,4 +1,8 @@
-const {MessageEmbed} = require("discord.js");
+const Discord = require('discord.js');
+const {teamWebhookToken} = require('../config.json');
+const teamWebhook = new Discord.WebhookClient("742727604926414971", teamWebhookToken);
+
+const {MessageEmbed} = Discord;
 const sanitizer = require('@aero/sanitizer');
 module.exports = (client, oldMember, newMember) => {
     function updateOurTeam() {
@@ -39,6 +43,12 @@ module.exports = (client, oldMember, newMember) => {
             if (client.checks.memberHigherThan(newMember, oldMember)) {
                 if (client.checks.hasRole(newMember, staffRoles)) {
                     updateTheEmbed(msg);
+                    let embed = new MessageEmbed()
+                    .setColor("#fff5c0")
+                    .setTitle(`New Team Member`)
+                    .setThumbnail(newMember.user.avatarURL)
+                    .setDescription(`${newMember.user.tag} is now a part of the team as ${client.functions.authorized({auth: "dev"}, newMember.user) ? "a Developer" : client.functions.authorized({auth: "admin"}, newMember.user) ? "an Administrator" : client.functions.authorized({auth: "mod"}, newMember.user) ? "a Moderator" : "Whoops! Error in the system! Please fix!"}`)
+                    teamWebhook.send(embed);
                 }
             } else if (client.checks.memberHigherThan(oldMember, newMember)) {
                 if (client.checks.hasRole(oldMember, staffRoles)) {
