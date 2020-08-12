@@ -46,7 +46,7 @@ module.exports = (client, oldMember, newMember) => {
                     let embed = new MessageEmbed()
                     .setColor("#fff5c0")
                     .setTitle(`New Team Member`)
-                    .setThumbnail(newMember.user.avatarURL)
+                    .setThumbnail(newMember.user.avatarURL())
                     .setDescription(`${newMember.user.tag} is now a part of the team as ${client.functions.authorized({auth: "dev"}, newMember.user) ? "a Developer" : client.functions.authorized({auth: "admin"}, newMember.user) ? "an Administrator" : client.functions.authorized({auth: "mod"}, newMember.user) ? "a Moderator" : "Whoops! Error in the system! Please fix!"}`)
                     teamWebhook.send(embed);
                 }
