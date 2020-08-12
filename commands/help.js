@@ -30,7 +30,9 @@ module.exports = {
                 information: [],
                 miscellaneous: [],
                 roles: [],
-                developer: []
+                fun: [],
+                developer: [],
+                botstaff: []
             };
             client.commands.map(cmd => cmd).forEach(cmd => {
                 commands[cmd.category].push(cmd.name);
@@ -47,8 +49,13 @@ module.exports = {
             .addField(`Information`, '`'+commands.information.join('` | `')+'`', true)
             .addField(`Miscellaneous`, '`'+commands.miscellaneous.join('` | `')+'`', true)
             .addField(`Roles`, '`'+commands.roles.join('` | `')+'`', true)
-            .addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true)
-
+            .addField(`Fun`, '`'+commands.fun.join('` | `')+'`', true)
+            if (client.functions.authorized({auth: "mod"}, message.author)) {
+                embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`', true);
+            }
+            if (client.functions.authorized({auth: "dev"}, message.author)) {
+                embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true);
+            }
             return message.channel.send(embed).catch(err => {
                 message.channel.send(`**Help**
 <> = required | [] = optional\n${prefix}${this.name} ${this.usage}
