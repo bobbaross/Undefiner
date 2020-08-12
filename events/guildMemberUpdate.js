@@ -50,7 +50,7 @@ module.exports = (client, oldMember, newMember) => {
                     .setColor("#fff5c0")
                     .setTitle(`New Team Member`)
                     .setThumbnail(newMember.user.avatarURL())
-                    .setDescription(`${newMember.user.tag} is now a part of the team as ${isDev === true ? "a Developer" : isAdmin === true ? "an Administrator" : isMod === true ? "a Moderator" : "Whoops! Error in the system! Please fix!"}`)
+                    .setDescription(`${newMember.user.tag} is now a part of the team as ${isDev === true ? "a Developer" : isAdmin === true ? "an Administrator" : isMod === true ? "a Moderator" : "Whoops! Error in the system! Please fix!"}\nWelcome to the team/Congrats on the promotion, ${newMember.user.username}!`)
                     teamWebhook.send(embed);
                 }
             } else if (client.checks.memberHigherThan(oldMember, newMember)) {
