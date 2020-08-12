@@ -50,11 +50,13 @@ module.exports = {
             .addField(`Miscellaneous`, '`'+commands.miscellaneous.join('` | `')+'`', true)
             .addField(`Roles`, '`'+commands.roles.join('` | `')+'`', true)
             .addField(`Fun`, '`'+commands.fun.join('` | `')+'`', true)
-            if (client.functions.authorized({auth: "mod"}, message.author)) {
-                embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`', true);
+            let isMod = await client.functions.authorized({auth: "mod"}, message.author);
+            if (isMod === true) {
+                embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`');
             }
-            if (client.functions.authorized({auth: "dev"}, message.author)) {
-                embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true);
+            let isDev = await client.functions.authorized({auth: "dev"}, message.author);
+            if (isDev) {
+                embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`');
             }
             return message.channel.send(embed).catch(err => {
                 message.channel.send(`**Help**
