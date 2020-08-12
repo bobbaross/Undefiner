@@ -9,7 +9,7 @@ module.exports = (client, oldMember, newMember) => {
         if (newMember.guild.id !== "724602779053719693") return;
         var channel = newMember.guild.channels.cache.get("724612797597745222");
         if (!channel) return;
-        channel.messages.fetch("740610386432360529").then(msg => {
+        channel.messages.fetch("740610386432360529").then(async msg => {
             if (!msg) return;
             var staffRoles = ["724603074651619401", "724603212598083626", "724609349871206432"];
             function updateTheEmbed(message) {
@@ -43,11 +43,14 @@ module.exports = (client, oldMember, newMember) => {
             if (client.checks.memberHigherThan(newMember, oldMember)) {
                 if (client.checks.hasRole(newMember, staffRoles)) {
                     updateTheEmbed(msg);
+                    let isDev = await client.functions.authorized({auth: "dev"}, newMember.user);
+                    let isAdmin = await client.functions.authorized({auth: "admin"}, newMember.user);
+                    let isMod = await client.functions.authorized({auth: "mod"}, newMember.user);
                     let embed = new MessageEmbed()
                     .setColor("#fff5c0")
                     .setTitle(`New Team Member`)
                     .setThumbnail(newMember.user.avatarURL())
-                    .setDescription(`${newMember.user.tag} is now a part of the team as ${client.functions.authorized({auth: "dev"}, newMember.user) ? "a Developer" : client.functions.authorized({auth: "admin"}, newMember.user) ? "an Administrator" : client.functions.authorized({auth: "mod"}, newMember.user) ? "a Moderator" : "Whoops! Error in the system! Please fix!"}`)
+                    .setDescription(`${newMember.user.tag} is now a part of the team as ${isDev === true ? "a Developer" : isAdmin === true ? "an Administrator" : isMod === true ? "a Moderator" : "Whoops! Error in the system! Please fix!"}`)
                     teamWebhook.send(embed);
                 }
             } else if (client.checks.memberHigherThan(oldMember, newMember)) {
