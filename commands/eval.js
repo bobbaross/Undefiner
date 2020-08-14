@@ -16,7 +16,7 @@ module.exports = {
             var code = args.join(" ");
             let evaled = await require('util').inspect(eval(code));
             if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
-            evaled = evaled.replace(`'${client.token}'`, `'token'`);
+            evaled = evaled.replace(`${client.token}`, `token`);
             if (evaled.length > 1024) {
               return message.channel.send(`Too long text, eek.`);
             } else {
