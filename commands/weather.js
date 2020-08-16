@@ -25,7 +25,7 @@ module.exports = {
         }
         weather.find({ search: city, degreeType, degreeType}, (err,result) => {
             if (err) return;
-            if (!result) {
+            if (!result[0]) {
                 let embed = new MessageEmbed()
                 .setDescription(`REEEEEEEEE I CAN'T FIND ANY RESULTS!!!`)
                 return message.channel.send(embed).catch(err => message.channel.send(embed.description));
