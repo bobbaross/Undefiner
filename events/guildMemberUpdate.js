@@ -64,7 +64,10 @@ module.exports = (client, oldMember, newMember) => {
         client.functions.getDB(newMember.guild.id).then(res => {
             if (res?.antiUntypable !== true) return;
             var sanitized = sanitizer(newMember.displayName);
-            if (newMember.displayName !== sanitized) newMember.setNickname(sanitized).catch(err => err);
+            if (newMember.displayName !== sanitized) {
+                if (sanitized.length > 32) sanitized = sanitized.slice(0,30);
+                newMember.setNickname(sanitized).catch(err => err);
+            }
         });
     }
     updateOurTeam();

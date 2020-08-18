@@ -10,7 +10,7 @@ module.exports = {
     usage: "<member> [time] <reason>",
     guildOnly: true,
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getDB(message.guild.id).then(async res => {
             if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
@@ -23,12 +23,20 @@ module.exports = {
             if (!message.member.hasPermission("MANAGE_MESSAGES") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             if (!message.guild.me.hasPermission("MANAGE_ROLES")) {
                 let embed = new MessageEmbed()
                 .setDescription(`Ehem... Maybe sort my permissions first? I need the Manage Roles permissions.`)
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             let mutedRole = await client.functions.getRole(res.settings.mutedRole, message.guild.roles);
             if (!mutedRole) {
@@ -63,40 +71,68 @@ module.exports = {
             if (!args[0]) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me who to mute.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             var user = await client.functions.getUser(args[0]);
             if (!user) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             var member = message.guild.member(user);
             await member;
             if (!member) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             if (member.user.id === message.author.id) {
                 let embed = new MessageEmbed()
                 .setDescription(`This isn't a good idea...\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             if (member.roles.highest.position >= message.member.roles.highest.position) {
                 let embed = new MessageEmbed()
                 .setDescription(`Hey, I don't think you should mute them.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             if (member.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I wouldn't mute that person if I was you.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             if (member.roles.cache.has(mutedRole.id)) {
                 let embed = new MessageEmbed()
                 .setDescription(`Uhm... I am pretty sure they're already muted, to be honest.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             await args.shift();
             var time = await client.functions.setTime(args[0]);
@@ -105,7 +141,11 @@ module.exports = {
             if (!reason) {
                 let embed = new MessageEmbed()
                 .setDescription(`Wait I don't wanna do this without a reason.\n${this.name} ${this.usage}`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             res.cases++;
             var duration = await client.functions.getTime(time-Date.now());
@@ -137,7 +177,11 @@ module.exports = {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`${user.tag} has been muted. ${res.settings.withReason === true ? reason : ""}`);
-                message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                 var embedId;
                 var modLogsChan = await client.functions.getChannel(res.settings.modLogs, message.guild.channels);
                 if (modLogsChan || res.settings.modLogs === "there") {
@@ -151,15 +195,22 @@ module.exports = {
                         .addField(`Reason`, reason)
                         .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
-                        modLogsChan.send(modLogEmbed).then(msg => {
-                            resolve(msg.id);
-                        }).catch(err => {
-                            modLogsChan.send(`**Member Muted** | Case #${res.cases}
-**Member**: ${member.user.tag}
-**Moderator**: ${message.author.tag}
-**Reason**: ${reason}
-${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`).catch(error => error);
-                        });;
+                        if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
+                            if (hasEmbedPerms === true) {
+                                modLogsChan.send(modLogEmbed).then(msg => {
+                                    resolve(msg.id);
+                                }).catch(err => err);
+                            } else {
+                                let fields = [];
+                                for (let field of embed.fields) {
+                                    fields.push(`**${field.name}**: ${field.value}`);
+                                }
+                                let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
+                                modLogsChan.send(str).then(msg => {
+                                    resolve(msg.id);
+                                }).catch(error => error);
+                            }
+                        }
                     });
                 }
                 res.modCases.push({

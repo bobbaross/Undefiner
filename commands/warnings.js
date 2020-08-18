@@ -9,7 +9,7 @@ module.exports = {
     category: "moderation",
     guildOnly: true,
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getDB(message.guild.id).then(async res => {
             if (!res) res = await client.functions.createDB(message.guild.id);
             let bypassRoles = [];
@@ -22,7 +22,11 @@ module.exports = {
             if (!message.member.hasPermission("MANAGE_MESSAGES") && !bypassRoles.some(r => message.member.roles.cache.has(r))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
-                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
             }
             var warningsArr = [];
             var user = await client.functions.getUser(args[0]);
@@ -36,7 +40,11 @@ module.exports = {
                 if (!member) {
                     let embed = new MessageEmbed()
                     .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
-                    return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                    if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                 }
                 await args.shift();
                 for (let warningInstance of res.modCases) {
@@ -58,20 +66,20 @@ module.exports = {
                 embed.addField(`${item.id}`, `**Case**: ${item.case}\n**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n**Member**: ${client.users.cache.get(item.userId) ? client.users.cache.get(item.userId).tag : item.userTag}\n${item.reason}\n**Happened at**: ${new Date(item.happenedAt).toString().slice(0,-40)}`);
             }
             embed.setFooter(`Page ${pages.amount}`);
-            return message.channel.send(embed).catch(err => {
-                let warningsArr = [];
-                for (i=0;i<pages.pages.length;i++) {
-                    warningsArr.push(`**${pages.pages[0].id}**
-**Case**: ${pages.pages[i].case}
-**Moderator**: ${client.users.cache.get(pages.pages[i].modId) ? client.users.cache.get(pages.pages[i].modId).tag : pages.pages[i].modTag}
-**Member**: ${client.users.cache.get(pages.pages[i].userId) ? client.users.cache.get(pages.pages[i].userId).tag : pages.pages[i].userTag}
-${pages.pages[0].reason}`)
+            if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
+                if (hasEmbedPerms === true) {
+                    modLogsChan.send(modLogEmbed).then(msg => {
+                        resolve(msg.id);
+                    }).catch(err => err);
+                } else {
+                    let fields = [];
+                    for (let field of embed.fields) {
+                        fields.push(`**${field.name}**: ${field.value}`);
+                    }
+                    let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
+                    modLogsChan.send(str).catch(error => error);
                 }
-                message.channel.send(`**Warnings**
-${warningsArr.join('\n\n')}
-
-Page ${pages.amount}`);
-            });
+            }
         });
     }
 }

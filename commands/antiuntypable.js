@@ -10,7 +10,7 @@ module.exports = {
     category: "manager",
     guildOnly: true,
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getDB(message.guild.id).then(async res => {
             if (!res) res = await client.functions.createDB(message.guild.id);
             if (!message.member.hasPermission("MANAGE_GUILD")) {

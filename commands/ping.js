@@ -5,7 +5,7 @@ module.exports = {
     usage: "",
     aliases: [],
     
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         let msg = await message.channel.send("Pinging... ")
         await msg.edit(`
         🏓 Pong! 🏓

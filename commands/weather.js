@@ -9,7 +9,7 @@ module.exports = {
     aliases: [],
     category: "miscellaneous",
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         var degreeType = args[0];
         if (!degreeType) {
             let embed = new MessageEmbed()
@@ -45,15 +45,20 @@ module.exports = {
             .addField('Winds', current.winddisplay, true)
             .addField('Humidity', `${current.humidity}%`, true)
 
-            return message.channel.send(embed).catch(err => {
-                let fields = [];
-                for (i=0;i<embed.fields.length;i++) {
-                    fields.push(`**${embed.fields[i].name}**: ${embed.fields[i].value}`);
+            if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
+                if (hasEmbedPerms === true) {
+                    modLogsChan.send(modLogEmbed).then(msg => {
+                        resolve(msg.id);
+                    }).catch(err => err);
+                } else {
+                    let fields = [];
+                    for (let field of embed.fields) {
+                        fields.push(`**${field.name}**: ${field.value}`);
+                    }
+                    let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
+                    modLogsChan.send(str).catch(error => error);
                 }
-                message.channel.send(`${embed.title}
-${embed.description}
-${fields.join('\n\n')}`).catch(err => err);
-            });
+            }
         });
     }
 }

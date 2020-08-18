@@ -9,7 +9,7 @@ module.exports = {
     staffOnly: true,
     auth: "dev",
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         if (!args) return;
         exec(args.join(' '), (err, out) => {
             if (err) {console.log(err); return message.author.send(err).catch(err => err);}

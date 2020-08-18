@@ -9,7 +9,7 @@ module.exports = {
     category: "manager",
     guildOnly: true,
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         if (!message.member.hasPermission('MANAGE_GUILD')) {
             let oMem = [];
             let errbed = async () => {
@@ -61,12 +61,20 @@ module.exports = {
                     if (!newPrefix) {
                         embed = new MessageEmbed()
                         .setDescription(`I uhh... So what are we changing the prefix to again?\n${this.name} ${this.usage}`);
-                        return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                        if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                     }
                     if (newPrefix.length > 10) {
                         embed = new MessageEmbed()
                         .setDescription(`The prefix may not be longer than 10 characters.\n${this.name} ${this.usage}`);
-                        return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                        if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                     }
                     if (message.content.search(/_$/) >= 0) newPrefix = newPrefix.slice(0,-1)+' ';
                     let oldPrefix = await res.prefix;
@@ -75,7 +83,11 @@ module.exports = {
                         embed = new MessageEmbed()
                         .setColor(branding)
                         .setDescription(`Prefix successfully changed from ${oldPrefix} to ${newPrefix}`)
-                        message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                        if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                     }).catch(err => {
                         console.error(err);
                     });
@@ -84,7 +96,11 @@ module.exports = {
                     if (!args[1]) {
                         embed = new MessageEmbed()
                         .setDescription(`I might be COMPLETELY wrong, but I highly doubt you specified a role to be honest.\n${this.name} ${this.usage}`);
-                        return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                        if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                     }
                     let role = await client.functions.getRole(args[1], message.guild.roles);
                     if (!role) role = "0";
@@ -93,7 +109,11 @@ module.exports = {
                         embed = new MessageEmbed()
                         .setColor(branding)
                         .setDescription(`Muted role successfully ${role === "0" ? `reset` : `changed to ${role.name}`}`)
-                        message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                        if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                     }).catch(err => {
                         console.error(err);
                     });
@@ -102,7 +122,11 @@ module.exports = {
                         if (!args[1]) {
                             embed = new MessageEmbed()
                             .setDescription(`I may overlook this, but I don't think you specified a channel. At least I don't see anything there.\n${this.name} ${this.usage}`);
-                            return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                            if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                         }
                         let channel = await client.functions.getChannel(args[1], message.guild.channels);
                         let channelTwo;
@@ -115,7 +139,11 @@ module.exports = {
                             embed = new MessageEmbed()
                             .setColor(branding)
                             .setDescription(`Modlogs successfully ${channelTwo.name ? channel === message.channel.id ? `set to the current channel` : `set to ${channelTwo.name}` : channel === "there" ? `set to the execution channel` : `turned off`}`)
-                            message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                            if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                         }).catch(err => {
                             console.error(err);
                         });
@@ -127,7 +155,11 @@ module.exports = {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Respond with reasons successfully turned on.`)
-                                message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                             }).catch(err => console.error(err));
                         }
                         else if (isFalse.includes(args[1])) {
@@ -136,13 +168,21 @@ module.exports = {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Respond with reasons successfully turned off.`)
-                                message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                             }).catch(err => console.error(err));
                         }
                         else {
                             embed = new MessageEmbed()
                             .setDescription(`I am pretty sure that doesn't tell me to enable or disable this.`);
-                            return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                            if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                         }
                     break;
                     case "delete-mod-commands":
@@ -152,7 +192,11 @@ module.exports = {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Delete Mod Commands successfully turned on.`)
-                                message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                             }).catch(err => console.error(err));
                         }
                         else if (isFalse.includes(args[1])) {
@@ -161,13 +205,21 @@ module.exports = {
                                 embed = new MessageEmbed()
                                 .setColor(branding)
                                 .setDescription(`Delete Mod Commands successfully turned off.`)
-                                message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                             }).catch(err => console.error(err));
                         }
                         else {
                             embed = new MessageEmbed()
                             .setDescription(`I am pretty sure that doesn't tell me to enable or disable this.`);
-                            return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                            if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                         }
                         break;
                         case "dm-on-punishment":
@@ -177,7 +229,11 @@ module.exports = {
                                     embed = new MessageEmbed()
                                     .setColor(branding)
                                     .setDescription(`DM On Punishment successfully turned on.`)
-                                    message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                                    if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                                 }).catch(err => console.error(err));
                             }
                             else if (isFalse.includes(args[1])) {
@@ -186,13 +242,21 @@ module.exports = {
                                     embed = new MessageEmbed()
                                     .setColor(branding)
                                     .setDescription(`DM On Punishment successfully turned off.`)
-                                    message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                                    if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                                 }).catch(err => console.error(err));
                             }
                             else {
                                 embed = new MessageEmbed()
                                 .setDescription(`I am pretty sure that doesn't tell me to enable or disable this.`);
-                                return message.channel.send(embed).catch(err => message.channel.send(embed.description).catch(err => err));
+                                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err)
+                }
                             }
             }
 

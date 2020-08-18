@@ -11,7 +11,7 @@ module.exports = {
     staffOnly: true,
     auth: "dev",
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         try {
             var code = args.join(" ");
             let evaled = await require('util').inspect(eval(code));

@@ -8,7 +8,7 @@ module.exports = {
     category: "information",
     aliases: ['commands', 'cmds'],
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         var prefix;
         if (message.guild) {
             prefix = await new Promise(resolve => {

@@ -8,7 +8,7 @@ module.exports = {
     category: "information",
     aliases: [],
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         let fetchEmbed = new MessageEmbed()
         message.channel.send(`Fetching...`).then(async msg => {
             async function cpuUsage(time) {

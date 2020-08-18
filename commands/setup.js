@@ -8,7 +8,7 @@ module.exports = {
     category: "manager",
     guildOnly: true,
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         if (!message.member.hasPermission('MANAGE_GUILD')) {
             let oMem = [];
             let errbed = async () => {

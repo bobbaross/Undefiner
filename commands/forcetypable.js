@@ -10,7 +10,7 @@ module.exports = {
     category: "manager",
     guildOnly: true,
 
-    async undefine(client, message, args) {
+    async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getDB(message.guild.id).then(async res => {
             if (!res) res = await client.functions.createDB(message.guild.id);
             if (!message.member.hasPermission("MANAGE_GUILD")) {
@@ -36,7 +36,10 @@ module.exports = {
                     if (message.guild.me.roles.highest.position < member.roles.highest.position || member.user.id === message.guild.ownerID) {
                         failedMembers.push(member.user.tag)
                     } else {
-                        member.setNickname(newNick);
+                        if (member.displayName !== newNick) {
+                            if (newNick.length > 32) newNick = newNick.slice(0,30);
+                            member.setNickname(newNick).catch(err => err);
+                        }
                     }
                 });
                 let embed = new MessageEmbed()
