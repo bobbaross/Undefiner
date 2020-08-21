@@ -70,20 +70,16 @@ module.exports = {
                 embed.addField(`${item.id}`, `**Case**: ${item.case}\n**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n**Member**: ${client.users.cache.get(item.userId) ? client.users.cache.get(item.userId).tag : item.userTag}\n${item.reason}\n**Happened at**: ${new Date(item.happenedAt).toString().slice(0,-40)}`);
             }
             embed.setFooter(`Page ${pages.amount}`);
-            return message.channel.send(embed).catch(err => {
-                let CasesArr = [];
-                for (i=0;i<pages.pages.length;i++) {
-                    warningsArr.push(`**${pages.pages[0].id}**
-**Case**: ${pages.pages[i].case}
-**Moderator**: ${client.users.cache.get(pages.pages[i].modId) ? client.users.cache.get(pages.pages[i].modId).tag : pages.pages[i].modTag}
-**Member**: ${client.users.cache.get(pages.pages[i].userId) ? client.users.cache.get(pages.pages[i].userId).tag : pages.pages[i].userTag}
-${pages.pages[0].reason}`)
+            if (hasEmbedPerms === true) {
+                message.channel.send(embed).catch(err => err);
+            } else {
+                let fields = [];
+                for (let field of embed.fields) {
+                    fields.push(`**${field.name}**: ${field.value}`);
                 }
-                message.channel.send(`**Cases**
-${CasesArr.join('\n\n')}
-
-Page ${pages.amount}`)
-            });
+                let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
+                message.channel.send(str).catch(error => error);
+            }
         });
     }
 }
