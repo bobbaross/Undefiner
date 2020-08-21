@@ -29,7 +29,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
             }
-            if (/(true)|(false)/i.test(args[0])) var caseSens = (args.shift().toLowerCase() === 'true');
+            if (/(true)|(false)/i.test(args[0])) var caseSens = args.shift().toLowerCase() === 'true';
             if (!args[0]) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
