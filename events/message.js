@@ -71,8 +71,7 @@ module.exports = (client, message) => {
         client.functions.getDB(message.guild.id).then(res => {
             if (!res?.autoResponses?.find(response => response.require.toLowerCase() === message.content.toLowerCase())) return;
             var autoResponse = res.autoResponses.find(response => response.require.toLowerCase() === message.content.toLowerCase());
-            console.log(autoResponse);
-            if (autoResponse?.caseSens === true && autoRespoonse?.require !== message.content) return;
+            if (autoResponse?.caseSens === true && autoResponse?.require !== message.content) return;
             return message.channel.send(autoResponse.respondWith);
         });
     }
