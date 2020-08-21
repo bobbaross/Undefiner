@@ -7,7 +7,7 @@ module.exports = {
     description: "Create phrases to auto respond to.",
     usage: "<add/delete> [case sensitive (true/false) default: true] <text to respond to> | <text to respond with>",
     category: "fun",
-    aliases: [],
+    aliases: ['autores'],
     guildOnly: true,
 
     async undefine(client, message, args, hasEmbedPerms) {
@@ -48,7 +48,7 @@ module.exports = {
             var respondWith = parts[1];
             var respondId = uniqid("autoRes-(", ")");
             if (!res.autoResponses) res.autoResponses = [];
-            res.autoResponses.push({id: respondId, madeBy: message.author.id, madeByTag: message.author.tag, caseSens: caseSens ? caseSens : true, require: respondTo, give: respondWith});
+            res.autoResponses.push({id: respondId, madeBy: message.author.id, madeByTag: message.author.tag, caseSens: caseSens, require: respondTo, give: respondWith});
             client.functions.saveDB(res);
             let embed = new MessageEmbed()
             .setColor(branding)
