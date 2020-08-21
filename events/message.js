@@ -65,6 +65,17 @@ module.exports = (client, message) => {
             }
         });
     }
+    
+    async function autoRes() {
+        if (!message.guild) return;
+        client.functions.getDB(message.guild.id).then(res => {
+            if (!res?.autoResponses?.find(response => response.require.toLowerCase() === message.content.toLowerCase())) return;
+            var autoResponse = res.autoResponses.find(response => response.require.toLowerCase() === message.content.toLowerCase());
+            if (autoResponse?.caseSens === true && autoRespoonse?.require !== message.content) return;
+            return message.channel.send(autoResponse.respondWith);
+        });
+    }
     commands();
     tags();
+    autoRes();
 }
