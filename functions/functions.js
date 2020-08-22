@@ -303,13 +303,8 @@ class Utils {
         });
     }
 
-    async getSupportServerChannel(channelid) {
-        return new Promise(resolve => {
-            this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")?.channels.cache.get("'+channelid+'")').then(results => {
-                let channel = results.find(result => result !== null);
-                return resolve(channel);
-            });
-        });
+    async sendMessageToSupportServerChannel(channelid, msg) {
+        await this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")?.channels.cache.get("'+channelid+'").send('+msg+')').catch(err => err);
     }
 
     async authorized(command, sender) {
