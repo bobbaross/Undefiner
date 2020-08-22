@@ -137,7 +137,8 @@ class Utils {
                 bannedUsers: [],
                 bannedOwners: [],
                 bannedAdmins: [],
-                infractions: []
+                infractions: [],
+                StaffCaseAmount: 0
             });
             return resolve(newDB);
         });
@@ -298,6 +299,15 @@ class Utils {
             this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")?.member("'+userid+'")?.roles.cache').then(results => {
                 let roles = results.find(result => result !== null);
                 return resolve(roles);
+            });
+        });
+    }
+
+    async getSupportServerChannel(channelid) {
+        return new Promise(resolve => {
+            this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")?.channels.cache.get("'+channelid+'")').then(results => {
+                let channel = results.find(result => result !== null);
+                return resolve(channel);
             });
         });
     }
