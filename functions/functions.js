@@ -304,7 +304,7 @@ class Utils {
     }
 
     async sendMessageToSupportServerChannel(channelid, msg) {
-        await this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")?.channels.cache.get("'+channelid+'").send('+msg+')').catch(err => err);
+        this.client.shard.broadcastEval('this.guilds.cache.get("724602779053719693")?.channels.cache.get("'+channelid+'").send("'+msg+'")').catch(err => console.error(err));
     }
 
     async authorized(command, sender) {
