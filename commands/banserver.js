@@ -33,6 +33,7 @@ module.exports = {
         } else {
             if (invite) var theServer = invite.guild;
         }
+        console.log(theServer)
         if (!theServer) {
             let embed = new MessageEmbed()
             .setColor(branding)
