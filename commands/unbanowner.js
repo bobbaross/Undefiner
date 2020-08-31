@@ -25,18 +25,7 @@ module.exports = {
                 return message.channel.send(embed.description).catch(err => err);
             }
         }
-        if (usr.includes('discord.gg')) {
-            let results = await client.shard.broadcastEval(`this.fetchInvite(${usr})`);
-            var invite = results.find(invite => invite !== null);
-        }
-        if (!invite) {
-            var user = usr[0];
-        } else {
-            if (invite) {
-                let usrid = invite.guild.ownerID;
-                var user = usrid;
-            }
-        }
+        var user = usr[0];
         if (!user) {
             let embed = new MessageEmbed()
             .setColor(branding)

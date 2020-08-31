@@ -24,17 +24,17 @@ module.exports = {
             }
         }
         if (usr.includes('discord.gg')) {
-            let results = await client.shard.broadcastEval(`this.fetchInvite(${usr})`);
+            let results = await client.shard.broadcastEval(`this.fetchInvite("${usr}")`);
             var invite = results.find(invite => invite !== null);
         }
         if (!invite) {
-            let results = await client.shard.broadcastEval(`this.functions.getUser(${usr})`);
+            let results = await client.shard.broadcastEval(`this.functions.getUser("${usr}")`);
             let userr = results.find(usrr => usrr !== null);
             var user = userr[0];
         } else {
             if (invite) {
                 let usrid = invite.guild.ownerID;
-                let results = await client.shard.broadcastEval(`this.functions.getUser(${usrid})`);
+                let results = await client.shard.broadcastEval(`this.functions.getUser("${usrid}")`);
                 let userr = results.find(usrr => usrr !== null);
                 var user = userr[0];
             }

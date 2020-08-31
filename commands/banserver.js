@@ -30,11 +30,9 @@ module.exports = {
         if (!invite) {
             let results = await client.shard.broadcastEval(`this.guilds.cache.get("${server}")`);
             var theServer = results.find(srv => srv !== null);
-            console.log(theServer)
         } else {
             if (invite) var theServer = invite.guild;
         }
-        //console.log(theServer)
         if (!theServer) {
             let embed = new MessageEmbed()
             .setColor(branding)
