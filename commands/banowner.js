@@ -60,7 +60,7 @@ module.exports = {
                 return message.channel.send(embed.description).catch(err => err);
             }
         }
-        client.functions.getStaffDB().then(res => {
+        client.functions.getStaffDB().then(async res => {
             if (!res) res = await client.functions.createStaffDB();
             res.infractions.push({
                 id: uniqid("ownerBan-(", ")"),
