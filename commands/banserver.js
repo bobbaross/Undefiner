@@ -24,17 +24,17 @@ module.exports = {
             }
         }
         if (server.includes('discord.gg')) {
-            let results = await client.shard.broadcastEval(`this.fetchInvite(${server})`);
+            let results = await client.shard.broadcastEval(`this.fetchInvite("${server}")`);
             var invite = results.find(invite => invite !== null);
         }
         if (!invite) {
-            let results = await client.shard.broadcastEval(`this.guilds.cache.get(${server})`);
+            let results = await client.shard.broadcastEval(`this.guilds.cache.get("${server}")`);
             var theServer = results.find(srv => srv !== null);
             console.log(theServer)
         } else {
             if (invite) var theServer = invite.guild;
         }
-        console.log(theServer)
+        //console.log(theServer)
         if (!theServer) {
             let embed = new MessageEmbed()
             .setColor(branding)
