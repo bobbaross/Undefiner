@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const { Utils } = require('./functions/functions');
 const { Checks } = require('./functions/checks');
 
-module.exports = (client) => {
+module.exports = async (client) => {
     var version = require('./version.json');
     client.checks = Checks;
     client.version = version;
@@ -40,6 +40,7 @@ module.exports = (client) => {
     };
     utils = new Utils(client);
     client.functions = utils;
+    //client.supportServerModChannel = await client.functions.getSupportServerChannel("724615821669957673");
     //client.supportServer = client.functions.getSupportServer();
 
     var commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));

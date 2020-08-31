@@ -55,35 +55,49 @@ module.exports = {
                 embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`');
             }
             let isDev = await client.functions.authorized({auth: "dev"}, message.author);
-            if (isDev) {
+            if (isDev === true) {
                 embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`');
             }
-            return message.channel.send(embed).catch(err => {
-                message.channel.send(`**Help**
-<> = required | [] = optional\n${prefix}${this.name} ${this.usage}
-**Manager**: ${commands.manager.join(', ')}
-**Moderation**: ${commands.moderation.join(', ')}
-**Information**: ${commands.information.join(', ')}
-**Miscellaneous**: ${commands.miscellaneous.join(', ')}
-**Roles**: ${commands.roles.join(', ')}
-**Developer**: ${commands.developer.join(', ')}`).catch(error => error);
-            });
+            if (hasEmbedPerms === true) {
+            return message.channel.send(embed).catch(err => err)
+            } else {
+                let fields = [];
+                for (let field of embed.fields) {
+                    fields.push(`**${field.name}**: ${field.value}`);
+                }
+                let str = `**${embed.title}**\n${fields.join('\n')}`;
+                return message.channel.send(str).catch(error => error);
+            }
         } else if (command) {
+            let isStaff = await client.functions.authorized({auth: command.auth}, message.author);
+            if (isStaff === false) {
+                args = [];
+                try {
+                    this.undefine(client, messsage, args, hasEmbedPerms);
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    return;
+                }
+            }
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle(command.name.slice(0,1).toUpperCase() + command.name.slice(1))
             .setDescription(`${command.description}\n<> = required | [] = optional`)
             .addField(`Usage`, prefix+command.name+' '+command.usage, true)
             .addField(`Category`, command.category.slice(0,1).toUpperCase()+command.category.slice(1), true)
-            .addField(`Aliases`, `${command.aliases.length > 0 ? command.aliases.join(', ') : "None" }`)
+            .addField(`Aliases`, `${command.aliases.length > 0 ? '`'+command.aliases.join('` | `')+'`' : "None" }`)
 
-            return message.channel.send(embed).catch(err => {
-                message.channel.send(`**${command.name.slice(0,1).toUpperCase() + command.name.slice(1)}**
-${command.description}\n<> = required | [] = optional
-**Usage**: ${prefix}${command.name} ${command.usage}
-**Category**: ${command.category.slice(0,1).toUpperCase()+command.category.slice(1)}
-**Aliases**: ${command.aliases > 0 ? command.aliases.join(', ') : "None"}`).catch(error => error);
-            });
+            if (hasEmbedPerms === true) {
+            return message.channel.send(embed).catch(err => err)
+            } else {
+                let fields = [];
+                for (let field of embed.fields) {
+                    fields.push(`**${field.name}**: ${field.value}`);
+                }
+                let str = `**${embed.title}**\n${fields.join('\n')}`;
+                return message.channel.send(str).catch(error => error);
+            }
         }
     }
 }

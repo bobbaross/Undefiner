@@ -1,0 +1,83 @@
+const {MessageEmbed} = require('discord.js');
+const {branding,good} = require('../config.json').colors;
+const uniqid = require('uniqid');
+
+module.exports = {
+    name: "unbanowner",
+    description: "Unban a owner.",
+    aliases: [],
+    category: "botstaff",
+    auth: "admin",
+    staffOnly: true,
+    usage: "<owner id> <reason>",
+
+    async undefine(client, message, args, hasEmbedPerms) {
+        client.functions.getStaffDB().then(async res => {
+            if (!res) res = await client.functions.createStaffDB();
+            var usr = args.shift();
+        if (!usr) {
+            let embed = new MessageEmbed()
+            .setColor(branding)
+            .setDescription(`Mind telling me which owner to ban?`)
+            if (hasEmbedPerms === true) {
+                return message.channel.send(embed).catch(err => err);
+            } else {
+                return message.channel.send(embed.description).catch(err => err);
+            }
+        }
+        if (usr.includes('discord.gg')) {
+            let results = await client.shard.broadcastEval(`this.fetchInvite(${usr})`);
+            var invite = results.find(invite => invite !== null);
+        }
+        if (!invite) {
+            var user = usr[0];
+        } else {
+            if (invite) {
+                let usrid = invite.guild.ownerID;
+                var user = usrid;
+            }
+        }
+        if (!user) {
+            let embed = new MessageEmbed()
+            .setColor(branding)
+            .setDescription(`I don't know that owner.`)
+            if (hasEmbedPerms === true) {
+                return message.channel.send(embed).catch(err => err);
+            } else {
+                return message.channel.send(embed.description).catch(err => err);
+            }
+        }
+        var reason = args.join(' ');
+        if (!reason) {
+            let embed = new MessageEmbed()
+            .setColor(branding)
+            .setDescription(`Please give me a reason for this.`)
+            if (hasEmbedPerms === true) {
+                return message.channel.send(embed).catch(err => err);
+            } else {
+                return message.channel.send(embed.description).catch(err => err);
+            }
+        }
+            if (!res) res = await client.functions.createStaffDB();
+            res.infractions.push({
+                id: uniqid("ownerUnban-(", ")"),
+                owner: user,
+                mod: message.author.id,
+                modTag: message.author.tag,
+                reason: reason
+            });
+            let index = res.bannedOwners.indexOf(user);
+            res.bannedOwners.splice(index,1);
+            res.staffCaseNum++;
+            client.functions.saveDB(res).then(() => {
+                let embed = new MessageEmbed()
+                .setColor(good)
+                .setTitle(`Owner Unbanned | Case #${res.staffCaseNum}`)
+                .addField(`Owner`, `${user}`, true)
+                .addField(`Moderator`, `${message.author.tag}`, true)
+                .addField(`Reason`, `${reason}`)
+                client.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
+            }).catch(err => err);
+        });
+    }
+}

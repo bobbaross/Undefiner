@@ -322,6 +322,9 @@ class Utils {
             return false;
         }
     }
+    async leaveServer(serverid) {
+        this.client.shard.broadcastEval('this.guilds.cache.get("'+serverid+'").leave()').catch(err => console.error(err));
+    }
 }
 
 module.exports = { Utils }

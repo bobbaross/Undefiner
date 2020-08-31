@@ -11,8 +11,9 @@ module.exports = {
 
     async undefine(client, message, args, hasEmbedPerms) {
         if (!args[0]) {
-            client.functions.getDB(message.guild.id).then(res => {
-                message.channel.send(`The prefix for this server is set to \`${res.prefix}\``).catch(err => err);
+            client.functions.getDB(message.guild.id).then(async res => {
+                if (!res) res = await client.functions.createDB(message.guild.id);
+                message.channel.send(`The prefix for this server is set to \`${res?.prefix}\``).catch(err => err);
             });
         } else {
             if (!message.member.hasPermission('MANAGE_GUILD')) {
