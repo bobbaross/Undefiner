@@ -72,11 +72,19 @@ module.exports = {
             .setColor(bad)
             .setTitle(`Server Banned | Case #${res.staffCaseNum}`)
             .addField(`Server`, `${theServer.name}`, true)
-            .addField(`Owner`, `${theServer.owner?.tag ?? "Owner not cached"}`, true)
+            .addField(`Owner`, `${theServer.owner?.tag ?? `Owner not cached... However... ID: ${theServer.ownerID}`}`, true)
             .addField(`Moderator`, `${message.author.tag}`, true)
             .addField(`Reason`, `${reason}`)
             client.functions.sendMessageToSupportServerChannel("724615821669957673", embed).catch(err => err);
             client.functions.leaveServer(theServer.id).catch(err => err);
+            let successEmbed = new MessageEmbed()
+            .setColor(branding)
+            .setDescription(`Successfully banned the server!`)
+            if (hasEmbedPerms === true) {
+                return message.channel.send(successEmbed).catch(err => err);
+            } else {
+                return message.channel.send(successEmbed.description).catch(err => err);
+            }
         });
     }
 }

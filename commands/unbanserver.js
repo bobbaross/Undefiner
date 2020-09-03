@@ -67,6 +67,14 @@ module.exports = {
                 .addField(`Reason`, `${reason}`)
                 client.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
             }).catch(err => err);
+            let successEmbed = new MessageEmbed()
+            .setColor(branding)
+            .setDescription(`Successfully unbanned the server!`)
+            if (hasEmbedPerms === true) {
+                return message.channel.send(successEmbed).catch(err => err);
+            } else {
+                return message.channel.send(successEmbed.description).catch(err => err);
+            }
         });
     }
 }

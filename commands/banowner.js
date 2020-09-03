@@ -72,23 +72,30 @@ module.exports = {
             });
             res.bannedOwners.push(user.id);
             res.staffCaseNum++;
-            client.functions.saveDB(res).then(() => {
-                let embed = new MessageEmbed()
-                .setColor(bad)
-                .setTitle(`Owner Banned | Case #${res.staffCaseNum}`)
-                .addField(`Owner`, `${theServer.owner.tag}`, true)
-                .addField(`Moderator`, `${message.author.tag}`, true)
-                .addField(`Reason`, `${reason}`)
-                client.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
-                client.broadcastEval(`this.guilds.cache.map(guild => guild).filter(guild => guild.ownerID === ${user.id})`).then(guildsFound => {
-                    var guildsOwnedByOwner = guildsFound.filter(g => g !== null);
-                    guildsOwnedByOwner.forEach(aGuild => {
-                        if (aGuild.ownerID !== user.id) return console.log(`Guild ${aGuild.name} owned by ${aGuild.ownerID} was found by mistake.`);
-                        console.log(`Guild ${aGuild.name} owned by ${aGuild.ownerID} was found to be owned by ${user.id}... Leaving...`);
-                        client.functions.leaveServer(aGuild.id).catch(err => err);
-                    });
+            client.functions.saveDB(res).catch(err => err)
+            let embed = new MessageEmbed()
+            .setColor(bad)
+            .setTitle(`Owner Banned | Case #${res.staffCaseNum}`)
+            .addField(`Owner`, `${theServer.owner?.tag ?? `Owner not found... However... ID: ${user.id}`}`, true)
+            .addField(`Moderator`, `${message.author.tag}`, true)
+            .addField(`Reason`, `${reason}`)
+            client.functions.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
+            client.broadcastEval(`this.guilds.cache.map(guild => guild).filter(guild => guild.ownerID === ${user.id})`).then(guildsFound => {
+                var guildsOwnedByOwner = guildsFound.filter(g => g !== null);
+                guildsOwnedByOwner.forEach(aGuild => {
+                    if (aGuild.ownerID !== user.id) return console.log(`Guild ${aGuild.name} owned by ${aGuild.ownerID} was found by mistake.`);
+                    console.log(`Guild ${aGuild.name} owned by ${aGuild.ownerID} was found to be owned by ${user.id}... Leaving...`);
+                    client.functions.leaveServer(aGuild.id).catch(err => err);
                 });
-            }).catch(err => err);
+            });
+            let successEmbed = new MessageEmbed()
+            .setColor(branding)
+            .setDescription(`Successfully banned the owner!`)
+            if (hasEmbedPerms === true) {
+                return message.channel.send(successEmbed).catch(err => err);
+            } else {
+                return message.channel.send(successEmbed.description).catch(err => err);
+            }
         });
     }
 }
