@@ -10,7 +10,7 @@ module.exports = (client, guild) => {
                         sysChan.send(`Hey! This server is banned from using this bot.\n**Reason**: ${item.reason}\n\nThink this is a mistake? Join https://discord.gg/k2PEWMw and go to the support channel and we help you out!`);
                     }
                 } catch (error) {return}
-                finally {guild.leave()}
+                finally {setTimeout(() => {guild.leave()}, 2500);}
             }
             else if (res.bannedOwners.find(item => item === guild.ownerID)) {
                 let item = res.infractions.find(item => item.owner === guild.ownerID);
@@ -19,7 +19,7 @@ module.exports = (client, guild) => {
                         sysChan.send(`Hey! The owner of this server is banned from using this bot.\n**Reason**: ${item.reason}\n\nThink this is a mistake? Join https://discord.gg/k2PEWMw and go to the support channel and we help you out!`);
                     }
                 } catch (error) {return}
-                finally {guild.leave()}
+                finally {setTimeout(() => {guild.leave()}, 2500);}
             }
         });
     }
