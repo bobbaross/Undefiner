@@ -75,7 +75,7 @@ module.exports = {
                 .addField(`Owner`, `${theServer.owner.tag}`, true)
                 .addField(`Moderator`, `${message.author.tag}`, true)
                 .addField(`Reason`, `${reason}`)
-                client.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
+                client.functions.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
                 client.functions.leaveServer(theServer.id).catch(err => err);
             }).catch(err => err);
         });
