@@ -25,7 +25,7 @@ module.exports = {
                 return message.channel.send(embed.description).catch(err => err);
             }
         }
-        var user = usr[0];
+        var user = usr;
         if (!user) {
             let embed = new MessageEmbed()
             .setColor(branding)
