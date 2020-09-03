@@ -14,7 +14,7 @@ async function commandHandler(client, message, prefix, disabledCommands, isDM) {
     if (disabledCommands && disabledCommands.includes(commandName)) return;
     var hasEmbedPerms = true;
     if (message.channel.type === 'dm') {}
-    else if (!message.channel.permissionsFor(client.user.id).has("EMBED_LINKS")) hasEmbedPerms = false;
+    else if (!isDM && !message.channel.permissionsFor(client.user.id).has("EMBED_LINKS")) hasEmbedPerms = false;
     try {
         command.undefine(client, message, args, hasEmbedPerms);
     } catch (error) {
