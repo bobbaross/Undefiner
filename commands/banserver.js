@@ -75,7 +75,7 @@ module.exports = {
             .addField(`Owner`, `${theServer.owner?.tag ?? "Owner not cached"}`, true)
             .addField(`Moderator`, `${message.author.tag}`, true)
             .addField(`Reason`, `${reason}`)
-            client.functions.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
+            client.functions.sendMessageToSupportServerChannel("724615821669957673", embed).catch(err => err);
             client.functions.leaveServer(theServer.id).catch(err => err);
         });
     }
