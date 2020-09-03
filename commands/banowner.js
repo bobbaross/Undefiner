@@ -29,15 +29,9 @@ module.exports = {
         }
         if (!invite) {
             let results = await client.shard.broadcastEval(`this.functions.getUser("${usr}")`);
-            let userr = results.find(usrr => usrr !== null);
-            var user = userr[0];
+            var user = results.find(usrr => usrr !== null);
         } else {
-            if (invite) {
-                let usrid = invite.guild.ownerID;
-                let results = await client.shard.broadcastEval(`this.functions.getUser("${usrid}")`);
-                let userr = results.find(usrr => usrr !== null);
-                var user = userr[0];
-            }
+            if (invite) {let userr = await client.shard.broadcastEval(`this.functions.getUser("${invite.guild.ownerID}")`); var user = userr.find(usrr => usrr !== null);}
         }
         if (!user) {
             let embed = new MessageEmbed()
