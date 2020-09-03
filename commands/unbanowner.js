@@ -65,7 +65,7 @@ module.exports = {
                 .addField(`Owner`, `${user}`, true)
                 .addField(`Moderator`, `${message.author.tag}`, true)
                 .addField(`Reason`, `${reason}`)
-                client.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
+                client.functions.sendMessageToSupportServerChannel("724615821669957673", embed).catch(err => err);
             }).catch(err => err);
             let successEmbed = new MessageEmbed()
             .setColor(branding)
