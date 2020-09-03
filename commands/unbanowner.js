@@ -14,22 +14,11 @@ module.exports = {
     async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getStaffDB().then(async res => {
             if (!res) res = await client.functions.createStaffDB();
-            var usr = args.shift();
-        if (!usr) {
-            let embed = new MessageEmbed()
-            .setColor(branding)
-            .setDescription(`Mind telling me which owner to ban?`)
-            if (hasEmbedPerms === true) {
-                return message.channel.send(embed).catch(err => err);
-            } else {
-                return message.channel.send(embed.description).catch(err => err);
-            }
-        }
-        var user = usr;
+            var user = args.shift();
         if (!user) {
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setDescription(`I don't know that owner.`)
+            .setDescription(`Mind telling me which owner to ban?`)
             if (hasEmbedPerms === true) {
                 return message.channel.send(embed).catch(err => err);
             } else {
@@ -55,6 +44,16 @@ module.exports = {
                 modTag: message.author.tag,
                 reason: reason
             });
+            if (!res.bannedOwners.find(usr => usr === user)) {
+                let embed = new MessageEmbed()
+                .setColor(branding)
+                .setDescription(`That owner isn't banned.`)
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err);
+                }
+            }
             let index = res.bannedOwners.indexOf(user);
             res.bannedOwners.splice(index,1);
             res.staffCaseAmount++;
