@@ -303,8 +303,12 @@ class Utils {
         });
     }
 
-    async sendMessageToSupportServerChannel(channelid, msg) {
-        this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").channels.cache.get("'+channelid+'").send("'+msg+'")').catch(err => console.error(err));
+    async sendMessageToSupportServerChannel(channelid, msg, isEmbed) {
+        if (isEmbed !== true) {    
+            this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").channels.cache.get("'+channelid+'").send("'+msg+'")').catch(err => console.error(err));
+        } else if (isEmbed === true) {
+            this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").channels.cache.get("'+channelid+'").send('+msg+')').catch(err => console.error(err));
+        }
     }
 
     async authorized(command, sender) {
