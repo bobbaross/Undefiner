@@ -170,8 +170,8 @@ class Utils {
 
     async getStaffDB() {
         return new Promise((resolve, reject) => {
-            global.findOne({
-                botstaffdb: "a"
+            botstaffdb.findOne({
+                global: true
             }, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
