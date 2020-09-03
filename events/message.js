@@ -4,14 +4,14 @@ module.exports = (client, message) => {
     async function commands() {
         var { commandHandler } = require('../functions/commandhandler.js');
         if (message.channel.type === 'dm') {
-            commandHandler(client, message, "undefine ", null).catch(err => console.error(err));
+            commandHandler(client, message, "undefine ", null, true).catch(err => console.error(err));
         } else {
             client.functions.getDB(message.guild.id).then(res => {
                 if (res && res.prefix) var prefix = res.prefix;
                 else var prefix = "undefine ";
                 if (res && res.disabledCommands) var disabledCommands = res.disabledCommands;
                 else var disabledCommands = null;
-                commandHandler(client, message, prefix, disabledCommands).catch(err => console.error(err));
+                commandHandler(client, message, prefix, disabledCommands, false).catch(err => console.error(err));
             });
         }
     }
