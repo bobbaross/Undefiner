@@ -67,17 +67,16 @@ module.exports = {
             });
             res.bannedServers.push(theServer.id);
             res.staffCaseNum++;
-            client.functions.saveDB(res).then(() => {
-                let embed = new MessageEmbed()
-                .setColor(bad)
-                .setTitle(`Server Banned | Case #${res.staffCaseNum}`)
-                .addField(`Server`, `${theServer.name}`, true)
-                .addField(`Owner`, `${theServer.owner.tag}`, true)
-                .addField(`Moderator`, `${message.author.tag}`, true)
-                .addField(`Reason`, `${reason}`)
-                client.functions.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
-                client.functions.leaveServer(theServer.id).catch(err => err);
-            }).catch(err => err);
+            client.functions.saveDB(res).catch(err => err);
+            let embed = new MessageEmbed()
+            .setColor(bad)
+            .setTitle(`Server Banned | Case #${res.staffCaseNum}`)
+            .addField(`Server`, `${theServer.name}`, true)
+            .addField(`Owner`, `${theServer.owner.tag}`, true)
+            .addField(`Moderator`, `${message.author.tag}`, true)
+            .addField(`Reason`, `${reason}`)
+            client.functions.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
+            client.functions.leaveServer(theServer.id).catch(err => err);
         });
     }
 }
