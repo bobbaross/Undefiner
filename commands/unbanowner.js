@@ -57,11 +57,11 @@ module.exports = {
             });
             let index = res.bannedOwners.indexOf(user);
             res.bannedOwners.splice(index,1);
-            res.staffCaseNum++;
+            res.staffCaseAmount++;
             client.functions.saveDB(res).then(() => {
                 let embed = new MessageEmbed()
                 .setColor(good)
-                .setTitle(`Owner Unbanned | Case #${res.staffCaseNum}`)
+                .setTitle(`Owner Unbanned | Case #${res.staffCaseAmount}`)
                 .addField(`Owner`, `${user}`, true)
                 .addField(`Moderator`, `${message.author.tag}`, true)
                 .addField(`Reason`, `${reason}`)

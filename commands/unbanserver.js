@@ -57,11 +57,11 @@ module.exports = {
             });
             let index = res.bannedServers.indexOf(theServer);
             res.bannedServers.splice(index,1);
-            res.staffCaseNum++;
+            res.staffCaseAmount++;
             client.functions.saveDB(res).then(() => {
                 let embed = new MessageEmbed()
                 .setColor(good)
-                .setTitle(`Server Unbanned | Case #${res.staffCaseNum}`)
+                .setTitle(`Server Unbanned | Case #${res.staffCaseAmount}`)
                 .addField(`Server`, `${theServer}`, true)
                 .addField(`Moderator`, `${message.author.tag}`, true)
                 .addField(`Reason`, `${reason}`)

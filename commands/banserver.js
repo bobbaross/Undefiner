@@ -66,11 +66,11 @@ module.exports = {
                 reason: reason
             });
             res.bannedServers.push(theServer.id);
-            res.staffCaseNum++;
+            res.staffCaseAmount++;
             client.functions.saveDB(res).catch(err => err);
             let embed = new MessageEmbed()
             .setColor(bad)
-            .setTitle(`Server Banned | Case #${res.staffCaseNum}`)
+            .setTitle(`Server Banned | Case #${res.staffCaseAmount}`)
             .addField(`Server`, `${theServer.name}`, true)
             .addField(`Owner`, `${theServer.owner?.tag ?? `Owner not cached... However... ID: ${theServer.ownerID}`}`, true)
             .addField(`Moderator`, `${message.author.tag}`, true)
