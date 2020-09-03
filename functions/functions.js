@@ -304,11 +304,10 @@ class Utils {
     }
 
     async sendMessageToSupportServerChannel(channelid, msg, isEmbed) {
-        var message = await msg;
         if (isEmbed !== true) {    
             this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").channels.cache.get("'+channelid+'").send("'+message+'")').catch(err => console.error(err));
         } else if (isEmbed === true) {
-            this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").channels.cache.get("'+channelid+'").send('+message+')').catch(err => console.error(err));
+            this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").channels.cache.get("'+channelid+'").send({ embed: '+JSON.stringify(message)+'})').catch(err => console.error(err));
         }
     }
 
