@@ -6,7 +6,7 @@ module.exports = (client, guild) => {
             if (!res) res = await client.functions.createStaffDB();
             let sysChan = guild.systemChannel;
             if (res.bannedServers.find(item => item === guild.id)) {
-                let item = res.infractions.find(item => item.guild === guild.id);
+                let item = res.infractions.find(item => item.server === guild.id);
                 try {
                     if (sysChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
                         sysChan.send(`Hey! This server is banned from using this bot.\n**Reason**: ${item.reason}\n\nThink this is a mistake? Join https://discord.gg/k2PEWMw and go to the support channel and we help you out!`);
