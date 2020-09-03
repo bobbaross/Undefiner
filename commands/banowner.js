@@ -70,7 +70,7 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(bad)
             .setTitle(`Owner Banned | Case #${res.staffCaseNum}`)
-            .addField(`Owner`, `${theServer.owner?.tag ?? `Owner not found... However... ID: ${user.id}`}`, true)
+            .addField(`Owner`, `${user.tag ?? `Owner not found... However... ID: ${user.id}`}`, true)
             .addField(`Moderator`, `${message.author.tag}`, true)
             .addField(`Reason`, `${reason}`)
             client.functions.sendMessageToSupportServerChannel("648040594651742239", embed).catch(err => err);
