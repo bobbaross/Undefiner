@@ -296,7 +296,7 @@ class Utils {
 
     async getSupportServerMemberRoles(userid) {
         return new Promise(resolve => {
-            this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693")?.member("'+userid+'")?.roles.cache').then(results => {
+            this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").member("'+userid+'")?.roles.cache').then(results => {
                 let roles = results.find(result => result !== null);
                 return resolve(roles);
             });
@@ -304,7 +304,7 @@ class Utils {
     }
 
     async sendMessageToSupportServerChannel(channelid, msg) {
-        this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693")?.channels.cache.get("'+channelid+'").send("'+msg+'")').catch(err => console.error(err));
+        this.client.shard.broadcastEval('if (this.guilds.cache.get("724602779053719693")) this.guilds.cache.get("724602779053719693").channels.cache.get("'+channelid+'").send("'+msg+'")').catch(err => console.error(err));
     }
 
     async authorized(command, sender) {
