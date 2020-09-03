@@ -58,15 +58,14 @@ module.exports = {
             let index = res.bannedOwners.indexOf(user);
             res.bannedOwners.splice(index,1);
             res.staffCaseAmount++;
-            client.functions.saveDB(res).then(() => {
-                let embed = new MessageEmbed()
-                .setColor(good)
-                .setTitle(`Owner Unbanned | Case #${res.staffCaseAmount}`)
-                .addField(`Owner`, `${user}`, true)
-                .addField(`Moderator`, `${message.author.tag}`, true)
-                .addField(`Reason`, `${reason}`)
-                client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
-            }).catch(err => err);
+            client.functions.saveDB(res).catch(err => err);
+            let embed = new MessageEmbed()
+            .setColor(good)
+            .setTitle(`Owner Unbanned | Case #${res.staffCaseAmount}`)
+            .addField(`Owner`, `${user}`, true)
+            .addField(`Moderator`, `${message.author.tag}`, true)
+            .addField(`Reason`, `${reason}`)
+            client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
             let successEmbed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully unbanned the owner!`)

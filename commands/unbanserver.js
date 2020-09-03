@@ -58,15 +58,14 @@ module.exports = {
             let index = res.bannedServers.indexOf(theServer);
             res.bannedServers.splice(index,1);
             res.staffCaseAmount++;
-            client.functions.saveDB(res).then(() => {
-                let embed = new MessageEmbed()
-                .setColor(good)
-                .setTitle(`Server Unbanned | Case #${res.staffCaseAmount}`)
-                .addField(`Server`, `${theServer}`, true)
-                .addField(`Moderator`, `${message.author.tag}`, true)
-                .addField(`Reason`, `${reason}`)
-                client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
-            }).catch(err => err);
+            client.functions.saveDB(res).catch(err => err);
+            let embed = new MessageEmbed()
+            .setColor(good)
+            .setTitle(`Server Unbanned | Case #${res.staffCaseAmount}`)
+            .addField(`Server`, `${theServer}`, true)
+            .addField(`Moderator`, `${message.author.tag}`, true)
+            .addField(`Reason`, `${reason}`)
+            client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
             let successEmbed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully unbanned the server!`)
