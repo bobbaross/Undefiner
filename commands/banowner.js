@@ -73,8 +73,8 @@ module.exports = {
             .addField(`Owner`, `${user.tag ?? `Owner not found... However... ID: ${user.id}`}`, true)
             .addField(`Moderator`, `${message.author.tag}`, true)
             .addField(`Reason`, `${reason}`)
-            client.functions.sendMessageToSupportServerChannel("724615821669957673", embed).catch(err => err);
-            client.shard.broadcastEval(`this.guilds.cache.map(guild => guild).filter(guild => guild.ownerID === ${user.id})`).then(guildsFound => {
+            client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
+            client.shard.broadcastEval(`this.guilds.cache.filter(guild => guild.ownerID === ${user.id})`).then(guildsFound => {
                 var guildsOwnedByOwner = [];
                 for (let guildsInIt of guildsFound) {
                     for (let guild of guildsInIt) {
