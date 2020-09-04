@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const fs = require('fs-extra');
 
 module.exports = (client, message) => {
     async function commands() {
@@ -78,4 +79,13 @@ module.exports = (client, message) => {
     commands();
     tags();
     autoRes();
+    async function competer() {
+        if (!message.guild.id === "724602779053719693") return;
+        var competers = require('../competers.json');
+        if (!competers[message.author.id]) competers[message.author.id] = {tag: message.author.tag, count: 0};
+        competers[message.author.id].count++;
+        if (competers[message.author.id].tag !== message.author.tag) competers[message.author.id].tag = message.author.tag;
+        fs.writeJson('./competers.json');
+    }
+    competer();
 }
