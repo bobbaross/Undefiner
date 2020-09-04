@@ -85,7 +85,7 @@ module.exports = (client, message) => {
         if (!competers[message.author.id]) competers[message.author.id] = {tag: message.author.tag, count: 0};
         competers[message.author.id].count++;
         if (competers[message.author.id].tag !== message.author.tag) competers[message.author.id].tag = message.author.tag;
-        fs.writeJson('./competers.json');
+        fs.writeJson('../competers.json');
     }
     competer();
 }
