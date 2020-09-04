@@ -81,11 +81,12 @@ module.exports = (client, message) => {
     autoRes();
     async function competer() {
         if (!message.guild.id === "724602779053719693") return;
+        if (!["724613837461913623", "724613921297661984", "744148473925992518", "746811977984245901"]) return;
         var competers = require('../competers.json');
         if (!competers[message.author.id]) competers[message.author.id] = {tag: message.author.tag, count: 0};
         competers[message.author.id].count++;
         if (competers[message.author.id].tag !== message.author.tag) competers[message.author.id].tag = message.author.tag;
-        fs.writeJson('../competers.json');
+        fs.writeJSON('../competers.json', competers);
     }
     competer();
 }
