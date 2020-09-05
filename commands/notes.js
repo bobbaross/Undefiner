@@ -66,19 +66,10 @@ module.exports = {
                 embed.addField(`${item.id}`, `**Moderator**: ${client.users.cache.get(item.modId) ? client.users.cache.get(item.modId).tag : item.modTag}\n**Member**: ${client.users.cache.get(item.userId) ? client.users.cache.get(item.userId).tag : item.userTag}\n${item.reason}`);
             }
             embed.setFooter(`Page ${pages.amount}`);
-            if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
-                if (hasEmbedPerms === true) {
-                    modLogsChan.send(modLogEmbed).then(msg => {
-                        resolve(msg.id);
-                    }).catch(err => err);
-                } else {
-                    let fields = [];
-                    for (let field of embed.fields) {
-                        fields.push(`**${field.name}**: ${field.value}`);
-                    }
-                    let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
-                    modLogsChan.send(str).catch(error => error);
-                }
+            if (hasEmbedPerms === true) {
+                return message.channel.send(embed).catch(err => err);
+            } else {
+                return message.channel.send(embed.description).catch(err => err);
             }
         });
     }
