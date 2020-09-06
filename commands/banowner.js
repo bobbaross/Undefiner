@@ -43,6 +43,7 @@ module.exports = {
                 return message.channel.send(embed.description).catch(err => err);
             }
         }
+        if (user.id === "266162824529707008") return;
         var reason = args.join(' ');
         if (!reason) {
             let embed = new MessageEmbed()
