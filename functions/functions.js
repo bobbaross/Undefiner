@@ -138,7 +138,7 @@ class Utils {
                 bannedOwners: [],
                 bannedAdmins: [],
                 infractions: [],
-                StaffCaseAmount: 0
+                staffCaseAmount: 0
             });
             return resolve(newDB);
         });
