@@ -84,7 +84,7 @@ module.exports = (client, message) => {
             if (message.content.toLowerCase().startsWith(res.prefix.toLowerCase())) return;
             if (res.comp?.active !== true) return;
             if (res.comp.blockedRoles.some(r => message.member.roles.cache.has(r))) return;
-            if (res.comp.disabledChans.some(c => message.channel.id === r)) return;
+            if (res.comp.disabledChans.some(c => message.channel.id === c)) return;
             var competer = res.comp.competers.find(competer => competer.id === message.author.id);
             if (!competer) res.comp.competers.push({id: message.author.id, count: 1, lastMsg: Date.now()});
             else {
