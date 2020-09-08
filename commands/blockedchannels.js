@@ -2,8 +2,8 @@ const {MessageEmbed} = require('discord.js');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
-    name: "blockedroles",
-    description: "Get the blocked roles for competitions.",
+    name: "blockedchannels",
+    description: "Get the blocked channels for competitions.",
     usage: "[page]",
     aliases: [""],
     category: "competition",
