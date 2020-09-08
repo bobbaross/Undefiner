@@ -12,7 +12,7 @@ module.exports = {
     async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getDB(message.guild.id).then(async res => {
             if (!res) res = await client.functions.createDB(message.guild.id);
-            if (res.comp?.active === true) {
+            if (res.comp?.active !== true) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`No competition active.`)
