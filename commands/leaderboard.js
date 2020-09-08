@@ -36,7 +36,7 @@ module.exports = {
                 }
             }
             var sortedTop = res.comp.competers.filter(item => message.guild.members.cache.get(item.id)).sort((a,b) => {return b.count-a.count});
-            var items = client.functions.getPages(sortedTop, page);
+            var items = await client.functions.getPages(sortedTop, page);
             var result = [];
             for (let item of items) {
                 let index = sortedTop.indexOf(item);
