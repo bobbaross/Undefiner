@@ -42,9 +42,9 @@ class Utils {
     async getRole(mention, roles) {
         return new Promise(resolve => {
             if (!mention) return resolve();
-            if (mention.startsWith('<&') && mention.endsWith('>')) {
+            if (mention.startsWith('<@&') && mention.endsWith('>')) {
                 // if it is a mention it will do this
-                mention = mention.slice(2, -1);
+                mention = mention.slice(3, -1);
                 if (mention.startsWith('!')) {
                     mention = mention.slice(1);
                 }
