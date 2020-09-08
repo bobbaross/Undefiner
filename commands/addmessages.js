@@ -26,7 +26,7 @@ module.exports = {
                 }
             }
             var user = await client.functions.getUser(args[0]);
-            if (user) {
+            if (!user) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`Could you please tell me the user?`)
