@@ -38,6 +38,16 @@ module.exports = {
             }
             if (!res.comp) res.comp = {active: false, ending: 0, prize: "Unset", competers: [], disabledChans: [], disabledChansInvert: false, finishChannel: "0", blockedRoles: []}
             let index = res.comp.blockedRoles.indexOf(role);
+            if (index < 0) {
+                let embed = new MessageEmbed()
+                .setColor(branding)
+                .setDescription(`Please tell me a valid role...`)
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err);
+                }
+            }
             res.comp.blockedRoles.splice(index,1);
             client.functions.saveDB(res);
             let embed = new MessageEmbed()
