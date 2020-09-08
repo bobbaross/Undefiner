@@ -46,7 +46,7 @@ module.exports = {
             .addField('Humidity', `${current.humidity}%`, true)
 
             if (hasEmbedPerms === true) {
-                message.channel.send(modLogEmbed).then(msg => {
+                message.channel.send(embed).then(msg => {
                     resolve(msg.id);
                 }).catch(err => err);
             } else {
