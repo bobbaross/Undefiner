@@ -57,7 +57,7 @@ module.exports = {
             } else {
                 message.channel.send(embed.description).catch(err => err);
             }
-            if (!message.guild.channels.cache.get(res.comp.finishChannel)) return;
+            if (message.guild.channels.cache.get(res.comp.finishChannel)) return;
             return message.channel.send(`Hey! I noticed there isn't a channel set up for me to announce the winner in. Could you please mention one?`).then(mes => {
                 async function awaitTheMessage(msgs) {
                     var filter = m => {
