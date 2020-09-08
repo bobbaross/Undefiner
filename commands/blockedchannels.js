@@ -25,7 +25,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err);
                 }
             }
-            var items = await client.functions.getPages(res.comp.disabledChannels, page);
+            var items = await client.functions.getPages(res.comp.disabledChans, page);
             var result = [];
             for (let item of items.pages) {
                 result.push(`Name: ${message.guild.channels.cache.get(item).name}\nID: ${item}`);
