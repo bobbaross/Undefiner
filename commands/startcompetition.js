@@ -78,7 +78,7 @@ module.exports = {
                                 msg.delete();
                             }
                         }
-                    }).catch(err => {console.log(err);message.channel.send(`Time ran out... You can still change this with the \`compchannel\` command.`)});
+                    }).catch(err => {message.channel.send(`Time ran out... You can still change this with the \`compchannel\` command.`)});
                 }
                 awaitTheMessage([mes]);
             }).catch(err => err);
