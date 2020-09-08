@@ -47,7 +47,7 @@ module.exports = {
 
             if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
                 if (hasEmbedPerms === true) {
-                    modLogsChan.send(modLogEmbed).then(msg => {
+                    message.channel.send(modLogEmbed).then(msg => {
                         resolve(msg.id);
                     }).catch(err => err);
                 } else {
@@ -56,7 +56,7 @@ module.exports = {
                         fields.push(`**${field.name}**: ${field.value}`);
                     }
                     let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
-                    modLogsChan.send(str).catch(error => error);
+                    message.channel.send(str).catch(error => error);
                 }
             }
         });
