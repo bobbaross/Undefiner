@@ -62,7 +62,7 @@ module.exports = {
             }
             if (!res.comp) res.comp = {active: false, ending: 0, prize: "Unset", competers: [], disabledChans: [], disabledChansInvert: false, finishChannel: "0", blockedRoles: []}
             var instance = res.comp.competers.find(competer => competer.id === user.id);
-            if (!insatance) {
+            if (!instance) {
                 let newInst = {id: user.id, count: amount, lastMsg: 0};
                 res.comp.competers.push(newInst);
             } else {
