@@ -81,6 +81,7 @@ module.exports = (client, message) => {
         if (!message.guild) return;
         client.functions.getDB(message.guild.id).then(res => {
             if (!res) return;
+            if (message.content.toLowerCase().startsWith(res.prefix.toLowerCase()))
             if (res.comp?.active !== true) return;
             if (res.comp.blockedRoles.some(r => message.member.roles.cache.has(r))) return;
             var competer = res.comp.competers.find(competer => competer.id === message.author.id);
