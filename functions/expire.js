@@ -6,7 +6,7 @@ class Expire {
     constructor (client) {
         this.client = client;
     }
-    
+
     async unmute(entry) {
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
@@ -123,7 +123,7 @@ class Expire {
             let winner;
             let winnerInServer = false;
             while (winnerInServer === false && endResult.length !== 0) {
-                if (guild.members.cache.get(winner.id)) {
+                if (guild.members.cache.get(endResult[0].id)) {
                     winner = endResult[0];
                     winnerInServer = true;
                 } else {

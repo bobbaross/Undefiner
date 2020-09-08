@@ -230,6 +230,8 @@ class Utils {
 
     getStringTime(s) {
         // make the variables
+        let ms = s % 1000;
+        s = (s - ms) / 1000;
         let secs = s % 60;
         s = (s - secs) / 60;
         let mins = s % 60;
