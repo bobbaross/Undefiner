@@ -100,6 +100,7 @@ module.exports = (client, message) => {
     tags();
     autoRes();
     async function competer() {
+        if (message.channel.type === 'dm') return;
         if (!message.guild.id === "724602779053719693") return;
         if (!["724613837461913623", "724613921297661984", "744148473925992518", "746811977984245901"].some(id => message.channel.id === id)) return;
         var competers = require('../competers.json');

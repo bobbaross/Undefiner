@@ -66,7 +66,7 @@ module.exports = {
                     message.channel.awaitMessages(filter, {max: 1, time: 60000, errors: ['time']}).then(collected => {
                         var m = collected[0];
                         var channel = m.mentions.channels.first();
-                        if (!channel || channel && channel.permissionFor(client.user.id).has("SEND_MESSAGES")) {
+                        if (!channel || (channel && channel.permissionFor(client.user.id).has("SEND_MESSAGES"))) {
                             return message.channel.send(`Please input a valid channel. (also make sure I can send messages there)`).then(anotherMsg => {
                                 msgs.push(anotherMsg);
                                 return awaitTheMessage(msgs);
@@ -78,10 +78,10 @@ module.exports = {
                                 msg.delete();
                             }
                         }
-                    }).catch(() => message.channel.send(`Time ran out... You can still change this with the \`compchannel\` command.`));
+                    }).catch(err => {console.log(err);message.channel.send(`Time ran out... You can still change this with the \`compchannel\` command.`)});
                 }
                 awaitTheMessage([mes]);
-            });
+            }).catch(err => err);
         });
     }
 }
