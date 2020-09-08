@@ -26,7 +26,7 @@ module.exports = {
                 }
             }
             let timeArg = args.shift();
-            var time = client.functions.setTime(timeArg);
+            var time = await client.functions.setTime(timeArg);
             if (!time) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
