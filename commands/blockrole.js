@@ -26,6 +26,7 @@ module.exports = {
                 }
             }
             var role = await client.functions.getRole(args[0], message.guild.roles.cache);
+            console.log(role)
             if (!role) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
