@@ -198,7 +198,7 @@ class Utils {
     }
 
     // Get Time Function
-    async getTime(s) {
+    getTime(s) {
         // make the variables
         let ms = s % 1000;
         s = (s - ms) / 1000;
@@ -228,7 +228,7 @@ class Utils {
         //return `${hours}:${mins}:${secs}`;
     }
 
-    async getStringTime(s) {
+    getStringTime(s) {
         // make the variables
         let secs = s % 60;
         s = (s - secs) / 60;
