@@ -25,7 +25,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
             }
-            var channel = await client.functions.getChannel(args[0]);
+            var channel = await client.functions.getChannel(args[0], message.guild.channels.cache);
             if (!channel) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
