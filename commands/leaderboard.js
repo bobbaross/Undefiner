@@ -37,10 +37,9 @@ module.exports = {
             }
             var sortedTop = res.comp.competers.filter(item => message.guild.members.cache.get(item.id)).sort((a,b) => {return b.count-a.count});
             var items = await client.functions.getPages(sortedTop, page);
-            console.log(items)
             var result = [];
             for (let item of items.pages) {
-                let index = sortedTop.indexOf(item);
+                let index = sortedTop.indexOf(item)+1;
                 result.push(`**#${index}**\n**Member**: ${client.users.cache.get(item.id) ? client.users.cache.get(item.id).tag : item.id}\n**Messages**: ${item.count}`);
             }
             let embed = new MessageEmbed()
