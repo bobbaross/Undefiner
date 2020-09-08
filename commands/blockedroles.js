@@ -28,7 +28,7 @@ module.exports = {
             var items = await client.functions.getPages(res.comp.blockedRoles, page);
             var result = [];
             for (let item of items.pages) {
-                result.push(`Name: ${message.guild.roles.cache.get(item.id).name}\nID: ${item.id}`);
+                result.push(`Name: ${message.guild.roles.cache.get(item).name}\nID: ${item.id}`);
             }
             let embed = new MessageEmbed()
             .setColor(branding)
