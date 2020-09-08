@@ -66,7 +66,7 @@ module.exports = {
                     message.channel.awaitMessages(filter, {max: 1, time: 60000, errors: ['time']}).then(collected => {
                         var m = collected.first();
                         var channel = m.mentions.channels.first();
-                        if (!channel || (channel && channel.permissionsFor(client.user.id).has("SEND_MESSAGES"))) {
+                        if (!channel || (channel && !channel.permissionsFor(client.user.id).has("SEND_MESSAGES"))) {
                             return message.channel.send(`Please input a valid channel. (also make sure I can send messages there)`).then(anotherMsg => {
                                 msgs.push(anotherMsg);
                                 return awaitTheMessage(msgs);
