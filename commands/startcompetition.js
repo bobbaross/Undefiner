@@ -1,4 +1,4 @@
-const {MessageEmbed} = require('discord.js');
+const {MessageEmbed, DataResolver} = require('discord.js');
 const {branding} = require('../config.json').colors;
 
 module.exports = {
@@ -45,13 +45,13 @@ module.exports = {
             res.comp.prize = prize;
             client.functions.saveDB(res);
             client.functions.getEntries("comp").then(async entryRes => {
-                if (!entryRes) entryRes = await client.functions.createEntryDB("comp");
+                if (!entryRes) entryRes = await client.functions.createEntries("comp");
                 entryRes.entries.push({id: message.guild.id, ending: time});
                 client.functions.saveDB(entryRes);
             });
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setDescription(`Successfully started a competition for ${prize} with ${winners} winners and ends in ${timeArg}`)
+            .setDescription(`Successfully started a competition for ${prize} and ends in ${client.functions.getStringTime(time-Date.now())}`)
             if (hasEmbedPerms === true) {
                 message.channel.send(embed).catch(err => err);
             } else {
