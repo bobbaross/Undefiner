@@ -39,13 +39,13 @@ module.exports = {
             var items = await client.functions.getPages(sortedTop, page);
             console.log(items)
             var result = [];
-            for (let item of items) {
+            for (let item of items.pages) {
                 let index = sortedTop.indexOf(item);
                 result.push(`**#${index}**\n**Member**: ${client.users.cache.get(item.id) ? client.users.cache.get(item.id).tag : item.id}\n**Messages**: ${item.count}`);
             }
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setDescription(`Ending in ${client.functions.getStringTime(res.comp.ending-Date.now())}\nCurrent lead of the **${res.comp.prize}** competition:\n${result.join('\n\n')}`)
+            .setDescription(`Ending in ${client.functions.getStringTime(res.comp.ending-Date.now())}\nCurrent lead of the **${res.comp.prize}** competition:\n${result.join('\n\n')}\nPage ${items.amount}`)
             if (hasEmbedPerms === true) {
                 return message.channel.send(embed).catch(err => err);
             } else {
