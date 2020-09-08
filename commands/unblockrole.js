@@ -5,7 +5,7 @@ module.exports = {
     name: "unblockrole",
     description: "Unblock a role from adding messages to the competition.",
     aliases: [],
-    usage: "<role>",
+    usage: "<roleid>",
     category: "competition",
     guildOnly: true,
 

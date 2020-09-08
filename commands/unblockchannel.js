@@ -5,7 +5,7 @@ module.exports = {
     name: "unblockchannel",
     description: "Unblock a channel from adding messages to the competition. (When blockinvert enabled, this will disallow channels instead)",
     aliases: [],
-    usage: "<channel>",
+    usage: "<channelid>",
     category: "competition",
     guildOnly: true,
 
