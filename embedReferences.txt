@@ -24,3 +24,5 @@ if (hasEmbedPerms === true) {
                 } else {
                     return message.channel.send(embed.description).catch(err => err)
                 }
+
+                aa
