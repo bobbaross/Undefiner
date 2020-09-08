@@ -15,7 +15,7 @@ module.exports = {
             var page = args.shift();
             if (page && !isNaN(page)) page = parseInt(page);
             else page = 1;
-            if (res.comp.disabledChannels.length === 0) {
+            if (res.comp.disabledChans.length === 0) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`No roles blocked`)
