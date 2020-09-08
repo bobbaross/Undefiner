@@ -45,19 +45,17 @@ module.exports = {
             .addField('Winds', current.winddisplay, true)
             .addField('Humidity', `${current.humidity}%`, true)
 
-            if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
-                if (hasEmbedPerms === true) {
-                    message.channel.send(modLogEmbed).then(msg => {
-                        resolve(msg.id);
-                    }).catch(err => err);
-                } else {
-                    let fields = [];
-                    for (let field of embed.fields) {
-                        fields.push(`**${field.name}**: ${field.value}`);
-                    }
-                    let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
-                    message.channel.send(str).catch(error => error);
+            if (hasEmbedPerms === true) {
+                message.channel.send(modLogEmbed).then(msg => {
+                    resolve(msg.id);
+                }).catch(err => err);
+            } else {
+                let fields = [];
+                for (let field of embed.fields) {
+                    fields.push(`**${field.name}**: ${field.value}`);
                 }
+                let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
+                message.channel.send(str).catch(error => error);
             }
         });
     }
