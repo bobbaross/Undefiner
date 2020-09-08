@@ -31,7 +31,7 @@ module.exports = {
             }
             if (!client.checks.hasPermission(message.member, "MANAGE_ROLES") && !client.checks.hasRole(message.member, bypassRoles)) {
                 let embed = new MessageEmbed()
-                .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_MESSAGES") ? "Whoops" : "Manage Messages"} amongst your permissions.`);
+                .setDescription(`I may be blind, but I don't see ${message.member.hasPermission("MANAGE_ROLES") ? "Whoops" : "Manage Roles"} amongst your permissions.`);
                 if (hasEmbedPerms === true) {
                     return message.channel.send(embed).catch(err => err);
                 } else {

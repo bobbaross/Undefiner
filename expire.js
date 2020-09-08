@@ -62,6 +62,20 @@ module.exports = {
                     }
                 }
             });
+            getEntries("comp").then(res => {
+                if (!res) return;
+                let entries = res.entries;
+                for (let entry of entries) {
+                    if (entry.ending < Date.now()+60000) {
+                        setTimeout(() => {
+                            expire.endComp(entry);
+                            let index = res.entries.indexOf(entry);
+                            res.entries.splice(index,1);
+                            saveDB(res);
+                        },entry.time-Date.now());
+                    }
+                }
+            });
         },60000);
     }
 }

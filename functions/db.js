@@ -23,7 +23,8 @@ const Schema = new mongoose.Schema({
     language: String,
     antiUntypable: Boolean,
     disabledUsers: Array,
-    autoResponses: [Object]
+    autoResponses: [Object],
+    comp: {active: Boolean, ending: Number, prize: String, competers: [Object], disabledChans: Array, finishChannel: String, disabledChansInvert: Boolean, blockedRoles: Array}
 });
 
 const serverID = mongoose.model("serverID", Schema);

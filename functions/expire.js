@@ -6,13 +6,13 @@ class Expire {
     constructor (client) {
         this.client = client;
     }
-
+    
     async unmute(entry) {
         let guild = this.client.guilds.cache.get(entry.guildId);
         if (!guild) return;
         guild.members.fetch(entry.userId).then(async member => {
             if (!member) return;
-            client.functions.getDB(guild.id).then(async res => {
+            this.client.functions.getDB(guild.id).then(async res => {
                 if (!member.roles.cache.has(res.settings.mutedRole)) return;
                 member.roles.remove(res.settings.mutedRole).then(async () => {
                     res.cases++;
@@ -20,7 +20,7 @@ class Expire {
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
                     if (modLogs) {
                         embedId = new Promise(async resolve => {
-                            let duration = await client.functions.getTime(Date.now()-entry.happenedAt);
+                            let duration = await this.client.functions.getTime(Date.now()-entry.happenedAt);
                             let embed = new MessageEmbed()
                             .setColor(good)
                             .setTitle(`Member Unmuted | Case #${res.cases}`)
@@ -45,7 +45,7 @@ class Expire {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    client.functions.saveDB(res);
+                    this.client.functions.saveDB(res);
                 }).catch(err => console.error(err));
             });
         });
@@ -56,14 +56,14 @@ class Expire {
         if (!guild) return;
         guild.fetchBan(entry.userId).then(async ban => {
             if (!ban) return;
-            client.functions.getDB(guild.id).then(async res => {
+            this.client.functions.getDB(guild.id).then(async res => {
                 guild.members.unban(ban.user.id).then(async () => {
                     res.cases++;
                     let embedId;
                     let modLogs = guild.channels.cache.get(res.settings.modLogs);
                     if (modLogs) {
                         embedId = new Promise(async resolve => {
-                            let duration = await client.functions.getTime(Date.now()-entry.happenedAt);
+                            let duration = await this.client.functions.getTime(Date.now()-entry.happenedAt);
                             let embed = new MessageEmbed()
                             .setColor(good)
                             .setTitle(`Member Unbanned | Case #${res.cases}`)
@@ -88,7 +88,7 @@ class Expire {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    client.functions.saveDB(res);
+                    this.client.functions.saveDB(res);
                 }).catch(err => console.error(err));
             });
         });
@@ -111,6 +111,33 @@ class Expire {
             if (!member) return;
             if (!member.roles.cache.has(entry.roleId)) return;
             member.roles.remove(entry.roleId);
+        });
+    }
+    async endComp(entry) {
+        let guild = this.client.guilds.cache.get(entry.id);
+        if (!guild) return;
+        this.client.functions.getDB(guild.id).then(res => {
+            if (!res) return;
+            if (!res.comp?.active === true) return;
+            let endResult = res.comp.competers.sort((a,b) => {return b.count-a.count});
+            let winner;
+            let winnerInServer = false;
+            while (winnerInServer === false && endResult.length !== 0) {
+                if (guild.members.cache.get(winner.id)) {
+                    winner = endResult[0];
+                    winnerInServer = true;
+                } else {
+                    endResult.shift();
+                }
+            }
+            guild.owner?.send(`Your competition for ${res.comp.prize} was won by ${this.client.users.cache.get(winner.id) ? this.client.users.cache.get(winner.id).tag : winner.id} with ${winner.count} messages.`);
+            let winnerUser = this.client.users.cache.get(winner.id);
+            winnerUser?.send(`CONGRATS!!! YOU WON THE COMPETITION FOR ${res.comp.prize} IN ${guild.name}!!! YOU SENT ${winner.count} MESSAGES, LEADING UP TO YOUR AMAZING WIN!!!`);
+            let finalChan = guild.channels.cache.get(res.comp.finalChannel);
+            finalChan?.send(`CONGRATS TO ${winnerUser ? winnerUser : winner.id} FOR WINNING ${res.comp.prize} BY SENDING A STUNNING ${winner.count} MESSAGES!!!`);
+            res.comp.competers.splice(0, res.comp.competers.length);
+            res.comp.active = false;
+            this.client.functions.saveDB(res);
         });
     }
 }

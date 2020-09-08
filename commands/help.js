@@ -31,8 +31,9 @@ module.exports = {
                 miscellaneous: [],
                 roles: [],
                 fun: [],
-                developer: [],
-                botstaff: []
+                competition: [],
+                botstaff: [],
+                developer: []
             };
             client.commands.map(cmd => cmd).forEach(cmd => {
                 commands[cmd.category].push(cmd.name);
@@ -50,13 +51,14 @@ module.exports = {
             .addField(`Miscellaneous`, '`'+commands.miscellaneous.join('` | `')+'`', true)
             .addField(`Roles`, '`'+commands.roles.join('` | `')+'`', true)
             .addField(`Fun`, '`'+commands.fun.join('` | `')+'`', true)
+            .addField(`Competition`, '`'+commands.competition.join('` | `')+'`', true)
             let isMod = await client.functions.authorized({auth: "mod"}, message.author);
             if (isMod === true) {
-                embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`');
+                embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`', true);
             }
             let isDev = await client.functions.authorized({auth: "dev"}, message.author);
             if (isDev === true) {
-                embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`');
+                embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true);
             }
             if (hasEmbedPerms === true) {
             return message.channel.send(embed).catch(err => err)

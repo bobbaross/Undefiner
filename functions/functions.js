@@ -48,14 +48,14 @@ class Utils {
                 if (mention.startsWith('!')) {
                     mention = mention.slice(1);
                 }
-                return resolve(roles.cache.get(mention));
+                return resolve(roles.get(mention));
             }
-            else if (roles.cache.get(mention)) {
+            else if (roles.get(mention)) {
                 // if it is a id it will do this
-                return resolve(roles.cache.get(mention));
+                return resolve(roles.get(mention));
             } else {
                 // if it isn't either of them it will do this
-                if (roles.cache.find(r => r.name.toLowerCase().startsWith(mention.toLowerCase()))) {
+                if (roles.find(r => r.name.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a role from the input it will do this
                     return resolve(roles.cache.find(r => r.name.toLowerCase().startsWith(mention.toLowerCase())));
                 }
@@ -77,16 +77,16 @@ class Utils {
                 if (mention.startsWith('!')) {
                     mention = mention.slice(1);
                 }
-                return resolve(channels.cache.get(mention));
+                return resolve(channels.get(mention));
             }
-            else if (channels.cache.get(mention)) {
+            else if (channels.get(mention)) {
                 // if it is a id it will do this
-                return resolve(channels.cache.get(mention));
+                return resolve(channels.get(mention));
             } else {
                 // if it isn't either of them it will do this
-                if (channels.cache.find(c => c.name.toLowerCase().startsWith(mention.toLowerCase()))) {
+                if (channels.find(c => c.name.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a channel from the input it will do this
-                    return resolve(channels.cache.find(c => c.tag.toLowerCase().startsWith(mention.toLowerCase())));
+                    return resolve(channels.find(c => c.tag.toLowerCase().startsWith(mention.toLowerCase())));
                 }
                 else {
                     // if not it wont do anything
@@ -122,7 +122,8 @@ class Utils {
                 language: "en",
                 antiUntypable: false,
                 disabledUsers: [],
-                autoResponses: []
+                autoResponses: [],
+                comp: {active: false, ending: 0, prize: "Not Entered", competers: [], disabledChans: [], finishChannel: "0", disabledChansInvert: false, blockedRoles: []}
             }, false);
             return resolve(newDB);
         });
@@ -156,7 +157,7 @@ class Utils {
     }
 
     // Get DB Function
-    // all this function does is just to get the database of the user, sooo...
+    // all this function does is just to get the database of the server, sooo...
     async getDB(serverid) {
         return new Promise((resolve, reject) => {
             DB.findOne({
@@ -167,7 +168,7 @@ class Utils {
             });
         });
     }
-
+    // all this function does is just to get the database of literally the only staff actions document, sooo...
     async getStaffDB() {
         return new Promise((resolve, reject) => {
             botstaffdb.findOne({
@@ -178,7 +179,7 @@ class Utils {
             });
         });
     }
-
+    // all this function does is just to get the database of the temporary thingy, sooo...
     async getEntries(enteryType) {
         return new Promise((resolve, reject) => {
             entryDB.findOne({

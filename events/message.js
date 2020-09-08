@@ -76,6 +76,25 @@ module.exports = (client, message) => {
             return message.channel.send(autoResponse.give);
         });
     }
+    async function compete() {
+        if (message.author.bot) return;
+        if (!message.guild) return;
+        client.functions.getDB(message.guild.id).then(res => {
+            if (!res) return;
+            if (res.comp?.active !== true) return;
+            var competer = res.comp.competers.find(competer => competer.id === message.author.id);
+            if (!competer) res.comp.competers.push({id: message.author.id, count: 1, lastMsg: Date.now()});
+            else {
+                if (Date.now()-3000 < competer.lastMsg) return;
+                let index = res.comp.competers.indexOf(competer);
+                competer.count++;
+                competer.lastMsg = Date.now()
+                res.comp.competers.splice(index,1,competer);
+            }
+            client.functions.saveDB(res);
+        });
+    }
+    compete();
     commands();
     tags();
     autoRes();
