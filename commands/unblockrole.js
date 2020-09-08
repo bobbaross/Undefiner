@@ -25,7 +25,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
             }
-            var role = await client.functions.getRole(args[0], message.guild.roles.cache);
+            var role = args[0];
             if (!role) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
@@ -37,12 +37,12 @@ module.exports = {
                 }
             }
             if (!res.comp) res.comp = {active: false, ending: 0, prize: "Unset", competers: [], disabledChans: [], disabledChansInvert: false, finishChannel: "0", blockedRoles: []}
-            let index = res.comp.blockedRoles.indexOf(role.id);
+            let index = res.comp.blockedRoles.indexOf(role);
             res.comp.blockedRoles.splice(index,1);
             client.functions.saveDB(res);
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setDescription(`Successfully unblocked ${role.name} from counting in the competition.`)
+            .setDescription(`Successfully unblocked ${message.guild.roles.cache.get(role) ? message.guild.roles.cache.get(role).name : role} from counting in the competition.`)
             if (hasEmbedPerms === true) {
                 return message.channel.send(embed).catch(err => err);
             } else {

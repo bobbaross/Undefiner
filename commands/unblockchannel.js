@@ -25,7 +25,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
             }
-            var channel = await client.functions.getChannel(args[0], message.guild.channels.cache);
+            var channel = args[0];
             if (!channel) {
                 let embed = new MessageEmbed()
                 .setColor(branding)
@@ -37,12 +37,12 @@ module.exports = {
                 }
             }
             if (!res.comp) res.comp = {active: false, ending: 0, prize: "Unset", competers: [], disabledChans: [], disabledChansInvert: false, finishChannel: "0", blockedRoles: []}
-            let index = res.comp.disabledChans.indexOf(channel.id);
+            let index = res.comp.disabledChans.indexOf(channel);
             res.comp.disabledChans.splice(index,1);
             client.functions.saveDB(res);
             let embed = new MessageEmbed()
             .setColor(branding)
-            .setDescription(`Successfully unblocked ${channel.name} from counting in the competition.`)
+            .setDescription(`Successfully unblocked ${message.guild.channels.cache.get(channel) ? message.guild.channels.cache.get(channel).name : channel} from counting in the competition.`)
             if (hasEmbedPerms === true) {
                 return message.channel.send(embed).catch(err => err);
             } else {
