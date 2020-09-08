@@ -57,7 +57,7 @@ class Utils {
                 // if it isn't either of them it will do this
                 if (roles.find(r => r.name.toLowerCase().startsWith(mention.toLowerCase()))) {
                     // if it can find a role from the input it will do this
-                    return resolve(roles.cache.find(r => r.name.toLowerCase().startsWith(mention.toLowerCase())));
+                    return resolve(roles.find(r => r.name.toLowerCase().startsWith(mention.toLowerCase())));
                 }
                 else {
                     // if not it wont do anything
