@@ -64,7 +64,7 @@ module.exports = {
                         return m.author.id === message.author.id && m.mentions.channels.first();
                     }
                     message.channel.awaitMessages(filter, {max: 1, time: 60000, errors: ['time']}).then(collected => {
-                        var m = collected[0];
+                        var m = collected.first();
                         console.log(m)
                         var channel = m.mentions.channels.first();
                         if (!channel || (channel && channel.permissionFor(client.user.id).has("SEND_MESSAGES"))) {
