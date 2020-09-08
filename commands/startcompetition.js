@@ -44,7 +44,7 @@ module.exports = {
             res.comp.ending = time;
             res.comp.prize = prize;
             client.functions.saveDB(res);
-            client.functions.getEntryDB("comp").then(async entryRes => {
+            client.functions.getEntries("comp").then(async entryRes => {
                 if (!entryRes) entryRes = await client.functions.createEntryDB("comp");
                 entryRes.entries.push({id: message.guild.id, ending: time});
                 client.functions.saveDB(entryRes);
