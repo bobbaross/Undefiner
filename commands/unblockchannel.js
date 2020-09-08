@@ -26,9 +26,7 @@ module.exports = {
                 }
             }
             var channel = args[0];
-            console.log("a")
             if (!channel) {
-                console.log("b")
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`I need to know the role...`)
@@ -38,13 +36,9 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err);
                 }
             }
-            console.log("c")
             if (!res.comp) res.comp = {active: false, ending: 0, prize: "Unset", competers: [], disabledChans: [], disabledChansInvert: false, finishChannel: "0", blockedRoles: []}
-            console.log("d")
             let index = res.comp.disabledChans.indexOf(channel);
-            console.log("e")
             if (index < 0) {
-                console.log("f")
                 let embed = new MessageEmbed()
                 .setColor(branding)
                 .setDescription(`Please tell me a valid channel...`)
@@ -54,11 +48,8 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err);
                 }
             }
-            console.log("g")
             res.comp.disabledChans.splice(index,1);
-            console.log("h")
             client.functions.saveDB(res);
-            console.log("j")
             let embed = new MessageEmbed()
             .setColor(branding)
             .setDescription(`Successfully unblocked ${message.guild.channels.cache.get(channel) ? message.guild.channels.cache.get(channel).name : channel} from counting in the competition.`)
