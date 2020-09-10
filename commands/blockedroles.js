@@ -5,7 +5,7 @@ module.exports = {
     name: "blockedroles",
     description: "Get the blocked roles for competitions.",
     usage: "[page]",
-    aliases: [""],
+    aliases: [],
     category: "competition",
     guildOnly: true,
 
