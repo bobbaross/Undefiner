@@ -75,7 +75,7 @@ module.exports = {
             if (isStaff === false) {
                 args = [];
                 try {
-                    this.undefine(client, messsage, args, hasEmbedPerms);
+                    this.undefine(client, message, args, hasEmbedPerms);
                 } catch (error) {
                     console.error(error);
                 } finally {
