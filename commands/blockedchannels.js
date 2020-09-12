@@ -5,7 +5,7 @@ module.exports = {
     name: "blockedchannels",
     description: "Get the blocked channels for competitions.",
     usage: "[page]",
-    aliases: [""],
+    aliases: [],
     category: "competition",
     guildOnly: true,
 

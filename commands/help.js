@@ -71,15 +71,17 @@ module.exports = {
                 return message.channel.send(str).catch(error => error);
             }
         } else if (command) {
-            let isStaff = await client.functions.authorized({auth: command.auth}, message.author);
-            if (isStaff === false) {
-                args = [];
-                try {
-                    this.undefine(client, message, args, hasEmbedPerms);
-                } catch (error) {
-                    console.error(error);
-                } finally {
-                    return;
+            if (command.auth) {
+                let isStaff = await client.functions.authorized({auth: command.auth}, message.author);
+                if (isStaff === false) {
+                    args = [];
+                    try {
+                        this.undefine(client, message, args, hasEmbedPerms);
+                    } catch (error) {
+                        console.error(error);
+                    } finally {
+                        return;
+                    }
                 }
             }
             let embed = new MessageEmbed()
