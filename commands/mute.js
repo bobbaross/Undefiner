@@ -51,9 +51,7 @@ module.exports = {
                         message.guild.roles.create({
                             data: {
                                 name: "Muted",
-                                permissions: {
-                                    SEND_MESSAGES: false
-                                }
+                                permissions: 0
                             }
                     }).then(newRole => {
                         message.guild.channels.cache.each(channel => {
