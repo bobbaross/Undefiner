@@ -130,7 +130,7 @@ module.exports = {
                         }
                         let channel = await client.functions.getChannel(args[1], message.guild.channels.cache);
                         let channelTwo;
-                        if (channel) {channel = channel.id; channelTwo = await client.functilns.getChannel(args[1], message.guild.channels.cache)}
+                        if (channel) {channel = channel.id; channelTwo = await client.functions.getChannel(args[1], message.guild.channels.cache)}
                         else if (args[1].toLowerCase() === "this") {channel = message.channel.id; channelTwo = await client.functions.getChannel(message.channel.id, message.guild.channels.cache)}
                         else if (args[1].toLowerCase() === "there") {channel = "there"; channelTwo = "there"}
                         else {channel = "off"; channelTwo = "off"}
