@@ -63,7 +63,7 @@ module.exports = {
                     });
                 });
                 await mutedRole;
-                res.settings.mutedRole = mutedRole;
+                res.settings.mutedRole = mutedRole.id;
                 await client.functions.saveDB(res);
             }
             if (!args[0]) {
