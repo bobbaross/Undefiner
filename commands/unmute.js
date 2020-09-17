@@ -159,7 +159,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
                 var embedId;
-                var modLogsChan = await client.functions.getChannel(res.settings.modLogs, message.guild.channels);
+                var modLogsChan = await client.functions.getChannel(res.settings.modLogs, message.guild.channels.cache);
                 if (modLogsChan || res.settings.modLogs === "there") {
                     if (res.settings.modLogs === "there") modLogsChan = message.channel;
                     embedId = await new Promise(resolve => {
