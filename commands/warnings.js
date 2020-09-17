@@ -67,7 +67,7 @@ module.exports = {
             }
             embed.setFooter(`Page ${pages.amount}`);
             if (hasEmbedPerms === true) {
-                message.channel.send(modLogEmbed).catch(err => err);
+                message.channel.send(embed).catch(err => err);
             } else {
                 let fields = [];
                 for (let field of embed.fields) {
