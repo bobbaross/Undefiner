@@ -143,9 +143,9 @@ module.exports = {
                 .setColor(branding)
                 .setDescription(`${user.tag ? user.tag : user.id} has been banned. ${res.settings.withReason === true ? reason : ""}`);
                 if (hasEmbedPerms === true) {
-                    return message.channel.send(embed).catch(err => err);
+                    message.channel.send(embed).catch(err => err);
                 } else {
-                    return message.channel.send(embed.description).catch(err => err)
+                    message.channel.send(embed.description).catch(err => err)
                 }
                 var embedId;
                 var modLogsChan = await client.functions.getChannel(res.settings.modLogs, message.guild.channels.cache);
@@ -160,7 +160,9 @@ module.exports = {
                         .addField(`Reason`, reason)
                         .setFooter(`${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
+                        console.log('a')
                         if (modLogsChan.permissionsFor(client.user.id).has("SEND_MESSAGES")) {
+                            console.log('b')
                             if (modLogsChan.permissionsFor(client.user.id).has("EMBED_LINKS")) {
                                 modLogsChan.send(modLogEmbed).then(msg => {
                                     resolve(msg.id);

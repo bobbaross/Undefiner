@@ -123,9 +123,9 @@ module.exports = {
                 .setColor(branding)
                 .setDescription(`${user.tag} has been kicked. ${res.settings.withReason === true ? reason : ""}`);
                 if (hasEmbedPerms === true) {
-                    return message.channel.send(embed).catch(err => err);
+                    message.channel.send(embed).catch(err => err);
                 } else {
-                    return message.channel.send(embed.description).catch(err => err)
+                    message.channel.send(embed.description).catch(err => err)
                 }
                 var embedId;
                 var modLogsChan = await client.functions.getChannel(res.settings.modLogs, message.guild.channels.cache);
