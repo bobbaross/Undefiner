@@ -1,4 +1,4 @@
-async function commandHandler(client, message, prefix, disabledCommands, isDM) {
+async function commandHandler(client, message, prefix, disabledCommands, isDM, disabledChannels) {
     if (!isDM && !message.channel.permissionsFor(client.user.id).has("SEND_MESSAGES")) return;
     var mentionedBotPrefix = message.content.startsWith(`<@!${client.user.id}> `);
     if (mentionedBotPrefix) prefix = `<@!${client.user.id}> `;
@@ -13,8 +13,10 @@ async function commandHandler(client, message, prefix, disabledCommands, isDM) {
     if (command.guildOnly === true && message.channel.type === 'dm') return;
     if (disabledCommands && disabledCommands.includes(commandName)) return;
     var hasEmbedPerms = true;
-    if (message.channel.type === 'dm') {}
-    else if (!isDM && !message.channel.permissionsFor(client.user.id).has("EMBED_LINKS")) hasEmbedPerms = false;
+    if (!isDM && !message.channel.permissionsFor(client.user.id).has("EMBED_LINKS")) hasEmbedPerms = false;
+    if (disabledChannels !== null) {
+        if (disabledChannels.includes(message.channel.id) && !message.member.hasPermission("ADMINISTRATOR")) return;
+    }
     try {
         command.undefine(client, message, args, hasEmbedPerms);
     } catch (error) {

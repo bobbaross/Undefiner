@@ -23,6 +23,7 @@ const Schema = new mongoose.Schema({
     language: String,
     antiUntypable: Boolean,
     disabledUsers: Array,
+    disabledChannels: Array,
     autoResponses: [Object],
     comp: {active: Boolean, ending: Number, prize: String, competers: [Object], disabledChans: Array, finishChannel: String, disabledChansInvert: Boolean, blockedRoles: Array}
 });

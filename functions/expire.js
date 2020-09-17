@@ -99,9 +99,9 @@ class Expire {
         if (!guild) return;
         let channel = guild.channels.cache.get(entry.channelId);
         if (!channel) return;
-        channel.overwritePermissions(guild.roles.everyone, {
+        channel.updateOverwrites(guild.roles.everyone, {
             SEND_MESSAGES: null
-        });
+        }).catch(err => err);
     }
 
     async untempRole(entry) {
@@ -109,8 +109,9 @@ class Expire {
         if (!guild) return;
         guild.members.fetch(entry.userId).then(async member => {
             if (!member) return;
-            if (!member.roles.cache.has(entry.roleId)) return;
-            member.roles.remove(entry.roleId);
+            if (!guild.roles.cache.get(entry.roleId)) return;
+            if (!member.roles.cache.has(entry.roleId)) member.roles.add(entry.roleId).catch(err => err);
+            else member.roles.remove(entry.roleId).catch(err => err);
         });
     }
     async endComp(entry) {
@@ -130,11 +131,11 @@ class Expire {
                     endResult.shift();
                 }
             }
-            guild.owner?.send(`Your competition for ${res.comp.prize} was won by ${this.client.users.cache.get(winner.id) ? this.client.users.cache.get(winner.id).tag : winner.id} with ${winner.count} messages.`);
+            guild.owner?.send(`Your competition for ${res.comp.prize} was won by ${this.client.users.cache.get(winner.id) ? this.client.users.cache.get(winner.id).tag : winner.id} with ${winner.count} messages.`).catch(err => err);
             let winnerUser = this.client.users.cache.get(winner.id);
-            winnerUser?.send(`CONGRATS!!! YOU WON THE COMPETITION FOR ${res.comp.prize} IN ${guild.name}!!! YOU SENT ${winner.count} MESSAGES, LEADING UP TO YOUR AMAZING WIN!!!`);
+            winnerUser?.send(`CONGRATS!!! YOU WON THE COMPETITION FOR ${res.comp.prize} IN ${guild.name}!!! YOU SENT ${winner.count} MESSAGES, LEADING UP TO YOUR AMAZING WIN!!!`).catch(err => err);
             let finalChan = guild.channels.cache.get(res.comp.finishChannel);
-            finalChan?.send(`CONGRATS TO ${winnerUser ? winnerUser : winner.id} FOR WINNING ${res.comp.prize} BY SENDING A STUNNING ${winner.count} MESSAGES!!!`);
+            finalChan?.send(`CONGRATS TO ${winnerUser ? winnerUser : winner.id} FOR WINNING ${res.comp.prize} BY SENDING A STUNNING ${winner.count} MESSAGES!!!`).catch(err => err);
             res.comp.competers.splice(0, res.comp.competers.length);
             res.comp.active = false;
             this.client.functions.saveDB(res);

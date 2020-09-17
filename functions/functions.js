@@ -122,6 +122,7 @@ class Utils {
                 language: "en",
                 antiUntypable: false,
                 disabledUsers: [],
+                disabledChannels: [],
                 autoResponses: [],
                 comp: {active: false, ending: 0, prize: "Not Entered", competers: [], disabledChans: [], finishChannel: "0", disabledChansInvert: false, blockedRoles: []}
             }, false);

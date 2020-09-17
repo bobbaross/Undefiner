@@ -49,17 +49,21 @@ module.exports = {
             }
             var user = await client.functions.getUser(args[0]);
             if (!user) {
-                let embed = new MessageEmbed()
-                .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
-                if (hasEmbedPerms === true) {
-                    return message.channel.send(embed).catch(err => err);
+                if (!isNaN(args[0])) {
+                    user = {id: args[0]};
                 } else {
-                    return message.channel.send(embed.description).catch(err => err)
+                    let embed = new MessageEmbed()
+                    .setDescription(`Now you see, there is something called telling me a real member.\n${this.name} ${this.usage}`);
+                    if (hasEmbedPerms === true) {
+                        return message.channel.send(embed).catch(err => err);
+                    } else {
+                        return message.channel.send(embed.description).catch(err => err)
+                    }
                 }
             }
-            var member = message.guild.member(user);
-            await member;
-            if (!member) {
+            if (user.username) var member = message.guild.member(user);
+            else var member = null;
+            /*if (!member) {
                 let embed = new MessageEmbed()
                 .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
                 if (hasEmbedPerms === true) {
@@ -67,8 +71,8 @@ module.exports = {
                 } else {
                     return message.channel.send(embed.description).catch(err => err)
                 }
-            }
-            if (member.user.id === message.author.id) {
+            }*/
+            if (user.id === message.author.id) {
                 let embed = new MessageEmbed()
                 .setDescription(`This isn't a good idea...\n${this.name} ${this.usage}`);
                 if (hasEmbedPerms === true) {
@@ -77,7 +81,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
             }
-            if (member.roles.highest.position >= message.member.roles.highest.position) {
+            if (member?.roles.highest.position >= message.member.roles.highest.position) {
                 let embed = new MessageEmbed()
                 .setDescription(`Hey, I don't think you should ban them.\n${this.name} ${this.usage}`);
                 if (hasEmbedPerms === true) {
@@ -86,7 +90,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
             }
-            if (member.roles.cache.some(r => bypassRoles.includes(r.id))) {
+            if (member?.roles.cache.some(r => bypassRoles.includes(r.id))) {
                 let embed = new MessageEmbed()
                 .setDescription(`I wouldn't ban that person if I was you.\n${this.name} ${this.usage}`);
                 if (hasEmbedPerms === true) {
@@ -122,7 +126,7 @@ module.exports = {
                 .setTimestamp()
                 user.send(dmEmbed).catch(err => err);
             }
-            member.ban(`Banned by ${message.author.tag} with reason: ${reason}`).then(async () => {
+            message.guild.members.ban(user.id, `Banned by ${message.author.tag} with reason: ${reason}`).then(async () => {
                 client.functions.getEntries("ban").then(async activeBans => {
                     if (!time) return;
                     activeBans.entries.push({
@@ -137,7 +141,7 @@ module.exports = {
                 });
                 let embed = new MessageEmbed()
                 .setColor(branding)
-                .setDescription(`${user.tag} has been banned. ${res.settings.withReason === true ? reason : ""}`);
+                .setDescription(`${user.tag ? user.tag : user.id} has been banned. ${res.settings.withReason === true ? reason : ""}`);
                 if (hasEmbedPerms === true) {
                     return message.channel.send(embed).catch(err => err);
                 } else {
@@ -151,13 +155,13 @@ module.exports = {
                         let modLogEmbed = new MessageEmbed()
                         .setColor(bad)
                         .setTitle(`Member Banned | Case #${res.cases}`)
-                        .addField(`Member`, member.user.tag, true)
+                        .addField(`Member`, user.tag ? user.tag : user.id, true)
                         .addField(`Moderator`, message.author.tag, true)
                         .addField(`Reason`, reason)
                         .setFooter(`${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
-                        if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
-                            if (hasEmbedPerms === true) {
+                        if (modLogsChan.permissionsFor(client.user.id).has("SEND_MESSAGES")) {
+                            if (modLogsChan.permissionsFor(client.user.id).has("EMBED_LINKS")) {
                                 modLogsChan.send(modLogEmbed).then(msg => {
                                     resolve(msg.id);
                                 }).catch(err => err);
@@ -179,7 +183,7 @@ module.exports = {
                     id: uniqid("ban-(", ")"),
                     case: res.cases,
                     userId: user.id,
-                    userTag: user.tag,
+                    userTag: user.tag ? user.tag : null,
                     modId: message.author.id,
                     modTag: message.author.tag,
                     duration: duration ? duration : "Nope",

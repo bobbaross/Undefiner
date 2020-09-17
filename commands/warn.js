@@ -112,21 +112,21 @@ module.exports = {
                     .addField(`Reason`, reason)
                     .setFooter(`${user.id}`)
                     .setTimestamp()
-                    if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
-                        if (hasEmbedPerms === true) {
-                                modLogsChan.send(modLogEmbed).then(msg => {
-                                    resolve(msg.id);
-                                }).catch(err => err);
-                            } else {
-                                let fields = [];
-                                for (let field of embed.fields) {
-                                    fields.push(`**${field.name}**: ${field.value}`);
-                                }
-                                let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
-                                modLogsChan.send(str).then(msg => {
-                                    resolve(msg.id);
-                                }).catch(error => error);
+                    if (modLogsChan.permissionsFor(client.user.id).has("SEND_MESSAGES")) {
+                        if (modLogsChan.permissionsFor(client.user.id).has("EMBED_LINKS")) {
+                            modLogsChan.send(modLogEmbed).then(msg => {
+                                resolve(msg.id);
+                            }).catch(err => err);
+                        } else {
+                            let fields = [];
+                            for (let field of embed.fields) {
+                                fields.push(`**${field.name}**: ${field.value}`);
                             }
+                            let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
+                            modLogsChan.send(str).then(msg => {
+                                resolve(msg.id);
+                            }).catch(error => error);
+                        }
                     }
                 });
             }

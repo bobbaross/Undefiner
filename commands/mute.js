@@ -195,8 +195,8 @@ module.exports = {
                         .addField(`Reason`, reason)
                         .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                         .setTimestamp()
-                        if (modLogsChan.permissionOverwrites.get(client.user.id).allow.has("SEND_MESSAGES")) {
-                            if (hasEmbedPerms === true) {
+                        if (modLogsChan.permissionsFor(client.user.id).has("SEND_MESSAGES")) {
+                            if (modLogsChan.permissionsFor(client.user.id).has("EMBED_LINKS")) {
                                 modLogsChan.send(modLogEmbed).then(msg => {
                                     resolve(msg.id);
                                 }).catch(err => err);
