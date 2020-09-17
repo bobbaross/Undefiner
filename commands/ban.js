@@ -164,7 +164,7 @@ module.exports = {
                             if (modLogsChan.permissionsFor(client.user.id).has("EMBED_LINKS")) {
                                 modLogsChan.send(modLogEmbed).then(msg => {
                                     resolve(msg.id);
-                                }).catch(err => err);
+                                }).catch(err => console.log(err));
                             } else {
                                 let fields = [];
                                 for (let field of embed.fields) {
@@ -173,7 +173,7 @@ module.exports = {
                                 let str = `**${embed.title}**\n${fields.join('\n')}\n${embed.footer}`;
                                 modLogsChan.send(str).then(msg => {
                                     resolve(msg.id);
-                                }).catch(error => error);
+                                }).catch(error => console.log(error));
                             }
                         }
                     });
