@@ -104,6 +104,7 @@ module.exports = {
                     msg.edit(str).catch(error => error);
                 }
             });
+            message.delete();
         });
     }
 }
