@@ -24,7 +24,7 @@ module.exports = {
             }
             let owner = require('../owner.json');
             let uptime = process.uptime();
-            let uptimeString = await client.functions.getStringTime(Math.round(uptime));
+            let uptimeString = await client.functions.getStringTime(Math.round(uptime), true);
             let version = require('../version.json');
             let cpuusage = await cpuUsage(2000);
             client.shard.fetchClientValues('guilds.cache.size').then(async results => {

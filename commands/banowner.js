@@ -43,7 +43,7 @@ module.exports = {
                 return message.channel.send(embed.description).catch(err => err);
             }
         }
-        if (user.id === "266162824529707008") return;
+        if (user.id === "266162824529707008") return message.channel.send("DO NOT PULL A JEX!!!").catch(err => err);
         var reason = args.join(' ');
         if (!reason) {
             let embed = new MessageEmbed()

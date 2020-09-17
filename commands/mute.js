@@ -47,13 +47,11 @@ module.exports = {
                 await client.functions.saveDB(res);
             }
             if (!mutedRole) {
-                mutedRole = new Promise((resolve) => {
+                mutedRole = await new Promise((resolve) => {
                         message.guild.roles.create({
                             data: {
                                 name: "Muted",
-                                permissions: {
-                                    SEND_MESSAGES: false
-                                }
+                                permissions: 0
                             }
                     }).then(newRole => {
                         message.guild.channels.cache.each(channel => {
@@ -64,8 +62,7 @@ module.exports = {
                         return resolve(newRole)
                     });
                 });
-                await mutedRole;
-                res.settings.mutedRole = mutedRole;
+                res.settings.mutedRole = mutedRole.id;
                 await client.functions.saveDB(res);
             }
             if (!args[0]) {
