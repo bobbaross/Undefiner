@@ -131,6 +131,9 @@ class Expire {
                     endResult.shift();
                 }
             }
+            if (!winner) {
+                finalChan?.send(`No one won the competition for ${res.comp.prize}...`).catch(err => err);
+            }
             guild.owner?.send(`Your competition for ${res.comp.prize} was won by ${this.client.users.cache.get(winner.id) ? this.client.users.cache.get(winner.id).tag : winner.id} with ${winner.count} messages.`).catch(err => err);
             let winnerUser = this.client.users.cache.get(winner.id);
             winnerUser?.send(`CONGRATS!!! YOU WON THE COMPETITION FOR ${res.comp.prize} IN ${guild.name}!!! YOU SENT ${winner.count} MESSAGES, LEADING UP TO YOUR AMAZING WIN!!!`).catch(err => err);
