@@ -131,13 +131,13 @@ class Expire {
                     endResult.shift();
                 }
             }
+            let finalChan = guild.channels.cache.get(res.comp.finishChannel);
             if (!winner) {
                 finalChan?.send(`No one won the competition for ${res.comp.prize}...`).catch(err => err);
             }
             guild.owner?.send(`Your competition for ${res.comp.prize} was won by ${this.client.users.cache.get(winner.id) ? this.client.users.cache.get(winner.id).tag : winner.id} with ${winner.count} messages.`).catch(err => err);
             let winnerUser = this.client.users.cache.get(winner.id);
             winnerUser?.send(`CONGRATS!!! YOU WON THE COMPETITION FOR ${res.comp.prize} IN ${guild.name}!!! YOU SENT ${winner.count} MESSAGES, LEADING UP TO YOUR AMAZING WIN!!!`).catch(err => err);
-            let finalChan = guild.channels.cache.get(res.comp.finishChannel);
             finalChan?.send(`CONGRATS TO ${winnerUser ? winnerUser : winner.id} FOR WINNING ${res.comp.prize} BY SENDING A STUNNING ${winner.count} MESSAGES!!!`).catch(err => err);
             res.comp.competers.splice(0, res.comp.competers.length);
             res.comp.active = false;
