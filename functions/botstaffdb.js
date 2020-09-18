@@ -9,7 +9,7 @@ const botstaffActions = new mongoose.Schema({
     bannedOwners: Array,
     bannedAdmins: Array,
     infractions: [Object],
-    StaffCaseAmount: Number
+    staffCaseAmount: Number
 });
 
 const global = mongoose.model("global", botstaffActions);

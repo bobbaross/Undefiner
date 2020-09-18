@@ -57,6 +57,16 @@ module.exports = {
         }
         client.functions.getStaffDB().then(async res => {
             if (!res) res = await client.functions.createStaffDB();
+            if (res.bannedOwners.includes(user.id)) {
+                let embed = new MessageEmbed()
+                .setColor(branding)
+                .setDescription(`This owner is already banned you dickshit`)
+                if (hasEmbedPerms === true) {
+                    return message.channel.send(embed).catch(err => err);
+                } else {
+                    return message.channel.send(embed.description).catch(err => err);
+                }
+            }
             res.infractions.push({
                 id: uniqid("ownerBan-(", ")"),
                 owner: user.id,
