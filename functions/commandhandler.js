@@ -2,6 +2,8 @@ async function commandHandler(client, message, prefix, disabledCommands, isDM, d
     if (!isDM && !message.channel.permissionsFor(client.user.id).has("SEND_MESSAGES")) return;
     var mentionedBotPrefix = message.content.startsWith(`<@!${client.user.id}> `);
     if (mentionedBotPrefix) prefix = `<@!${client.user.id}> `;
+    var secondBotPrefix = message.content.startsWith(`${client.user.tag} `);
+    if (secondBotPrefix) prefix = `${client.user.tag} `;
     if (!message.content.toLowerCase().startsWith(prefix) || message.author.bot) return;
     var args = message.content.slice(prefix.length).split(/ +/);
     var commandName = args.shift().toLowerCase();
