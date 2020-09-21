@@ -102,7 +102,7 @@ module.exports = {
                     return message.channel.send(embed.description).catch(err => err)
                 }
                     }
-                    let role = await client.functions.getRole(args[1], message.guild.roles);
+                    let role = await client.functions.getRole(args[1], message.guild.roles.cache);
                     if (!role) role = "0";
                     res.settings.mutedRole = role.id;
                     client.functions.saveDB(res).then(() => {
