@@ -6,7 +6,7 @@ module.exports = {
     description: "Temporarily assign a role to a member.",
     usage: "<member> <duration> <role>",
     aliases: [],
-    category: "role",
+    category: "roles",
     guildOnly: true,
 
     async undefine(client, message, args, hasEmbedPerms) {
