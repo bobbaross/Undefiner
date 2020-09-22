@@ -66,7 +66,7 @@ module.exports = {
                         embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true);
                     }
                 } else {
-                    embed.addField(thingy[0].slice(0,1).toUpperCase()+thingy[0].slice(1).toLowerCase(), '`'+thingy[0].join('` | `')+'`', true);
+                    embed.addField(thingy[0].slice(0,1).toUpperCase()+thingy[0].slice(1).toLowerCase(), '`'+thingy[1].join('` | `')+'`', true);
                 }
             }
             if (hasEmbedPerms === true) {
