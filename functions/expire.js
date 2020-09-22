@@ -24,10 +24,10 @@ class Expire {
                                 let duration = await this.client.functions.getTime(Date.now()-entry.happenedAt);
                                 let embed = new MessageEmbed()
                                 .setColor(good)
-                                .setTitle(`Member Unmuted | Case #${res.cases}`)
+                                .setTitle(`Member Unmuted | Case #${modRes.cases}`)
                                 .addField(`Member`, member.user.tag, true)
                                 .addField(`Moderator`, this.client.user.tag, true)
-                                .addField(`Reason`, `Automatic unmute, time expired from case #${entry.servCase}`, true)
+                                .addField(`Reason`, `Automatic unmute, time expired from case #${entry.servCase}`)
                                 .setFooter(`This mute lasted ${duration} | ${entry.userId}`)
                                 .setTimestamp()
 
@@ -46,7 +46,7 @@ class Expire {
                             embedId: embedId ? embedId : null,
                             happenedAt: Date.now()
                         });
-                        this.client.functions.saveDB(res);
+                        this.client.functions.saveDB(modRes);
                     }).catch(err => console.error(err));
                 });
             });
@@ -69,10 +69,10 @@ class Expire {
                                 let duration = await this.client.functions.getTime(Date.now()-entry.happenedAt);
                                 let embed = new MessageEmbed()
                                 .setColor(good)
-                                .setTitle(`Member Unbanned | Case #${res.cases}`)
+                                .setTitle(`Member Unbanned | Case #${modRes.cases}`)
                                 .addField(`Member`, ban.user.tag, true)
                                 .addField(`Moderator`, this.client.user.tag, true)
-                                .addField(`Reason`, `Automatic unmute, time expired from case #${entry.servCase}`, true)
+                                .addField(`Reason`, `Automatic unban, time expired from case #${entry.servCase}`)
                                 .setFooter(`This ban lasted ${duration} | ${entry.userId}`)
                                 .setTimestamp()
 
