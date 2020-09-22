@@ -5,7 +5,7 @@ const uniqid = require('uniqid');
 module.exports = {
     name: "note",
     description: "Add a note to a member.",
-    aliases: [],
+    aliases: ["n"],
     category: "moderation",
     usage: "<member> <note>",
     guildOnly: true,

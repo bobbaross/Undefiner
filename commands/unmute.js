@@ -5,7 +5,7 @@ const uniqid = require('uniqid');
 module.exports = {
     name: "unmute",
     description: "Unmute a member.",
-    aliases: ['unsilence'],
+    aliases: ['unsilence', "um"],
     category: "moderation",
     usage: "<member> <reason>",
     guildOnly: true,

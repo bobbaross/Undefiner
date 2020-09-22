@@ -5,7 +5,7 @@ const uniqid = require('uniqid');
 module.exports = {
     name: "warn",
     description: "Warn a member.",
-    aliases: [],
+    aliases: ["w"],
     category: "moderation",
     usage: "<member> <reason>",
     guildOnly: true,
