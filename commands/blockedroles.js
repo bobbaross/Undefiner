@@ -10,8 +10,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args, hasEmbedPerms) {
-        client.functions.getDB(message.guild.id).then(async res => {
-            if (!res) res = await client.functions.createDB(message.guild.id);
+        client.functions.getCompDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createCompDB(message.guild.id);
             var page = args.shift();
             if (page && !isNaN(page)) page = parseInt(page);
             else page = 1;

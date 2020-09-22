@@ -6,7 +6,7 @@ module.exports = (client, oldMessage, newMessage) => {
         if (newMessage.channel.type === 'dm') {
             commandHandler(client, newMessage, "undefine ", null, true, null).catch(err => console.error(err));
         } else {
-            client.functions.getDB(newMessage.guild.id).then(res => {
+            client.functions.getSettingsDB(newMessage.guild.id).then(res => {
                 if (res && res.prefix) var prefix = res.prefix;
                 else var prefix = "undefine ";
                 if (res && res.disabledCommands) var disabledCommands = res.disabledCommands;

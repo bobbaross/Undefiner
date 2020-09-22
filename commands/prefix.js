@@ -11,8 +11,8 @@ module.exports = {
 
     async undefine(client, message, args, hasEmbedPerms) {
         if (!args[0]) {
-            client.functions.getDB(message.guild.id).then(async res => {
-                if (!res) res = await client.functions.createDB(message.guild.id);
+            client.functions.getSettingsDB(message.guild.id).then(async res => {
+                if (!res) res = await client.functions.createSettingsDB(message.guild.id);
                 message.channel.send(`The prefix for this server is set to \`${res?.prefix}\``).catch(err => err);
             });
         } else {
@@ -39,9 +39,9 @@ module.exports = {
                 }
                 return errbed();
             }
-            client.functions.getDB(message.guild.id).then(async res => {
+            client.functions.getSettingsDB(message.guild.id).then(async res => {
                 if (!res) {
-                    res = await client.functions.createDB(message.guild.id);
+                    res = await client.functions.createSettingsDB(message.guild.id);
 
                 }
                 var embed;

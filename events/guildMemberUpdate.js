@@ -62,7 +62,7 @@ module.exports = (client, oldMember, newMember) => {
         });
     }
     function sanitize() {
-        client.functions.getDB(newMember.guild.id).then(res => {
+        client.functions.getSettingsDB(newMember.guild.id).then(res => {
             if (res?.antiUntypable !== true) return;
             var sanitized = sanitizer(newMember.displayName);
             if (newMember.displayName !== sanitized) {

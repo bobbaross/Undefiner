@@ -7,7 +7,7 @@ module.exports = (client, message) => {
         if (message.channel.type === 'dm') {
             commandHandler(client, message, "undefine ", null, true, null).catch(err => console.error(err));
         } else {
-            client.functions.getDB(message.guild.id).then(res => {
+            client.functions.getSettingsDB(message.guild.id).then(res => {
                 if (res?.prefix) var prefix = res.prefix;
                 else var prefix = "undefine ";
                 if (res?.disabledCommands) var disabledCommands = res.disabledCommands;
@@ -71,7 +71,7 @@ module.exports = (client, message) => {
     
     async function autoRes() {
         if (!message.guild) return;
-        client.functions.getDB(message.guild.id).then(res => {
+        client.functions.getSettingsDB(message.guild.id).then(res => {
             if (!res?.autoResponses?.find(response => response.require.toLowerCase() === message.content.toLowerCase())) return;
             var autoResponse = res.autoResponses.find(response => response.require.toLowerCase() === message.content.toLowerCase());
             if (autoResponse?.caseSens === true && autoResponse?.require !== message.content) return;
@@ -81,7 +81,7 @@ module.exports = (client, message) => {
     async function compete() {
         if (message.author.bot) return;
         if (!message.guild) return;
-        client.functions.getDB(message.guild.id).then(res => {
+        client.functions.getCompDB(message.guild.id).then(res => {
             if (!res) return;
             if (message.content.toLowerCase().startsWith(res.prefix.toLowerCase())) return;
             if (res.comp?.active !== true) return;

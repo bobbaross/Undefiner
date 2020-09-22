@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const { serverID, DB } = require(`./db.js`);
 const { entryType, entryDB } = require('./expiredb.js');
 const { global, botstaffdb } = require('./botstaffdb.js');
+const { compServer, comp } = require('./compdb.js');
+const { modServer, modCases } = require('./moddb.js');
+const { settingsServer, settings } = require('./settingsdb.js');
+const { giveawayServer, giveaways } = require('./giveawaydb.js');
+const { webhooksServer, webhooks } = require('./webhooksdb.js');
 const Discord = require('discord.js');
 
 class Utils {
@@ -103,29 +108,74 @@ class Utils {
             let newDB = new DB({
                 serverID: `${serverid}`,
                 db: "a",
-                prefix: "undefine ",
-                modCases: [],
-                lockedChans: [],
                 tempRoles: [],
                 persistedRoles: [],
+                afkMembers: [],
+                tags: [],
+                language: "en"
+            }, false);
+            return resolve(newDB);
+        });
+    }
+
+    async createCompDB(serverid) {
+        return new Promise(resolve => {
+            let newDB = new comp({
+                compServer: serverid,
+                comp: {active: false, ending: 0, prize: "Not Entered", competers: [], disabledChans: [], finishChannel: "0", disabledChansInvert: false, blockedRoles: []}
+            });
+            return resolve(newDB);
+        });
+    }
+
+    async createGiveDB(serverid) {
+        return new Promise(resolve => {
+            let newDB = new giveaways({
+                giveawayServer: serverid,
+                activeGiveaways: [],
+                winners: []
+            });
+            return resolve(newDB);
+        });
+    }
+
+    async createModDB(serverid) {
+        return new Promise(resolve => {
+            let newDB = new modCases({
+                modServer: serverid,
+                modCases: [],
+                lockedChans: [],
                 cases: 0,
+                notes: [],
+            });
+            return resolve(newDB);
+        });
+    }
+
+    async createSettingsDB(serverid) {
+        return new Promise(resolve => {
+            let newDB = new settings({
+                settingsServer: serverid,
+                prefix: "undefine ",
+                settings: {mutedRole: "", modLogs: "off", withReason: false, deleteModCommands: false, dmOnPunish: false},
                 modRoles: [],
                 adminRoles: [],
-                afkMembers: [],
                 disabledCommands: [],
-                tags: [],
-                settings: {mutedRole: "", modLogs: "off", withReason: false, deleteModCommands: false, dmOnPunish: false},
-                notes: [],
-                webhooks: {
-                    logs: "off"
-                },
-                language: "en",
-                antiUntypable: false,
                 disabledUsers: [],
                 disabledChannels: [],
-                autoResponses: [],
-                comp: {active: false, ending: 0, prize: "Not Entered", competers: [], disabledChans: [], finishChannel: "0", disabledChansInvert: false, blockedRoles: []}
-            }, false);
+                antiUntypable: false,
+                autoResponses: []
+            });
+            return resolve(newDB);
+        });
+    }
+
+    async createWebDB(serverid) {
+        return new Promise(resolve => {
+            let newDB = new webhooks({
+                webhooksServer: serverid,
+                webhooks: []
+            });
             return resolve(newDB);
         });
     }
@@ -169,6 +219,62 @@ class Utils {
             });
         });
     }
+
+    async getCompDB(serverid) {
+        return new Promise((resolve, reject) => {
+            comp.findOne({
+                compServer: serverid
+            }, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+            });
+        });
+    }
+
+    async getGiveDB(serverid) {
+        return new Promise((resolve, reject) => {
+            giveaways.findOne({
+                compServer: serverid
+            }, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+            });
+        });
+    }
+
+    async getModDB(serverid) {
+        return new Promise((resolve, reject) => {
+            modCases.findOne({
+                compServer: serverid
+            }, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+            });
+        });
+    }
+
+    async getSettingsDB(serverid) {
+        return new Promise((resolve, reject) => {
+            settings.findOne({
+                compServer: serverid
+            }, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+            });
+        });
+    }
+
+    async getWebDB(serverid) {
+        return new Promise((resolve, reject) => {
+            webhooks.findOne({
+                compServer: serverid
+            }, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+            });
+        });
+    }
+
     // all this function does is just to get the database of literally the only staff actions document, sooo...
     async getStaffDB() {
         return new Promise((resolve, reject) => {
@@ -180,6 +286,7 @@ class Utils {
             });
         });
     }
+    
     // all this function does is just to get the database of the temporary thingy, sooo...
     async getEntries(enteryType) {
         return new Promise((resolve, reject) => {

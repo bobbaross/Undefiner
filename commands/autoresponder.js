@@ -11,8 +11,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args, hasEmbedPerms) {
-        client.functions.getDB(message.guild.id).then(async res => {
-            if (!res) res = await client.functions.createDB(message.guild.id);
+        client.functions.getSettingsDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createSettingsDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);
@@ -54,10 +54,10 @@ module.exports = {
             .setColor(branding)
             .setDescription(`Auto Response Created Successfully!\n**ID**: ${respondId}\n**Case Sensitive**: ${caseSens}\n**Respond To**: ${respondTo}\n**Respond With**: ${respondWith}`)
             if (hasEmbedPerms === true) {
-                    return message.channel.send(embed).catch(err => err);
-                } else {
-                    return message.channel.send(embed.description).catch(err => err)
-                }
+                return message.channel.send(embed).catch(err => err);
+            } else {
+                return message.channel.send(embed.description).catch(err => err)
+            }
         });
     }
 }

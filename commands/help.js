@@ -12,7 +12,7 @@ module.exports = {
         var prefix;
         if (message.guild) {
             prefix = await new Promise(resolve => {
-                client.functions.getDB(message.guild.id).then(res => {
+                client.functions.getSettingsDB(message.guild.id).then(res => {
                     if (res && res.prefix) return resolve(res.prefix);
                     else return resolve("undefine ");
                 });
@@ -32,6 +32,7 @@ module.exports = {
                 roles: [],
                 fun: [],
                 competition: [],
+                giveaways: [],
                 botstaff: [],
                 developer: []
             };
@@ -52,6 +53,7 @@ module.exports = {
             .addField(`Roles`, '`'+commands.roles.join('` | `')+'`', true)
             .addField(`Fun`, '`'+commands.fun.join('` | `')+'`', true)
             .addField(`Competition`, '`'+commands.competition.join('` | `')+'`', true)
+            .addField(`Giveaways`, '`'+commands.giveaways.join('` | `')+'`', true)
             let isMod = await client.functions.authorized({auth: "mod"}, message.author);
             if (isMod === true) {
                 embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`', true);

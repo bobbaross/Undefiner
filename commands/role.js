@@ -20,8 +20,8 @@ module.exports = {
                 }
         }
 
-        client.functions.getDB(message.guild.id).then(async res => {
-            if (!res) res = await client.functions.createDB(message.guild.id);
+        client.functions.getSettingsDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createSettingsDB(message.guild.id);
             let bypassRoles = [];
             for (let role of res.modRoles) {
                 bypassRoles.push(role);

@@ -10,8 +10,8 @@ module.exports = {
     guildOnly: true,
 
     async undefine(client, message, args, hasEmbedPerms) {
-        client.functions.getDB(message.guild.id).then(async res => {
-            if (!res) res = await client.functions.createDB(message.guild.id);
+        client.functions.getSettingsDB(message.guild.id).then(async res => {
+            if (!res) res = await client.functions.createSettingsDB(message.guild.id);
             var resArr = [];
             for (let autoRes of res.autoResponses) {
                 resArr.push(autoRes);
