@@ -23,7 +23,7 @@ module.exports = (client, message) => {
         client.functions.getDB(message.guild.id).then(res => {
             if (!res) return;
             client.functions.getSettingsDB(message.guild.id).then(async setRes => {
-                if (!setRes) setRes = await client.functions.createSettingsDB(guild.id);
+                if (!setRes) setRes = await client.functions.createSettingsDB(message.guild.id);
                 if (!message.content.toLowerCase().startsWith(setRes.prefix) || message.author.bot) return;
                 let bypassRoles = [];
                 for (let role of res.modRoles) {
