@@ -46,21 +46,28 @@ module.exports = {
             .setColor(branding)
             .setTitle("Help")
             .setDescription(`<> = required | [] = optional\n${prefix}${this.name} ${this.usage}`)
-            .addField(`Manager`, '`'+commands.manager.join('` | `')+'`', true)
+            /*.addField(`Manager`, '`'+commands.manager.join('` | `')+'`', true)
             .addField(`Moderation`, '`'+commands.moderation.join('` | `')+'`', true)
             .addField(`Information`, '`'+commands.information.join('` | `')+'`', true)
             .addField(`Miscellaneous`, '`'+commands.miscellaneous.join('` | `')+'`', true)
             .addField(`Roles`, '`'+commands.roles.join('` | `')+'`', true)
             .addField(`Fun`, '`'+commands.fun.join('` | `')+'`', true)
             .addField(`Competition`, '`'+commands.competition.join('` | `')+'`', true)
-            .addField(`Giveaways`, '`'+commands.giveaways.join('` | `')+'`', true)
-            let isMod = await client.functions.authorized({auth: "mod"}, message.author);
-            if (isMod === true) {
-                embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`', true);
-            }
-            let isDev = await client.functions.authorized({auth: "dev"}, message.author);
-            if (isDev === true) {
-                embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true);
+            .addField(`Giveaways`, '`'+commands.giveaways.join('` | `')+'`', true)*/
+            for (let thingy of Object.entries(commands)) {
+                if (thingy[0] === "botstaff") {       
+                    let isMod = await client.functions.authorized({auth: "mod"}, message.author);
+                    if (isMod === true) {
+                        embed.addField(`Bot Staff`, '`'+commands.botstaff.join('` | `')+'`', true);
+                    }
+                } else if (thingy[0] === "developer") {
+                    let isDev = await client.functions.authorized({auth: "dev"}, message.author);
+                    if (isDev === true) {
+                        embed.addField(`Developer`, '`'+commands.developer.join('` | `')+'`', true);
+                    }
+                } else {
+                    embed.addField(thingy[0].slice(0,1).toUpperCase()+thingy[0].slice(1).toLowerCase(), '`'+thingy[0].join('` | `')+'`', true);
+                }
             }
             if (hasEmbedPerms === true) {
             return message.channel.send(embed).catch(err => err)
