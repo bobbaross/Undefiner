@@ -225,7 +225,7 @@ module.exports = {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    await client.functions.saveDB(setRes).catch(err => console.error(err));
+                    await client.functions.saveDB(res).catch(err => console.error(err));
                     if (setRes.settings.deleteModCommands === true) message.delete();
                 });
             });
