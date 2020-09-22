@@ -35,25 +35,17 @@ module.exports = {
                 giveaways: [],
                 botstaff: [],
                 developer: []
-            };
+            }; // the category list
             client.commands.map(cmd => cmd).forEach(cmd => {
                 commands[cmd.category].push(cmd.name);
-            });
+            }); // putting the commands in it
             for (let category of Object.entries(commands)) {
                 if (category[1].length === 0) category[1].push(`None`);
-            }
+            } // making sure there are no empty arrays that will error the embed
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle("Help")
             .setDescription(`<> = required | [] = optional\n${prefix}${this.name} ${this.usage}`)
-            /*.addField(`Manager`, '`'+commands.manager.join('` | `')+'`', true)
-            .addField(`Moderation`, '`'+commands.moderation.join('` | `')+'`', true)
-            .addField(`Information`, '`'+commands.information.join('` | `')+'`', true)
-            .addField(`Miscellaneous`, '`'+commands.miscellaneous.join('` | `')+'`', true)
-            .addField(`Roles`, '`'+commands.roles.join('` | `')+'`', true)
-            .addField(`Fun`, '`'+commands.fun.join('` | `')+'`', true)
-            .addField(`Competition`, '`'+commands.competition.join('` | `')+'`', true)
-            .addField(`Giveaways`, '`'+commands.giveaways.join('` | `')+'`', true)*/
             for (let thingy of Object.entries(commands)) {
                 if (thingy[0] === "botstaff") {       
                     let isMod = await client.functions.authorized({auth: "mod"}, message.author);
@@ -68,8 +60,8 @@ module.exports = {
                 } else {
                     embed.addField(thingy[0].slice(0,1).toUpperCase()+thingy[0].slice(1).toLowerCase(), '`'+thingy[1].join('` | `')+'`', true);
                 }
-            }
-            if (hasEmbedPerms === true) {
+            } // putting in the fields to the embed
+                if (hasEmbedPerms === true) {
             return message.channel.send(embed).catch(err => err)
             } else {
                 let fields = [];
@@ -92,7 +84,7 @@ module.exports = {
                         return;
                     }
                 }
-            }
+            } // checked if you can use the command
             let embed = new MessageEmbed()
             .setColor(branding)
             .setTitle(command.name.slice(0,1).toUpperCase() + command.name.slice(1))
