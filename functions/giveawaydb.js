@@ -6,7 +6,7 @@ const giveawaySchema = new mongoose.Schema({
     winners: Array
 });
 
-const giveawayServer = mongoose.model("serverID", giveawaySchema);
-const giveaways = mongoose.model("db", giveawaySchema);
+const giveawayServer = mongoose.model("giveawayServer", giveawaySchema);
+const giveaways = mongoose.model("activeGiveaways", giveawaySchema);
 
 module.exports = { giveawayServer, giveaways }
