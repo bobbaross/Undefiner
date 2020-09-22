@@ -12,7 +12,7 @@ module.exports = {
     async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getModDB(message.guild.id).then(async res => {
             if (!res) res = await client.functions.createModDB(message.guild.id);
-            client.functions.getSettingsDB(guild.id).then(async setRes => {
+            client.functions.getSettingsDB(message.guild.id).then(async setRes => {
                 if (!setRes) setRes = await client.functions.createSettingsDB(guild.id);
                 let bypassRoles = [];
                 for (let role of setRes.modRoles) {

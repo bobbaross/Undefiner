@@ -22,7 +22,7 @@ module.exports = (client, message) => {
         if (message.channel.type === 'dm') return;
         client.functions.getDB(message.guild.id).then(res => {
             if (!res) return;
-            client.functions.getSettingsDB(guild.id).then(async setRes => {
+            client.functions.getSettingsDB(message.guild.id).then(async setRes => {
                 if (!setRes) setRes = await client.functions.createSettingsDB(guild.id);
                 if (!message.content.toLowerCase().startsWith(setRes.prefix) || message.author.bot) return;
                 let bypassRoles = [];

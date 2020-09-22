@@ -13,7 +13,7 @@ module.exports = {
     async undefine(client, message, args, hasEmbedPerms) {
         client.functions.getCompDB(message.guild.id).then(async res => {
             if (!res) res = await client.functions.createCompDB(message.guild.id);
-            client.functions.getSettingsDB(guild.id).then(async setRes => {
+            client.functions.getSettingsDB(message.guild.id).then(async setRes => {
                 if (!setRes) setRes = await client.functions.createSettingsDB(guild.id);
                 let bypassRoles = [];
                 for (let role of setRes.adminRoles) {
