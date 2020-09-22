@@ -26,10 +26,10 @@ module.exports = (client, message) => {
                 if (!setRes) setRes = await client.functions.createSettingsDB(message.guild.id);
                 if (!message.content.toLowerCase().startsWith(setRes.prefix) || message.author.bot) return;
                 let bypassRoles = [];
-                for (let role of res.modRoles) {
+                for (let role of setRes.modRoles) {
                     bypassRoles.push(role);
                 }
-                for (let role of res.adminRoles) {
+                for (let role of setRes.adminRoles) {
                     bypassRoles.push(role);
                 }
                 if (!message.member.hasPermission("MANAGE_MESSAGES") && !message.member.roles.cache.some(r => bypassRoles.includes(r.id))) return;
