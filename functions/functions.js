@@ -234,7 +234,7 @@ class Utils {
     async getGiveDB(serverid) {
         return new Promise((resolve, reject) => {
             giveaways.findOne({
-                compServer: serverid
+                giveawayServer: serverid
             }, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
@@ -245,7 +245,7 @@ class Utils {
     async getModDB(serverid) {
         return new Promise((resolve, reject) => {
             modCases.findOne({
-                compServer: serverid
+                modServer: serverid
             }, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
@@ -256,7 +256,7 @@ class Utils {
     async getSettingsDB(serverid) {
         return new Promise((resolve, reject) => {
             settings.findOne({
-                compServer: serverid
+                settingsServer: serverid
             }, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
@@ -267,7 +267,7 @@ class Utils {
     async getWebDB(serverid) {
         return new Promise((resolve, reject) => {
             webhooks.findOne({
-                compServer: serverid
+                webhooksServer: serverid
             }, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
@@ -286,7 +286,7 @@ class Utils {
             });
         });
     }
-    
+
     // all this function does is just to get the database of the temporary thingy, sooo...
     async getEntries(enteryType) {
         return new Promise((resolve, reject) => {
