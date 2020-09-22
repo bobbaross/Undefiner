@@ -39,7 +39,7 @@ module.exports = {
             client.commands.map(cmd => cmd).forEach(cmd => {
                 commands[cmd.category].push(cmd.name);
             });
-            for (const category of Object.entries(commands)) {
+            for (let category of Object.entries(commands)) {
                 if (category[1].length === 0) category[1].push(`None`);
             }
             let embed = new MessageEmbed()
