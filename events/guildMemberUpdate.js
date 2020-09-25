@@ -43,7 +43,7 @@ module.exports = (client, oldMember, newMember) => {
             if (client.checks.memberHigherThan(newMember, oldMember)) {
                 if (client.checks.hasRole(newMember, staffRoles)) {
                     updateTheEmbed(msg);
-                    if (!staffRoles.some(r => r === newMember.roles.cache.highest.id)) return;
+                    if (!staffRoles.some(r => r === newMember.roles.highest.id)) return;
                     let isDev = await client.functions.authorized({auth: "dev"}, newMember.user);
                     let isAdmin = await client.functions.authorized({auth: "admin"}, newMember.user);
                     let isMod = await client.functions.authorized({auth: "mod"}, newMember.user);
