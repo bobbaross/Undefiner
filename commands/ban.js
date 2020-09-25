@@ -128,7 +128,7 @@ module.exports = {
                     .setTimestamp()
                     user.send(dmEmbed).catch(err => err);
                 }
-                message.guild.members.ban(user.id, `Banned by ${message.author.tag} with reason: ${reason}`).then(async () => {
+                message.guild.members.ban(user.id, {reason: `Banned by ${message.author.tag} with reason: ${reason}`}).then(async () => {
                     client.functions.getEntries("ban").then(async activeBans => {
                         if (!time) return;
                         activeBans.entries.push({
@@ -139,7 +139,7 @@ module.exports = {
                             reason: reason,
                             happenedAt: Date.now()
                         });
-                        await client.functions.saveDB(activeBans).catch(err => console.error(err));
+                        client.functions.saveDB(activeBans).catch(err => console.error(err));
                     });
                     let embed = new MessageEmbed()
                     .setColor(branding)
@@ -193,7 +193,7 @@ module.exports = {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    await client.functions.saveDB(res).catch(err => console.error(err));
+                    client.functions.saveDB(res).catch(err => console.error(err));
                     if (setRes.settings.deleteModCommands === true) message.delete();
                 }).catch(err => console.error(err));
             });
