@@ -195,7 +195,7 @@ module.exports = {
                     });
                     await client.functions.saveDB(res).catch(err => console.error(err));
                     if (setRes.settings.deleteModCommands === true) message.delete();
-                });
+                }).catch(err => console.error(err));
             });
         });
     }
