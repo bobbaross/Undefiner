@@ -63,7 +63,7 @@ module.exports = {
                         return message.channel.send(embed.description).catch(err => err)
                     }
                     }
-                    await args.shift();
+                    args.shift();
                     var reason = args.slice(0).join(' ');
                     if (!reason) reason = "No reason specified.";
                     res.cases++;
@@ -84,8 +84,8 @@ module.exports = {
                             let modLogEmbed = new MessageEmbed()
                             .setColor(good)
                             .setTitle(`Member Unbanned | Case #${res.cases}`)
-                            .addField(`Member`, userId, true)
-                            .addField(`Moderator`, message.author.tag, true)
+                            .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : `<@!${user.id}> (${user.id})`, true)
+                            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                             .addField(`Reason`, reason)
                             .setFooter(`${userId}`)
                             .setTimestamp()

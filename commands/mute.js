@@ -46,7 +46,7 @@ module.exports = {
                 }
                 if (mutedRole) {
                     setRes.settings.mutedRole = mutedRole.id;
-                    await client.functions.saveDB(setRes);
+                    client.functions.saveDB(setRes);
                 }
                 if (!mutedRole) {
                     mutedRole = await new Promise((resolve) => {
@@ -65,7 +65,7 @@ module.exports = {
                         });
                     });
                     setRes.settings.mutedRole = mutedRole.id;
-                    await client.functions.saveDB(setRes);
+                    client.functions.saveDB(setRes);
                 }
                 if (!args[0]) {
                     let embed = new MessageEmbed()
@@ -87,7 +87,6 @@ module.exports = {
                     }
                 }
                 var member = message.guild.member(user);
-                await member;
                 if (!member) {
                     let embed = new MessageEmbed()
                     .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
@@ -133,9 +132,9 @@ module.exports = {
                         return message.channel.send(embed.description).catch(err => err)
                     }
                 }
-                await args.shift();
+                args.shift();
                 var time = await client.functions.setTime(args[0]);
-                if (time !== null) await args.shift();
+                if (time !== null) args.shift();
                 var reason = args.slice(0).join(' ');
                 if (!reason) {
                     let embed = new MessageEmbed()
@@ -153,8 +152,8 @@ module.exports = {
                     let dmEmbed = new MessageEmbed()
                     .setColor(dangerous)
                     .setTitle(`You've been muted in ${message.guild.name}, here is a copy of the log!\nMember Muted | Case #${res.cases}`)
-                    .addField(`Member`, member.user.tag, true)
-                    .addField(`Moderator`, message.author.tag, true)
+                    .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : `<@!${user.id}> (${user.id})`, true)
+                    .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                     .addField(`Reason`, reason)
                     .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                     .setTimestamp()
@@ -171,7 +170,7 @@ module.exports = {
                             reason: reason,
                             happenedAt: Date.now()
                         });
-                        await client.functions.saveDB(activeMutes).catch(err => console.error(err));
+                        client.functions.saveDB(activeMutes).catch(err => console.error(err));
                     });
                     let embed = new MessageEmbed()
                     .setColor(branding)
@@ -189,8 +188,8 @@ module.exports = {
                             let modLogEmbed = new MessageEmbed()
                             .setColor(dangerous)
                             .setTitle(`Member Muted | Case #${res.cases}`)
-                            .addField(`Member`, member.user.tag, true)
-                            .addField(`Moderator`, message.author.tag, true)
+                            .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : `<@!${user.id}> (${user.id})`, true)
+                            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                             .addField(`Reason`, reason)
                             .setFooter(`${duration !== null ? `This mute will last ${duration} | ` : ""}${user.id}`)
                             .setTimestamp()
@@ -225,7 +224,7 @@ module.exports = {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    await client.functions.saveDB(res).catch(err => console.error(err));
+                    client.functions.saveDB(res).catch(err => console.error(err));
                     if (setRes.settings.deleteModCommands === true) message.delete();
                 });
             });

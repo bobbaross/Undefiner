@@ -73,8 +73,8 @@ module.exports = {
             .setColor(bad)
             .setTitle(`Server Banned | Case #${res.staffCaseAmount}`)
             .addField(`Server`, `${theServer.name}`, true)
-            .addField(`Owner`, `${theServer.owner?.tag ?? `Owner not cached... However... ID: ${theServer.ownerID}`}`, true)
-            .addField(`Moderator`, `${message.author.tag}`, true)
+            .addField(`Owner`, theServer.owner?.tag ? `${theServer.owner} (${theServer.owner.tag} | ${theServer.ownerID})` : theServer.ownerID, true)
+            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
             .addField(`Reason`, `${reason}`)
             client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
             client.functions.leaveServer(theServer.id).catch(err => err);

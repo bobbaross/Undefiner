@@ -62,8 +62,8 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(good)
             .setTitle(`Server Unbanned | Case #${res.staffCaseAmount}`)
-            .addField(`Server`, `${theServer}`, true)
-            .addField(`Moderator`, `${message.author.tag}`, true)
+            .addField(`Server`, theServer, true)
+            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
             .addField(`Reason`, `${reason}`)
             client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
             let successEmbed = new MessageEmbed()

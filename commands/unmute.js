@@ -46,7 +46,7 @@ module.exports = {
                 }
                 if (mutedRole) {
                     setRes.settings.mutedRole = mutedRole.id;
-                    await client.functions.saveDB(setRes);
+                    client.functions.saveDB(setRes);
                 }
                 if (!mutedRole) {
                     mutedRole = new Promise((resolve) => {
@@ -66,9 +66,8 @@ module.exports = {
                             return resolve(newRole)
                         });
                     });
-                    await mutedRole;
                     setRes.settings.mutedRole = await mutedRole.id;
-                    await client.functions.saveDB(setRes);
+                    client.functions.saveDB(setRes);
                 }
                 if (!args[0]) {
                     let embed = new MessageEmbed()
@@ -136,7 +135,7 @@ module.exports = {
                         return message.channel.send(embed.description).catch(err => err)
                     }
                 }
-                await args.shift();
+                args.shift();
                 var reason = args.slice(0).join(' ');
                 if (!reason) reason = "No reason specified.";
                 res.cases++;
@@ -144,8 +143,8 @@ module.exports = {
                     let dmEmbed = new MessageEmbed()
                     .setColor(bad)
                     .setTitle(`You've been unmuted in ${message.guild.name}, here is a copy of the log!\nMember Unmuted | Case #${res.cases}`)
-                    .addField(`Member`, member.user.tag, true)
-                    .addField(`Moderator`, message.author.tag, true)
+                    .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : `<@!${user.id}> (${user.id})`, true)
+                    .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                     .addField(`Reason`, reason)
                     .setFooter(`${user.id}`)
                     .setTimestamp()
@@ -168,8 +167,8 @@ module.exports = {
                             let modLogEmbed = new MessageEmbed()
                             .setColor(good)
                             .setTitle(`Member Unmuted | Case #${res.cases}`)
-                            .addField(`Member`, member.user.tag, true)
-                            .addField(`Moderator`, message.author.tag, true)
+                            .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : `<@!${user.id}> (${user.id})`, true)
+                            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                             .addField(`Reason`, reason)
                             .setFooter(`${user.id}`)
                             .setTimestamp()
@@ -203,14 +202,14 @@ module.exports = {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    await client.functions.saveDB(res).catch(err => console.error(err));
+                    client.functions.saveDB(res).catch(err => console.error(err));
                     client.functions.getEntries("mute").then(async activeMutes => {
                         for (let entry of activeMutes.entries) {
                             if (entry.guildId == message.guild.id && entry.userId == user.id) {
                                 let index = activeMutes.entries.indexOf(entry);
                                 activeMutes.entries.splice(index, 1);
-                                await activeMutes;
-                                await client.functions.saveDB(activeMutes).catch(err => console.error(err));
+                                activeMutes;
+                                client.functions.saveDB(activeMutes).catch(err => console.error(err));
                             }
                         }
                     });

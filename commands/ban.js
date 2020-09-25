@@ -101,9 +101,9 @@ module.exports = {
                         return message.channel.send(embed.description).catch(err => err)
                     }
                 }
-                await args.shift();
+                args.shift();
                 var time = await client.functions.setTime(args[0]);
-                if (time !== null) await args.shift();
+                if (time !== null) args.shift();
                 var reason = args.slice(0).join(' ');
                 if (!reason) {
                     let embed = new MessageEmbed()
@@ -121,8 +121,8 @@ module.exports = {
                     let dmEmbed = new MessageEmbed()
                     .setColor(bad)
                     .setTitle(`You've been banned from ${message.guild.name}, here is a copy of the log!\nMember Banned | Case #${res.cases}`)
-                    .addField(`Member`, member.user.tag, true)
-                    .addField(`Moderator`, message.author.tag, true)
+                    .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : `<@!${user.id}> (${user.id})`, true)
+                    .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                     .addField(`Reason`, reason)
                     .setFooter(`${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`)
                     .setTimestamp()
@@ -157,8 +157,8 @@ module.exports = {
                             let modLogEmbed = new MessageEmbed()
                             .setColor(bad)
                             .setTitle(`Member Banned | Case #${res.cases}`)
-                            .addField(`Member`, user.tag ? user.tag : user.id, true)
-                            .addField(`Moderator`, message.author.tag, true)
+                            .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : `<@!${user.id}> (${user.id})`, true)
+                            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                             .addField(`Reason`, reason)
                             .setFooter(`${duration !== null ? `This ban will last ${duration} | ` : ""}${user.id}`)
                             .setTimestamp()

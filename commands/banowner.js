@@ -81,8 +81,8 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor(bad)
             .setTitle(`Owner Banned | Case #${res.staffCaseAmount}`)
-            .addField(`Owner`, `${user.tag ?? `Owner not found... However... ID: ${user.id}`}`, true)
-            .addField(`Moderator`, `${message.author.tag}`, true)
+            .addField(`Owner`, user.tag ? `${user} (${user.tag} | ${user.id})` : user.id, true)
+            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
             .addField(`Reason`, `${reason}`)
             client.functions.sendMessageToSupportServerChannel("724615821669957673", embed, true).catch(err => err);
             client.shard.broadcastEval(`this.guilds.cache.filter(guild => guild.ownerID === "${user.id}")`).then(guildsFound => {

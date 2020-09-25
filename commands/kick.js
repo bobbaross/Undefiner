@@ -60,7 +60,6 @@ module.exports = {
                     }
                 }
                 var member = message.guild.member(user);
-                await member;
                 if (!member) {
                     let embed = new MessageEmbed()
                     .setDescription(`Now you see, there is something called telling me a member from this server.\n${this.name} ${this.usage}`);
@@ -97,7 +96,7 @@ module.exports = {
                         return message.channel.send(embed.description).catch(err => err)
                     }
                 }
-                await args.shift();
+                args.shift();
                 var reason = args.slice(0).join(' ');
                 if (!reason) {
                     let embed = new MessageEmbed()
@@ -137,8 +136,8 @@ module.exports = {
                             let modLogEmbed = new MessageEmbed()
                             .setColor(dangerous)
                             .setTitle(`Member Kicked | Case #${res.cases}`)
-                            .addField(`Member`, member.user.tag, true)
-                            .addField(`Moderator`, message.author.tag, true)
+                            .addField(`Member`, user.tag ? `${user} (${user.tag} | ${user.id})` : user.id, true)
+                            .addField(`Moderator`, `${message.author} (${message.author.tag} | ${message.author.id})`, true)
                             .addField(`Reason`, reason)
                             .setFooter(`${user.id}`)
                             .setTimestamp()
@@ -172,7 +171,7 @@ module.exports = {
                         embedId: embedId ? embedId : null,
                         happenedAt: Date.now()
                     });
-                    await client.functions.saveDB(res).catch(err => console.error(err));
+                    client.functions.saveDB(res).catch(err => console.error(err));
                     if (setRes.settings.deleteModCommands === true) message.delete();
                 });
             });
